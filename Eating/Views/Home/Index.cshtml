@@ -1,31 +1,98 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_layout2.cshtml";
 }
-
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+<div style="text-align:center;">
+    <h2 class="col-md-12" style="font-weight:800;">Dashboard</h2>
+    <p class="col-md-12 " id="p-total" style="font-weight:600;"></p>
 </div>
+<section class="col-lg-12 connectedSortable ui-sortable">
+    <div class="box box-info" style="position: relative; left: 0px; top: 0px;">
+        <div class="box-header ui-sortable-handle" style="">
+            <i class="fa fa-dashboard"></i>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+            <h3 class="box-title">整體滿意度分布</h3>
+
+            
+            </div>
+        <div class="box-body">
+            <canvas id="myChart" style="height:50vh; width:80vw"></canvas>
+          </div>
+        <div class="box-footer clearfix">
+
+        </div>
+        </div>
+    
+</section>
+
+
+
+@section scripts{
+
+    <script>
+
+        $(document).ready(function () {
+            var score = [];
+            var total=0;
+            $.ajax({
+                type: "GET",
+                url: "/Home/GetRating",
+                data: {
+                    r_id: "@User.Identity.Name",
+                },
+                dataType: "json",
+            })
+                .done(function (json) {
+                    for (var i = 0; i < 5; i++) {
+                        score.push(json[i].length);
+                        total += json[i].length;
+                    }
+                    GetChart(score, total);
+                })
+                .fail(function () {
+                    alert("讀取資料錯誤，請稍後重試");
+                });
+        });
+
+        function GetChart(score, total) {
+            var config = {
+                type: 'pie',
+                data: {
+                    datasets: [{
+                        data: [
+                            score[0],
+                            score[1],
+                            score[2],
+                            score[3],
+                            score[4]
+                        ],
+                        backgroundColor: [
+                            "rgba(255, 86, 89, 0.92)",
+                            "rgba(255, 168, 86, 0.92)",
+                            "rgba(250, 207, 50, 0.92)",
+                            "rgba(177, 252, 37, 0.92)",
+                            "rgba(26, 232, 22, 0.92)"
+                        ],
+                        label: 'Dataset 1'
+                    }],
+                    labels: [
+                        "非常差",
+                        "差",
+                        "普通",
+                        "滿意",
+                        "非常滿意"
+                    ]
+                },
+                options: {
+                    responsive: true
+                }
+            }
+            var ctx = document.getElementById("myChart").getContext("2d");
+            window.myPie = new Chart(ctx, config);
+
+            $("#p-total").text("當前總筆數: "+total);
+        }
+
+
+    
+    </script>
+}

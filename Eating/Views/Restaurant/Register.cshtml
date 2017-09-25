@@ -1,0 +1,171 @@
+﻿@model Eating.ViewModels.RestaurantRegisterViewModel
+
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Index.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12" style="text-align:center; font-size:26px; margin-top:10px;">
+        <i class="fa  fa-user"></i> <span class="span-title" style="font-size:26px;">註冊</span>
+    </div>
+</div>
+<hr style="margin:12px 0px 20px 0px;"/>
+<div class="row">
+    <div class="col-md-12">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-horizontal" style="">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group ">
+                    @Html.LabelFor(model => model.R_Account, htmlAttributes: new { @class = "control-label col-md-3 col-md-offset-1" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.R_Account, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.R_Account, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.R_Password, htmlAttributes: new { @class = "control-label col-md-3 col-md-offset-1" })
+                    <div class="col-md-6 ">
+                        @Html.EditorFor(model => model.R_Password, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.R_Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.checkR_Password, htmlAttributes: new { @class = "control-label col-md-3 col-md-offset-1" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.checkR_Password, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.checkR_Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.R_Name, htmlAttributes: new { @class = "control-label col-md-3 col-md-offset-1" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.R_Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.R_Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.R_PhoneNum, htmlAttributes: new { @class = "control-label col-md-3 col-md-offset-1" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.R_PhoneNum, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.R_PhoneNum, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-3 col-md-offset-1" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.R_County, htmlAttributes: new { @class = "control-label col-md-3 col-md-offset-1" })
+                    <div class="col-md-3">
+                        @Html.DropDownListFor(m => m.R_County,
+                new SelectList(Model.Counties, "CountyName", "CountyName", Model.Counties), "--請選擇--", new { @class = "form-control", @onchange = "GetAreas()" })
+                        @Html.ValidationMessageFor(model => model.R_County, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-3">
+                        <!--    <select id="Area" name="country" class="form-control"></select>-->
+                        @Html.DropDownListFor(m => m.R_Area,
+                Model.Areas == null ? new SelectList(Enumerable.Empty<SelectListItem>(), "Value", "Value") :
+                new SelectList(Model.Areas, "Name", "Name", Model.Areas), "", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.R_Area, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-6 col-md-offset-4">
+                        @Html.EditorFor(model => model.DetailAddr, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.DetailAddr, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.StartTime, htmlAttributes: new { @class = "control-label col-md-3 col-md-offset-1" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "form-control", @style="color:#000" } })
+                        @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CloseTime, htmlAttributes: new { @class = "control-label col-md-3 col-md-offset-1" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.CloseTime, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CloseTime, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-4 col-md-4">
+                        <input id="save" type="submit" value="註冊" class="btn btn-primary btn-block" style="background-color:rgba(255, 143, 100, 0.9);  border: none" />
+                    </div>
+                </div>
+            </div>
+        }
+
+        
+    </div>
+</div>
+<div class="row">
+        <a class="col-md-12" href="/Restaurant/Login" style="padding:10px 0px; text-decoration:none; color:#ececec; font-size:18px; text-align:center;">已有帳號? 登入去</a>
+</div>
+
+@section scripts
+{
+@Scripts.Render("~/bundles/datetimepicker")
+<script>
+    
+    $(document).ready(function () {
+
+        $('#CloseTime, #StartTime').datetimepicker({
+            format: 'HH:mm',
+
+        });
+
+        $('#save').on('click', function () {
+            var startTime = document.getElementById('StartTime').value.split(':');
+            var closeTime = document.getElementById('CloseTime').value.split(':');
+
+            var _sTime = new Date('2000', '1', '1', startTime[0], startTime[1]);
+            var _cTime = new Date('2000', '1', '1', closeTime[0], closeTime[1]);
+            if (_sTime > _cTime) {
+                alert("'營業時間' 需小於 '結束時間'!");
+                return false;
+            }
+        });
+    });
+
+
+    function GetAreas() {
+        var name = $('#R_County').val();
+        $.ajax({
+            url: '@Url.Action("Areas", "Restaurant")',
+            data: { county: name },
+            type: 'get',
+            cache: false,
+            async: false,
+            dataType: 'json',
+            success: function(data) {
+                if (data.length > 0) {
+                    $('#R_Area').empty();
+                    $('#R_Area').append($('<option></option>').val('').text('請選擇'));
+                    $.each(data, function(i, item) {
+                        $('#R_Area').append(
+                            $('<option></option>').val(item.Name).text(item.Name));
+                    });
+                }
+            }
+        });
+    }
+</script>
+}
+   

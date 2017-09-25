@@ -1,4 +1,4 @@
-﻿@using Eating.Models
+﻿@*@using Eating.Models
 @model LoginViewModel
 @{
     ViewBag.Title = "登入";
@@ -49,15 +49,15 @@
                         @Html.ActionLink("忘記密碼?", "ForgotPassword")
                     </p>*@
             }
-        </section>
+        @*</section>
     </div>
     <div class="col-md-4">
         <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-        </section>
+            @*Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })*@
+        @*</section>
     </div>
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-}
+}*@*@*@

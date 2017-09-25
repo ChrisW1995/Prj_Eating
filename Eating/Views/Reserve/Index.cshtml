@@ -1,0 +1,410 @@
+﻿@model IEnumerable<Eating.ViewModels.SeatViewModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+<div id="dialog" title="訂位資訊">
+    @using (Html.BeginForm("SaveReserve", "Reserve", FormMethod.Post, new { onsubmit = "return submitForm()" }))
+    {
+        <table id="reserve-tb" class="table">
+            <thead>
+                <tr>
+                    <th>目前桌號</th>
+                    <th>顧客姓名</th>
+                    <th>連絡電話</th>
+                    <th>訂位人數</th>
+                    <th>訂位時間</th>
+                    <th>桌號</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot></tfoot>
+        </table>
+                            <div class="form-group" style="">
+                                <input id="btn-close" type="button" value="關閉" class="btn btn-default" style="float:right;" />
+                                <input onclick="" type="submit" value="確認修改" class="btn btn-primary" style="float:right; " />
+                            </div>
+
+    }
+
+</div>
+
+<section class="col-lg-12 connectedSortable ui-sortable">
+    <div class="box box-danger" style="position: relative; left: 0px; top: 0px;">
+        <div class="box-header ui-sortable-handle" style="">
+            <i class="fa fa-info"></i>
+
+            <h3 class="box-title"><b>訂位資訊</b></h3>
+        </div>
+        <div class="box-body">
+            @{var time = TempData["Time"] == null ? DateTime.Now.ToString("yyyy/MM/dd") : TempData["Time"]; }
+            <br />
+            <div class="form-inline">
+                <div class="form-group col-md-offse-2">
+                    <input type="text" class="form-control" id="date" placeholder="選取時間" value="@time" />
+                </div>
+                <button id="btn-search" type="submit" class="btn btn-default">搜尋</button>
+                <button id="btn-pop" type="submit" class="btn btn-default">訂位調整</button>
+                <div style="float:right; background-color:antiquewhite; width:20px; height:20px;"></div><p style="font-weight:800; float:right;">非吸菸區：</p>
+                <span style="float:right;">∥</span>
+                <div style="float:right; background-color:#c4e3fe; width:20px; height:20px;"></div><p style="font-weight:800; float:right;">吸菸區：</p>
+            </div>
+
+            <hr />
+            <div class="container" style="height:70vh; position:relative;">
+
+                <div class="row">
+
+                  
+
+
+                    @{int _id = 0;}
+                    @foreach (var item in Model)
+                    {
+                        string color = item.SeatSmoke == true ? "#c4e3fe" : "antiquewhite";
+                        int count = 0;
+                        string seatName = item.SeatName.ToString();
+
+                        if (item.SeatCapacity <= 2)
+                        {
+                            <div id="@_id" class="col-md-1 main-seat" style=" float:left; position:relative; left:@string.Format(item.location_X+"px"); top:@string.Format(item.location_Y + "px");">
+                                @Html.Hidden($"SeatViewModel[{_id}].SeatId", item.SeatId)
+                                @for (int i = 0; i < item.SeatCapacity; i++)
+                    {
+                                    <div class="@seatName seat" style="height:20px; width:20px; border:1px solid black; float:left; margin:5px 16px;"></div>
+                                    count++;
+                                    if (count == 1)
+                                    {
+                                        <div style="display:table; height:45px; width:80%; border:1px solid black; float:left; background-color:@color;">
+                                            <p class="a-@seatName" style="font-size:20px;text-align:center; vertical-align:middle;display: table-cell;" href="">@seatName</p>
+                                        </div>
+                                    }
+                                }
+                            </div>
+
+                        }
+                        else if (item.SeatCapacity <= 4)
+                        {
+                            <div id="@_id" class="col-md-1 main-seat" style="float:left; position:relative; left:@string.Format(item.location_X+"px"); top:@string.Format(item.location_Y + "px");">
+                                @Html.Hidden($"SeatViewModel[{_id}].SeatId", item.SeatId)
+                                @for (int i = 0; i < item.SeatCapacity; i++)
+                    {
+                                    <div class="@seatName seat" style="height:20px; width:20px; border:1px solid black; float:left; margin:5px 4px;"></div>
+                                    count++;
+                                    if (count == 2)
+                                    {
+                                        <div style="display:table; height:45px; width:80%; border:1px solid black; float:left; background-color:@color;">
+                                            <p style="font-size:20px;text-align:center; vertical-align:middle;display: table-cell;" href="#">@seatName</p>
+
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        }
+                        else if (item.SeatCapacity <= 6)
+                        {
+                            <div id="@_id" class="col-md-2 main-seat" style="position:relative;  float:left;position:relative; left:@string.Format(item.location_X+"px"); top:@string.Format(item.location_Y + "px");">
+                                @Html.Hidden($"SeatViewModel[{_id}].SeatId", item.SeatId)
+                                @for (int i = 0; i < item.SeatCapacity; i++)
+                    {
+                                    <div class="@seatName seat" style=" width:20px; height:20px; border:1px solid black; float:left; margin:5px 6px; position:relative; left:33px;"></div>
+
+                                    count++;
+                                    if (count == 3)
+                                    {
+
+                                        <div style="display:table; height:45px; left:20%; position:relative; width:60%; clear: left; border:1px solid black; float:left; background-color:@color; ">
+                                            <p style="font-size:20px;text-align:center; vertical-align:middle;display: table-cell;" href="#">@seatName</p>
+
+                                        </div>
+                                        <div style="clear: both;"></div>
+                                    }
+                                }
+                            </div>
+                        }
+                        else if (item.SeatCapacity <= 8)
+                        {
+                            <div id="@_id" class="col-md-2 main-seat" style="position:relative;  float:left; display:table; position:relative; left:@string.Format(item.location_X+"px"); top:@string.Format(item.location_Y + "px");">
+                                @Html.Hidden($"SeatViewModel[{_id}].SeatId", item.SeatId)
+                                @for (int i = 0; i < item.SeatCapacity; i++)
+                    {
+                                    <div class="@seatName seat" style=" width:20px; height:20px; border:1px solid black; float:left; margin:5px 6px; position:relative; left:33px;"></div>
+
+                                    count++;
+                                    if (count == 3)
+                                    {
+                                        <div style="clear:both;"></div>
+                                        <div class="@seatName seat" style="display:table-cell; width:20px; vertical-align:middle; height:20px; border:1px solid black; float:left; margin:12px 5px; position:relative;"></div>
+                                        i++;
+                                        <div style="display:table; height:45px; position:relative; width:60%; border:1px solid black; float:left; background-color:@color; ">
+                                            <p style="font-size:20px;text-align:center; vertical-align:middle;display: table-cell;" href="#">@seatName</p>
+                                        </div>
+                                        <div class="@seatName seat" style="display:table-cell; width:20px; vertical-align:middle; height:20px; border:1px solid black; float:left; margin:12px 5px; position:relative;"></div>
+                                        i++;
+                                        <div style="clear:both;"></div>
+                                    }
+                                }
+                            </div>
+                        }
+                        else if (item.SeatCapacity <= 10)
+                        {
+                            <div id="@_id" class="col-md-2 main-seat" style="position:relative;  float:left; display:table;  left:@string.Format(item.location_X+"px"); top:@string.Format(item.location_Y + "px");">
+                                @Html.Hidden($"SeatViewModel[{_id}].SeatId", item.SeatId)
+                                @for (int i = 0; i < item.SeatCapacity; i++)
+                    {
+                                    <div class="@seatName seat" style=" width:20px; height:20px; border:1px solid black; float:left; margin:5px 4px; position:relative; left:28px;"></div>
+
+                                    count++;
+                                    if (count == 4)
+                                    {
+                                        <div style="clear:both;"></div>
+                                        <div class="@seatName seat" style="display:table-cell; width:20px; vertical-align:middle; height:20px; border:1px solid black; float:left; margin:12px 3px; position:relative;"></div>
+                                        i++;
+                                        <div style="display:table; height:45px; position:relative; width:68%; border:1px solid black; float:left; background-color:@color; ">
+                                            <p style="font-size:20px;text-align:center; vertical-align:middle;display: table-cell;" href="#">@seatName</p>
+                                        </div>
+                                        <div class="@seatName seat" style="display:table-cell; width:20px; vertical-align:middle; height:20px; border:1px solid black; float:left; margin:12px 3px; position:relative;"></div>
+                                        i++;
+                                        <div style="clear:both;"></div>
+                                    }
+                                }
+                            </div>
+                        }
+                        else if (item.SeatCapacity <= 12)
+                        {
+                            <div id="@_id" class="col-md-3 main-seat" style="position:relative;  float:left; display:table;  left:@string.Format(item.location_X+"px"); top:@string.Format(item.location_Y + "px");">
+                                @Html.Hidden($"SeatViewModel[{_id}].SeatId", item.SeatId)
+                                @for (int i = 0; i < item.SeatCapacity; i++)
+                    {
+                                    <div class="@seatName seat" style=" width:20px; height:20px; border:1px solid black; float:left; margin:5px 6px; position:relative; left:28px;"></div>
+
+                                    count++;
+                                    if (count == 4)
+                                    {
+                                        <div style="clear:both;"></div>
+                                        <div style="display:table; height:55px; position:relative; width:10%; float:left; ">
+                                            <div class="@seatName seat" style="display:table-cell; width:20px; vertical-align:middle; height:20px; border:1px solid black; float:left; margin:4px 3px; position:relative;"></div>
+                                            <div class="@seatName seat" style="display:table-cell; width:20px; vertical-align:middle; height:20px; border:1px solid black; float:left; margin:4px 3px; position:relative;"></div>
+                                        </div>
+
+                                        i += 2;
+                                        <div style="display:table; height:55px; position:relative; width:50%; border:1px solid black; float:left; background-color:@color; ">
+                                            <p style="font-size:20px;text-align:center; vertical-align:middle;display: table-cell;" href="#">@seatName</p>
+                                        </div>
+                                        <div style="display:table; height:55px; position:relative; width:10%; float:left; ">
+                                            <div class="@seatName seat" style="display:table-cell; width:20px; vertical-align:middle; height:20px; border:1px solid black; float:left; margin:4px 3px; position:relative;"></div>
+                                            <div class="@seatName seat" style="display:table-cell; width:20px; vertical-align:middle; height:20px; border:1px solid black; float:left; margin:4px 3px; position:relative;"></div>
+                                        </div>
+                                        i += 2;
+                                        <div style="clear:both;"></div>
+                                    }
+                                }
+                            </div>
+                        }
+                        _id++;
+
+                    }
+                </div>
+            </div>
+
+            </div>
+        <div class="box-footer">
+
+        </div>
+        </div>
+    </section>
+      
+
+
+
+
+            @Scripts.Render("~/bundles/lib")
+            @section scripts
+{
+                @Scripts.Render("~/bundles/datetimepicker")
+                <script>
+        $(document).ready(function () {
+
+
+            dialog = $("#dialog").dialog({
+                autoOpen: false,
+                modal: true,
+                draggable: false,
+                closeText: "關閉",
+                width: 950,
+                height: 670,
+
+            });
+
+
+            GetList();
+            $('#date').datetimepicker({
+                format: 'YYYY/MM/DD',
+                defaultDate: moment()
+            });
+
+            $("#btn-search").on('click', function () {
+                GetList();
+            });
+            $("#btn-pop").on("click", function () {
+                dialog.dialog("open");
+                GetReserveTb();
+            });
+            $("#btn-close").on("click", function () {
+                dialog.dialog("close");
+            });
+
+
+        });
+
+        function GetList() {
+            $.ajax({
+                type: "GET",
+                url: "/Reserve/GetReservedSeat",
+                data: {
+                    name: "@User.Identity.Name",
+                    date: $("#date").val()
+                },
+                dataType: "json",
+                success: function (json) {
+                    $(".seat").css("background-color", "#FFF");
+                    var count = json.length;
+                    for (var i = 0; i < count; i++) {
+                        $(".main-seat ." + json[i].SeatName + ":lt(" + json[i].PeopleNum + ")").css("background-color", "red");
+                    }
+                },
+                error: function () {
+                    $(".seat").css("background-color", "#FFF");
+                }
+            });
+        }
+
+        function GetReserveTb() {
+            if ($.fn.DataTable.isDataTable('#reserve-tb')) {
+                $('#reserve-tb').DataTable().destroy();
+            }
+
+            $('#reserve-tb tbody').empty();
+
+            var table = $("#reserve-tb").DataTable({
+                "sScrollY": 410,
+                "language": {
+                    "lengthMenu": "每頁顯示 _MENU_ 筆紀錄",
+                    "zeroRecords": "無資料",
+                    "info": "當前頁數 _PAGE_ of _PAGES_",
+                    "infoEmpty": "抱歉, 無資料可顯示",
+                    "infoFiltered": "(filtered from _MAX_ total records)",
+                    "search": "搜尋",
+                    "paginate": {
+                        "first": "第一頁",
+                        "last": "最後一頁",
+                        "next": "下一頁",
+                        "previous": "前一頁"
+                    }
+                },
+            ajax: {
+                url: '@Url.Action("GetReservedSeat", "Reserve")',
+                dataSrc:'',
+                data: function(d){
+                   d.name= "@User.Identity.Name",
+                    d.date= $("#date").val()
+                },
+                error: function () {
+                    $('#reserve-tb tbody').html("<tr ><td colspan='4' style='text-align:center;'>無資料</td></tr>");
+                }
+            },
+            columns: [
+                {
+                    data: "SeatName",
+                    render: function (data, type, row, meta) {
+                        return row.SeatName+ "<input type=\"hidden\" name=\"reserveVM[" + meta.row + "].Id\" value=\"" + row.Id + "\"  />";
+
+                    }
+                },
+                {
+                    data: "C_Name"
+                },
+                {
+                    data:"C_PhoneNum"
+                },
+                {
+                    data: "PeopleNum",
+                    render: function (data, type, row, meta) {
+                        return "<label class=\"peopleNum\" name=\"reserveVM[" + meta.row + "].PeopleNum\" value=\"" + row.PeopleNum + "\">" + row.PeopleNum + "</label > ";
+                    }
+                },
+                {
+                    data: "ReserveTime",
+                    render: function (data, type, row, meta) {
+                        return row.FormattedDate + "<input type=\"hidden\" name=\"reserveVM[" + meta.row + "].ReserveTime\" value=\"" + row.FormattedDate + "\"  />";
+                  }
+                },
+                {
+                    data: "Seats",
+                    render: function (data, type, row, meta) {
+                        var $select = $("<select class=\"form-control seats-select input-sm\" name=\"reserveVM[" + meta.row + "].SeatId\" id=\"seats-select"+meta.row+"\"></select>", {
+                            "value": row.SeatId
+                        });
+
+                        $.each(row.Seats, function (k, v) {
+                            var $option = $("<option></option>", {
+                                "text": v.SeatName,
+                                "value": v.SeatId
+                            });
+                            if (row.SeatId === v.SeatId) {
+                                $option.attr("selected", "selected")
+                            }
+                            $select.append($option);
+                        });
+                        return $select.prop("outerHTML") + "<input Id=\"seatCapacity" + meta.row+"\" type=\"hidden\" value=\"" + row.SeatCapacity + "\" name =\"reserveVM[" + meta.row + "].SeatCapacity\" />";
+                    }
+                }
+            ]
+            });
+          table.column(0).visible(true);
+        }
+
+        function checkInfo() {
+            //check whether seatName is duplicate
+            var arr = [];
+            var r = true;
+            $(".seats-select").each(function () {
+                var value = $(this).val();
+                var num = arr.indexOf(value);
+                if (arr.indexOf(value) == -1) {
+                    arr.push(value);
+
+                }
+                else {
+                    r= false;
+                }
+            });
+
+            //check whether capacity < peopleNum
+            var table = $('#reserve-tb').DataTable();
+            var data = table.rows().data();
+
+            data.each(function (value, index) {
+                var selectedIndex = $("#seats-select" + index).prop('selectedIndex');
+                if (value.Seats[selectedIndex].SeatCapacity < value.PeopleNum) {
+                    r= false;
+                }
+            });
+            return r;
+        }
+
+        function submitForm() {
+            if (!checkInfo()) {
+                bootbox.alert("請重新確認人數與桌號是否重複或是有誤！");
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+                </script>
+
+            }
+
+

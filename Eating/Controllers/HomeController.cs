@@ -3,28 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Eating.Models;
+using Eating.Interface;
+using Eating.Service;
+using Eating.Service.Interface;
+using Eating.ViewModels;
 
 namespace Eating.Controllers
 {
     public class HomeController : Controller
     {
+        private IFeedBackService feedbackService = new FeedbackService();
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult About()
+        [HttpGet]
+        public ActionResult GetRating(string r_id)
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+           var list = feedbackService.GetRatingVM(r_id);
+            var group_list = list.GroupBy(g => g.Rating);
+            return Json(group_list, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
+      
     }
 }

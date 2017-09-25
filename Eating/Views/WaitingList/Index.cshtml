@@ -1,0 +1,132 @@
+﻿@model IEnumerable<Eating.ViewModels.WaitingListViewModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<section class="col-lg-12 connectedSortable ui-sortable">
+    <div class="box box-danger" style="position: relative; left: 0px; top: 0px;">
+        <div class="box-header ui-sortable-handle" style="">
+            <i class="fa fa-info"></i>
+
+            <h3 class="box-title"><b>候位列表</b></h3>
+        </div>
+        <div class="box-body">
+            <table class="table " id="DataTables">
+                <thead>
+                    <tr>
+                        <th>
+                            目前號碼
+                        </th>
+                        <th>
+                            備註
+                        </th>
+                        <th>
+                            排隊時間
+                        </th>
+                        <th>
+                            暱稱
+                        </th>
+                        <th>
+
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody></tbody>
+                <tfoot>
+
+                </tfoot>
+            </table>
+            </div>
+        <div class="box-footer">
+
+        </div>
+        </div>
+    </section>
+            
+           
+
+            @Scripts.Render("~/bundles/lib")
+            @section scripts
+{
+                <script>
+    $(document).ready(function () {
+        var timeoutId;
+       timeoutId = setInterval(GetAreas, 3000);
+
+       var table = $("#DataTables").DataTable({
+           "sScrollY": 465,
+           "language": {
+               "lengthMenu": "每頁顯示 _MENU_ 筆紀錄",
+               "zeroRecords": "無資料",
+               "info": "當前頁數 _PAGE_ of _PAGES_",
+               "infoEmpty": "抱歉, 無資料可顯示",
+               "infoFiltered": "(filtered from _MAX_ total records)",
+               "search": "搜尋",
+               "paginate": {
+                   "first": "第一頁",
+                   "last": "最後一頁",
+                   "next": "下一頁",
+                   "previous": "前一頁"
+               }
+           },
+            ajax: {
+                url: '@Url.Action("GetWaitingList", "WaitingList")',
+                dataSrc: ''
+            },
+            columns: [
+                {
+                    data: "CurrentNo"
+                },
+                {
+                    data: "Detail"
+                },
+                {
+                    data: "AddTime",
+                    render: function (data, type, announcement) {
+                        return announcement.FormattedDate;
+                    }
+                },
+                {
+                    data: "C_Name"
+                },
+                {
+                    data: "Id",
+                    render: function (data) {
+                        return "<button class='btn-link js-delete' data-customer-id  = " + data + ">叫號</button>";
+                    }
+                }
+            ]
+        });
+        $("#DataTables").on("click", '.js-delete',function () {
+            clearInterval(timeoutId);
+            if (confirm("確認叫號")) {
+                $.ajax({
+                    url: '/WaitingList/CheckStatus/' + $(this).attr('data-customer-id'),
+                    method: "PUT",
+                    success: function () {
+                        timeoutId = setInterval(GetAreas, 3000);
+                        GetAreas();
+                    },
+                    error: function () {
+                        timeoutId = setInterval(GetAreas, 3000);
+                        GetAreas();
+                    }
+
+                });
+            }
+        });
+
+
+    });
+
+    function GetAreas() {
+        var table = $('#DataTables').DataTable();
+         table.ajax.reload();
+    }
+
+
+                </script>
+            }
