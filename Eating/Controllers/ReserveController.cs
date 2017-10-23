@@ -12,7 +12,7 @@ using System.Net;
 
 namespace Eating.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "User")]
     public class ReserveController : Controller
     {
         private IReserveService reserveService = new ReserveService();
@@ -21,8 +21,8 @@ namespace Eating.Controllers
         // GET: Reserve
         public ActionResult Index()
         {
-            //var list = reserveService.GetReserveListByRAccount(User.Identity.Name, reserveService.GetAll());
-            var R_Id = User.Identity.Name;
+            var cookie = Request.Cookies["idCookie"];
+            var R_Id = cookie.Values["r_id"];
             var SeatList = seatService.GetSeatByRAccount(R_Id).Select(Mapper.Map<Seat, SeatViewModel>);
 
             return View(SeatList);

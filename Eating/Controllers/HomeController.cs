@@ -8,9 +8,11 @@ using Eating.Interface;
 using Eating.Service;
 using Eating.Service.Interface;
 using Eating.ViewModels;
+using System.Web.Security;
 
 namespace Eating.Controllers
 {
+    [Authorize(Roles ="User")]
     public class HomeController : Controller
     {
         private IFeedBackService feedbackService = new FeedbackService();

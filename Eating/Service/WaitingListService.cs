@@ -68,12 +68,12 @@ namespace Eating.Service
             return this.repository.Get(x => x.Id == waitingID);
         }
 
-        public IEnumerable<WaitingLists> GetWaitingListsByRAccount(string r_Account)
+        public IEnumerable<WaitingLists> GetWaitingListsByRAccount(string r_id)
         {
-            return repository.GetAllById(x => x.R_Id == r_Account).Where(s => s.CheckStatus == false).ToList();
+            return repository.GetAllById(x => x.R_Id == r_id).Where(s => s.CheckStatus == false).ToList();
         }
 
-        public IEnumerable<WaitingLists> GetWaitingListsByCAccount(string c_Account)
+        public IEnumerable<WaitingLists> GetWaitingListsByCAccount(int c_Account)
         {
             return repository.GetAllById(x => x.C_Id == c_Account).ToList();
         }
@@ -82,13 +82,13 @@ namespace Eating.Service
         {
             var q = WaitingLists.Join(db.Customers,
                 wl => wl.C_Id,
-                c => c.C_Account,
+                c => c.C_Id,
                 (wl, c) => new WaitingListViewModel{
                     Id = wl.Id,
                     Detail = wl.Detail,
                     CurrentNo = wl.CurrentNo,
                      AddTime = wl.AddTime,
-                     C_Id = c.C_Account,
+                     C_Id = c.C_Id,
                      C_Name = c.C_Name
                 }).OrderBy(i => i.CurrentNo).ToList();
                

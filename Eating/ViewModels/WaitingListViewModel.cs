@@ -19,8 +19,7 @@ namespace Eating.ViewModels
         [Display(Name = "加入時間")]
         public DateTime AddTime { get; set; }
 
-        [StringLength(25)]
-        public string C_Id { get; set; }
+        public int C_Id { get; set; }
 
         [Display(Name = "用戶姓名")]
         public string C_Name { get; set; }

@@ -1,0 +1,113 @@
+﻿@model IEnumerable<Eating.Areas.Backend.Models.RestaurantStatusVM>
+@functions{
+    public List<SelectListItem> getStatusList()
+    {
+
+        List <SelectListItem> items = new List<SelectListItem>();
+        items.Add(new SelectListItem { Text = "全部", Value = "0" });
+        items.Add(new SelectListItem { Text = "未確認", Value = "1" });
+        items.Add(new SelectListItem { Text = "未通過", Value = "2" });
+        items.Add(new SelectListItem { Text = "已通過", Value = "3" });
+
+        //if (ViewBag.index != null)
+        //{
+        //    string index = Convert.ToString(ViewBag.index);
+        //    foreach (var item in items)
+        //    {
+        //        if (item.Value == index)
+        //        {
+        //            item.Selected = true;
+        //            break;
+        //        }
+        //    }
+        //}
+        return items;
+    }
+        }
+@using (Html.BeginForm("Index", "Admin", FormMethod.Get, new { id="searchForm" , name = "searchForm" }))
+{
+    @Html.DropDownList("ddlStatus", new SelectList(getStatusList(), "Value","Text", Convert.ToString(ViewBag.index)), new { @onchange = "this.form.submit();" })
+
+}
+
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.R_Account)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.R_Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.R_PhoneNum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.R_County)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.R_Area)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.R_DetailAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SignUpTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StatusFlg)
+            </th>
+            <th></th>
+        </tr>
+
+    
+        @foreach (var item in Model)
+        {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.R_Account)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.R_Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.R_PhoneNum)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.R_County)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.R_Area)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.R_DetailAddress)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SignUpTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StatusFlg)
+                    </td>
+                    <td>
+                     
+                            @Html.ActionLink("通過", "Check", new { id = item.Id, flg = true })  
+                        
+                            @Html.ActionLink("拒絕", "Check", new { id = item.Id, flg = false })
+                                  
+                    </td>
+                </tr>
+        }
+
+
+
+    </table>
+
+@section scripts{
+    <script>
+        function SelectedIndexChanged() {
+            var form = document.getElementById("searchForm");
+            form.submit();
+        }
+
+    </script>
+    }

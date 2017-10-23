@@ -11,17 +11,15 @@ using AutoMapper;
 
 namespace Eating.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "User")]
     public class SeatController : Controller
     {
         private ISeatService seatService = new SeatService();
         // GET: Seat
         public ActionResult Index()
         {
-            var R_Id = User.Identity.Name;
-            var SeatList = seatService.GetSeatByRAccount(R_Id).Select(Mapper.Map<Seat, SeatViewModel>);
             
-            return View(SeatList);
+            return View();
         }
 
         public ActionResult Delete(int? id)
@@ -37,28 +35,59 @@ namespace Eating.Controllers
             }
             return RedirectToAction("Index");
         }
-        [HttpPost]
-        public ActionResult Save(SeatViewModel SeatVM)
+
+        public ActionResult getSeatList()
         {
+            var R_Id = Request.Cookies["idCookie"].Values["r_id"];
+            var SeatList = seatService.GetSeatByRAccount(R_Id).Select(Mapper.Map<Seat, SeatViewModel>);
+            return PartialView("_SeatList", SeatList);
+        }
+
+        public ActionResult getNewSeatPartial()
+        {
+            return PartialView("_NewSeat");
+        }
+
+        public ActionResult getLocationPartial(SeatViewModel seatVM)
+        {
+            var R_Id = Request.Cookies["idCookie"].Values["r_id"];
+
+            var SeatList = seatService.GetSeatByRAccount(R_Id).Select(Mapper.Map<Seat, SeatViewModel>);
+
+            return PartialView("_SeatLocation", SeatList);
+        }
+        [HttpPost]
+        public ActionResult Save(NewSeatViewModel SeatVM)
+        {
+            var R_Id = Request.Cookies["idCookie"].Values["r_id"];
+
             if (!ModelState.IsValid)
             {
-                return RedirectToAction("Index");
+                TempData["seatMessage"] = "bootbox.alert('請輸入桌號！');" ;
+                return View("Index", SeatVM);
             }
             //New
             if(SeatVM.SeatId == 0 || SeatVM.SeatId == null)
             {
-                var instance = Mapper.Map<SeatViewModel, Seat>(SeatVM);
-                instance.R_Id = User.Identity.Name.ToString();
-                seatService.Create(instance);
+                
+                var instance = Mapper.Map<NewSeatViewModel, Seat>(SeatVM);
+                instance.R_Id = R_Id;
+                var result = seatService.Create(instance);
+                string msg = result.Success == true ?  "" : "bootbox.alert('錯誤，請重新再試一次！');";
+                TempData["seatMessage"] = msg;
+                return RedirectToAction("Index");
             }
             else
             {
                 var SeatInDb = seatService.GetByID(SeatVM.SeatId);
-                Mapper.Map<SeatViewModel, Seat>(SeatVM, SeatInDb);
-                SeatInDb.R_Id = User.Identity.Name.ToString();
-                seatService.Update(SeatInDb);
+                Mapper.Map(SeatVM, SeatInDb);
+                SeatInDb.R_Id = R_Id;
+                var result = seatService.Update(SeatInDb);
+                string msg = result.Success == true ? "bootbox.alert('修改成功', function(){ location.replace('/Seat/Index'); });" : "bootbox.alert('錯誤，請重新再試一次！');";
+                TempData["seatEditMessage"] = msg;
+                return View("SeatForm");
             }
-            return RedirectToAction("Index");
+            
         }
 
         public ActionResult Create()
@@ -69,13 +98,15 @@ namespace Eating.Controllers
         public ActionResult Edit(int? id)
         {
             var seat = seatService.GetByID(id);
-            var seatVM = new SeatViewModel();
+            var seatVM = new NewSeatViewModel();
             return View("SeatForm", Mapper.Map(seat, seatVM));
         }
 
         public ActionResult Location()
         {
-            var seatLst = seatService.GetSeatByRAccount(User.Identity.Name).Select(Mapper.Map<Seat, SeatViewModel>);
+            var R_Id = Request.Cookies["idCookie"].Values["r_id"];
+
+            var seatLst = seatService.GetSeatByRAccount(R_Id).Select(Mapper.Map<Seat, SeatViewModel>);
             return View(seatLst);
         }
 
@@ -89,12 +120,12 @@ namespace Eating.Controllers
                 var result = seatService.Update(seat);
                 if(result.Success == false)
                 {
-                    TempData["Message"] = "儲存失敗! 請重新再試一次";
+                    TempData["Message"] = "bootbox.alert('儲存失敗! 請重新再試一次');";
                     TempData["color"] = "Red";
                     return RedirectToAction("Location");
                 }
             }
-            TempData["Message"] = "已儲存擺放位置";
+            TempData["Message"] = "bootbox.alert('已儲存擺放位置');";
             TempData["color"] = "Green";
             return RedirectToAction("Index");
         }

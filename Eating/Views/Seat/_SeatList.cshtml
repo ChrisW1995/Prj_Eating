@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Eating.ViewModels.SeatViewModel>
+
+<table class="table table-striped" id="seat-tb">
+    <thead class="thead-inverse">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SeatName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SeatCapacity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SeatDetail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SeatSmoke)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SeatName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SeatCapacity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SeatDetail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SeatSmoke)
+                </td>
+                <td>
+                    @Html.ActionLink("編輯", "Edit", new { id = item.SeatId }) |
+
+                    @Html.ActionLink("刪除", "Delete", new { id = item.SeatId }, new { @onclick = "return confirm(\"是否刪除?\");" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

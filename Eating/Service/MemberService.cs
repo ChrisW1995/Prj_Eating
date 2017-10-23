@@ -7,6 +7,11 @@ using System.Security.Cryptography;
 using System.Text;
 using Eating.Repository;
 using Eating.Interface;
+using Eating.ViewModels;
+using Eating.Areas.Backend.Models;
+using AutoMapper;
+using System.Linq.Expressions;
+using Eating.DTOs;
 
 namespace Eating.Service
 {
@@ -62,6 +67,12 @@ namespace Eating.Service
 
         }
 
+
+        public bool isCheck(string Account)
+        {
+            var q = db.Restaurants.Where(r => r.R_Account == Account).FirstOrDefault();
+            return (q.StatusFlg == false ? false : true);
+        }
         /// <summary>
         /// Validate Email
         /// </summary>
@@ -96,7 +107,7 @@ namespace Eating.Service
 
         public string LoginCheck(string UserName, string Password)
         {
-            Restaurant r = db.Restaurants.Find(UserName);
+            Restaurant r = db.Restaurants.Where(u => u.R_Account == UserName).SingleOrDefault();
 
             if(r != null)
             {
@@ -130,10 +141,28 @@ namespace Eating.Service
             return result;
         }
 
-        public Restaurant GetRestaurant(string r_account)
+        public Restaurant GetRestaurant(string id)
         {
-            return repository.Get(r => r.R_Account == r_account);
+            return repository.Get(r => r.Id == id);
         }
+
+        /// <summary>
+        /// Get check restaurants
+        /// </summary>
+        /// <returns></returns>
+        /// 
+        public IEnumerable<RestaurantStatusVM> GetAllCheckList(Expression<Func<Restaurant, bool>> predicate)
+        {
+            var q = db.Restaurants.Where(predicate).Select(Mapper.Map<Restaurant, RestaurantStatusVM>).ToList();
+            return q;
+        }
+        public IEnumerable<RestaurantStatusVM> GetAllCheckList()
+        {
+            var q = db.Restaurants.Select(Mapper.Map<Restaurant, RestaurantStatusVM>).ToList();
+            return q;
+        }
+
+
 
         public bool CheckOldPassword(string r_account, string checkPassword)
         {
@@ -158,6 +187,12 @@ namespace Eating.Service
                 result.Exception = ex;
             }
             return result;
+        }
+
+        public IEnumerable<RestaurantDetailDTO> GetAllList()
+        {
+            var query = repository.GetAll().Select(Mapper.Map<Restaurant, RestaurantDetailDTO>).ToList();
+            return query;
         }
 
     }

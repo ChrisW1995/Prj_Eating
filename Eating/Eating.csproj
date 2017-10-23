@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -118,12 +119,21 @@
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.4.1\lib\net45\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -199,8 +209,15 @@
     <Compile Include="App_Start\MappingProfile.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Backend\BackendAreaRegistration.cs" />
+    <Compile Include="Areas\Backend\Controllers\AdminController.cs" />
+    <Compile Include="Areas\Backend\Models\AdminLoginVM.cs" />
+    <Compile Include="Areas\Backend\Models\RestaurantStatusVM.cs" />
+    <Compile Include="Areas\Backend\Service\AdminService.cs" />
+    <Compile Include="Areas\Backend\Service\CustomAuthorization.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Api\RestaurantController.cs" />
     <Compile Include="Controllers\CouponController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -208,7 +225,10 @@
     <Compile Include="Controllers\RestaurantController.cs" />
     <Compile Include="Controllers\SeatController.cs" />
     <Compile Include="Controllers\WaitingListController.cs" />
-    <Compile Include="DTOSs\RestaurantRegistDTO.cs" />
+    <Compile Include="Controllers\Api\CustomerController.cs" />
+    <Compile Include="DTOs\CustomerLoginDTO.cs" />
+    <Compile Include="DTOs\CustomerRegisterDTO.cs" />
+    <Compile Include="DTOs\RestaurantDetailDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -293,8 +313,37 @@
     <Compile Include="Migrations\201709191541013_AddNewTbCustomerCoupon.Designer.cs">
       <DependentUpon>201709191541013_AddNewTbCustomerCoupon.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709270606121_ChangeSeatRIdLengthBug.cs" />
+    <Compile Include="Migrations\201709270606121_ChangeSeatRIdLengthBug.Designer.cs">
+      <DependentUpon>201709270606121_ChangeSeatRIdLengthBug.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710020220475_changeRTBAddIdProp.cs" />
+    <Compile Include="Migrations\201710020220475_changeRTBAddIdProp.Designer.cs">
+      <DependentUpon>201710020220475_changeRTBAddIdProp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710020358175_AddRTbStatusFlg.cs" />
+    <Compile Include="Migrations\201710020358175_AddRTbStatusFlg.Designer.cs">
+      <DependentUpon>201710020358175_AddRTbStatusFlg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710030540535_AddRTbisCheck.cs" />
+    <Compile Include="Migrations\201710030540535_AddRTbisCheck.Designer.cs">
+      <DependentUpon>201710030540535_AddRTbisCheck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710040658524_AddAdminTb.cs" />
+    <Compile Include="Migrations\201710040658524_AddAdminTb.Designer.cs">
+      <DependentUpon>201710040658524_AddAdminTb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710090630289_AddIdPropC_Id.cs" />
+    <Compile Include="Migrations\201710090630289_AddIdPropC_Id.Designer.cs">
+      <DependentUpon>201710090630289_AddIdPropC_Id.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710140424474_AddRTSProp.cs" />
+    <Compile Include="Migrations\201710140424474_AddRTSProp.Designer.cs">
+      <DependentUpon>201710140424474_AddRTSProp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Admins.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Feedback.cs" />
     <Compile Include="Models\Reserves.cs" />
@@ -311,6 +360,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\AddressService.cs" />
     <Compile Include="Service\CouponService.cs" />
+    <Compile Include="Service\CustomerService.cs" />
     <Compile Include="Service\FeedbackService.cs" />
     <Compile Include="Service\Interface\ICouponService.cs" />
     <Compile Include="Service\Interface\IFeedBackService.cs" />
@@ -331,10 +381,13 @@
     <Compile Include="ViewModels\RestaurantInfoViewModel.cs" />
     <Compile Include="ViewModels\RestaurantAccountViewModel.cs" />
     <Compile Include="ViewModels\RestaurantRegisterViewModel.cs" />
+    <Compile Include="ViewModels\NewSeatViewModel.cs" />
     <Compile Include="ViewModels\SeatViewModel.cs" />
     <Compile Include="ViewModels\WaitingListViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Admin.css" />
+    <Content Include="Content\Admin.postcss.css" />
     <Content Include="Content\bootstrap-datetimepicker.css" />
     <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -630,7 +683,6 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Content\_bootstrap-datetimepicker.less" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
@@ -712,8 +764,17 @@
     <Content Include="Content\DataTables\css\semanticui.scss" />
     <Content Include="Content\DataTables\css\mixins.scss" />
     <Content Include="Content\DataTables\css\common.scss" />
+    <Content Include="Areas\Backend\Views\web.config" />
+    <Content Include="Areas\Backend\Views\Shared\_Layout2.cshtml" />
+    <Content Include="Areas\Backend\Views\Admin\Index.cshtml" />
+    <Content Include="Areas\Backend\Views\Shared\_AdminLogin.cshtml" />
+    <Content Include="Areas\Backend\Views\Admin\Login.cshtml" />
+    <Content Include="Areas\Backend\Views\Shared\_AdminLoginPartial.cshtml" />
+    <Content Include="Areas\Backend\Views\Admin\_GetRList.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Img\cover.jpeg" />
+    <Content Include="Img\index.jpg" />
+    <Content Include="Img\logo_new.png" />
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
@@ -1673,7 +1734,6 @@
     <Content Include="Views\Seat\Index.cshtml" />
     <Content Include="Views\WaitingList\Index.cshtml" />
     <Content Include="Views\Reserve\Index.cshtml" />
-    <Content Include="Views\Restaurant\Account.cshtml" />
     <Content Include="Views\Restaurant\Info.cshtml" />
     <Content Include="Views\Seat\Location.cshtml" />
     <Content Include="Views\Shared\_Layout2.cshtml" />
@@ -1704,13 +1764,15 @@
     <Content Include="Scripts\plugins\datatables\extensions\TableTools\Readme.md" />
     <Content Include="Scripts\plugins\input-mask\phone-codes\phone-be.json" />
     <Content Include="Scripts\plugins\input-mask\phone-codes\phone-codes.json" />
+    <Content Include="Views\Restaurant\_AccountPartial.cshtml" />
+    <Content Include="Views\Restaurant\_InfoPartial.cshtml" />
+    <Content Include="Views\Seat\_NewSeat.cshtml" />
+    <Content Include="Views\Seat\_SeatLocation.cshtml" />
+    <Content Include="Views\Seat\_SeatList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Admin\" />
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Controllers\" />
-    <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Admin\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -1775,6 +1837,27 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709191541013_AddNewTbCustomerCoupon.resx">
       <DependentUpon>201709191541013_AddNewTbCustomerCoupon.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709270606121_ChangeSeatRIdLengthBug.resx">
+      <DependentUpon>201709270606121_ChangeSeatRIdLengthBug.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710020220475_changeRTBAddIdProp.resx">
+      <DependentUpon>201710020220475_changeRTBAddIdProp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710020358175_AddRTbStatusFlg.resx">
+      <DependentUpon>201710020358175_AddRTbStatusFlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710030540535_AddRTbisCheck.resx">
+      <DependentUpon>201710030540535_AddRTbisCheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710040658524_AddAdminTb.resx">
+      <DependentUpon>201710040658524_AddAdminTb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710090630289_AddIdPropC_Id.resx">
+      <DependentUpon>201710090630289_AddIdPropC_Id.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710140424474_AddRTSProp.resx">
+      <DependentUpon>201710140424474_AddRTSProp.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

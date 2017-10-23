@@ -23,7 +23,7 @@ namespace Eating.Service.Interface
 
         IEnumerable<Reserves> GetAll();
 
-        IEnumerable<ReserveViewModel> GetReserveListByRAccount(string r_Account, IEnumerable<Reserves> Reserves);
+        IEnumerable<ReserveViewModel> GetReserveListByRAccount(string r_id, IEnumerable<Reserves> Reserves);
         //  IEnumerable<Reserves> GetConponByRAccount(string r_Account);
     }
 }

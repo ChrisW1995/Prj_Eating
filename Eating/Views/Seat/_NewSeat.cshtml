@@ -1,0 +1,47 @@
+﻿@model  Eating.ViewModels.NewSeatViewModel
+@using (Html.BeginForm("Save", "Seat"))
+            {
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SeatName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-2">
+                @Html.TextBoxFor(m =>m.SeatName,"", new { @class="form-control"})
+                @Html.ValidationMessageFor(model => model.SeatName, "", new { @class = "text-danger" })
+                @Html.HiddenFor(m => m.SeatId,0)
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="SeatCapacity" class="control-label col-md-2">座位數量</label>
+            <div class="col-md-2">
+                <select name="SeatCapacity" Id="SeatCapacity" class="form-control"></select>
+                @Html.ValidationMessage("SeatCapacity", "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="SeatDetail" class="control-label col-md-2">備註說明</label>
+            <div class="col-md-10">
+                @Html.TextAreaFor(m => m.SeatDetail, new { @class = "form-control" })
+                @Html.ValidationMessage("SeatDetail", "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="SeatSmoke" value="true" />吸菸區(勾選)
+                    </label>
+                    @Html.ValidationMessage("SeatSmoke", "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="新增" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}

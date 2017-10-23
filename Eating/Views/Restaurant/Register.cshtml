@@ -4,126 +4,154 @@
     ViewBag.Title = "Register";
     Layout = "~/Views/Shared/_Index.cshtml";
 }
-
 <div class="row">
-    <div class="col-md-12" style="text-align:center; font-size:26px; margin-top:10px;">
-        <i class="fa  fa-user"></i> <span class="span-title" style="font-size:26px;">註冊</span>
-    </div>
-</div>
-<hr style="margin:12px 0px 20px 0px;"/>
-<div class="row">
-    <div class="col-md-12">
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
-            <div class="form-horizontal" style="">
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="col-md-offset-2 col-md-8 col-sm-10 col-sm-offset-1 col-xs-offset-1 col-xs-10" style="border:1px solid #d7d7d7;background-color:rgba(252, 233, 233, 0.7
+);border-radius: 10px;">
 
-                <div class="form-group ">
-                    @Html.LabelFor(model => model.R_Account, htmlAttributes: new { @class = "control-label col-md-3 col-md-offset-1" })
-                    <div class="col-md-6">
-                        @Html.EditorFor(model => model.R_Account, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.R_Account, "", new { @class = "text-danger" })
-                    </div>
-                </div>
+        <div class="row">
+            <div class="col-md-12" style="text-align:center; font-size:26px; margin-top:10px;">
+                <i class="fa fa-user" style="color:#f586aa"></i> <span class="" style="font-size:28px;font-weight:600;">註冊新會員</span>
+            </div>
+        </div>
+        <hr style="margin:12px 0px 20px 0px;display: block; height:1px; background-color:#ffffff;" />
+        <div class="row">
+            <div class="col-md-6">
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.R_Password, htmlAttributes: new { @class = "control-label col-md-3 col-md-offset-1" })
-                    <div class="col-md-6 ">
-                        @Html.EditorFor(model => model.R_Password, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.R_Password, "", new { @class = "text-danger" })
-                    </div>
-                </div>
+                <div class="row">
+                    @using (Html.BeginForm("Register", "Restaurant", FormMethod.Post, new { @style = "border-right:1.5px solid #fff;" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-horizontal" style="">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group ">
+                                @Html.LabelFor(model => model.Id, htmlAttributes: new { @class = "control-label col-md-3 col-xs-offset-1" })
+                                <div class="col-md-6 col-xs-offset-1 col-xs-10">
+                                    @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.checkR_Password, htmlAttributes: new { @class = "control-label col-md-3 col-md-offset-1" })
-                    <div class="col-md-6">
-                        @Html.EditorFor(model => model.checkR_Password, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.checkR_Password, "", new { @class = "text-danger" })
-                    </div>
-                </div>
+                            <div class="form-group ">
+                                @Html.LabelFor(model => model.R_Account, htmlAttributes: new { @class = "control-label col-md-3 col-xs-offset-1" })
+                                <div class="col-md-6 col-xs-offset-1 col-xs-10">
+                                    @Html.EditorFor(model => model.R_Account, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.R_Account, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.R_Password, htmlAttributes: new { @class = "control-label col-md-3 col-xs-offset-1" })
+                                <div class="col-md-6 col-xs-offset-1 col-xs-10">
+                                    @Html.EditorFor(model => model.R_Password, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.R_Password, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.checkR_Password, htmlAttributes: new { @class = "control-label col-md-3 col-xs-offset-1" })
+                                <div class="col-md-6 col-xs-offset-1 col-xs-10">
+                                    @Html.EditorFor(model => model.checkR_Password, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.checkR_Password, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
 
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.R_Name, htmlAttributes: new { @class = "control-label col-md-3 col-md-offset-1" })
-                    <div class="col-md-6">
-                        @Html.EditorFor(model => model.R_Name, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.R_Name, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.R_PhoneNum, htmlAttributes: new { @class = "control-label col-md-3 col-md-offset-1" })
-                    <div class="col-md-6">
-                        @Html.EditorFor(model => model.R_PhoneNum, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.R_PhoneNum, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-3 col-md-offset-1" })
-                    <div class="col-md-6">
-                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.R_County, htmlAttributes: new { @class = "control-label col-md-3 col-md-offset-1" })
-                    <div class="col-md-3">
-                        @Html.DropDownListFor(m => m.R_County,
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.R_Name, htmlAttributes: new { @class = "control-label col-md-3 col-xs-offset-1 " })
+                                <div class="col-md-6 col-xs-offset-1 col-xs-10">
+                                    @Html.EditorFor(model => model.R_Name, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.R_Name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.R_PhoneNum, htmlAttributes: new { @class = "control-label col-md-3 col-xs-offset-1" })
+                                <div class="col-md-6 col-xs-10 col-xs-offset-1">
+                                    @Html.EditorFor(model => model.R_PhoneNum, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.R_PhoneNum, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-3 col-xs-offset-1" })
+                                <div class="col-md-6 col-xs-offset-1 col-xs-10">
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.R_County, htmlAttributes: new { @class = "control-label col-md-3 col-md-offset-1 col-xs-offset-1" })
+                                <div class="col-md-6 col-xs-offset-1 col-xs-10">
+                                    @Html.DropDownListFor(m => m.R_County,
                 new SelectList(Model.Counties, "CountyName", "CountyName", Model.Counties), "--請選擇--", new { @class = "form-control", @onchange = "GetAreas()" })
-                        @Html.ValidationMessageFor(model => model.R_County, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="col-md-3">
-                        <!--    <select id="Area" name="country" class="form-control"></select>-->
-                        @Html.DropDownListFor(m => m.R_Area,
+                                    @Html.ValidationMessageFor(model => model.R_County, "", new { @class = "text-danger" })
+                                </div>
+                               
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-6 col-md-offset-5 col-xs-10 col-xs-offset-1">
+                                    <!--    <select id="Area" name="country" class="form-control"></select>-->
+                                    @Html.DropDownListFor(m => m.R_Area,
                 Model.Areas == null ? new SelectList(Enumerable.Empty<SelectListItem>(), "Value", "Value") :
                 new SelectList(Model.Areas, "Name", "Name", Model.Areas), "", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.R_Area, "", new { @class = "text-danger" })
-                    </div>
+                                    @Html.ValidationMessageFor(model => model.R_Area, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-6 col-md-offset-5 col-xs-10 col-xs-offset-1">
+                                    @Html.EditorFor(model => model.DetailAddr, new { htmlAttributes = new { @class = "form-control", @placeholder="路段地址" } })
+                                    @Html.ValidationMessageFor(model => model.DetailAddr, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.StartTime, htmlAttributes: new { @class = "control-label col-md-3 col-xs-offset-1 col-xs-6" })
+                                <div class="col-md-6 col-xs-10 col-xs-offset-1">
+                                    @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "form-control", @style = "color:#000" } })
+                                    @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.CloseTime, htmlAttributes: new { @class = "control-label col-md-3 col-xs-offset-1 col-xs-6" })
+                                <div class="col-md-6 col-xs-10 col-xs-offset-1">
+                                    @Html.EditorFor(model => model.CloseTime, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.CloseTime, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-offset-4 col-md-4 col-xs-8 col-xs-offset-2">
+                                    <input id="save" type="submit" value="註冊" class="btn btn-primary btn-block" style="background-color:#f7635c;  border: none" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+
                 </div>
 
-                <div class="form-group">
-                    <div class="col-md-6 col-md-offset-4">
-                        @Html.EditorFor(model => model.DetailAddr, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.DetailAddr, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.StartTime, htmlAttributes: new { @class = "control-label col-md-3 col-md-offset-1" })
-                    <div class="col-md-6">
-                        @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "form-control", @style="color:#000" } })
-                        @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.CloseTime, htmlAttributes: new { @class = "control-label col-md-3 col-md-offset-1" })
-                    <div class="col-md-6">
-                        @Html.EditorFor(model => model.CloseTime, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.CloseTime, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-offset-4 col-md-4">
-                        <input id="save" type="submit" value="註冊" class="btn btn-primary btn-block" style="background-color:rgba(255, 143, 100, 0.9);  border: none" />
-                    </div>
+                <div class="row">
+                    <a class="col-md-12" href="/Restaurant/Login" style="padding:10px 0px; text-decoration:none; color:##e65b5b; font-size:18px; text-align:center;">已有帳號? 登入去</a>
                 </div>
             </div>
-        }
+            <div class="col-md-6" style="position:relative;">
+                <div class="row">
+                    <ul class="col-md-10 col-md-offset-1">
+                        <li><p style="color:#a30000">信箱需經過驗證後才可登入，請註冊前確認信箱地址是否有效</p></li>
+                        <li><p style="color:#a30000">地址欄位註冊後唯有詳細路段地址可修改，縣/市區為不可修改欄 位請見諒</p></li>
+                        <li><p style="color:#a30000">其他有關餐廳之詳細資訊，於註冊後可在後台編輯修改</p></li>
+                        
+                    </ul>
+                    
+                    
 
-        
+
+                </div>
+                <div class="row" style="position:relative; height:400px;">
+                    <img src="~/Img/logo_new.png" class="col-md-12" style="position:absolute; bottom:0;"/>
+                </div>
+
+            </div>
+        </div>
     </div>
 </div>
-<div class="row">
-        <a class="col-md-12" href="/Restaurant/Login" style="padding:10px 0px; text-decoration:none; color:#ececec; font-size:18px; text-align:center;">已有帳號? 登入去</a>
-</div>
-
-@section scripts
+    @section scripts
 {
-@Scripts.Render("~/bundles/datetimepicker")
-<script>
-    
+        @Scripts.Render("~/bundles/datetimepicker")
+        <script>
+
     $(document).ready(function () {
 
         $('#CloseTime, #StartTime').datetimepicker({
@@ -166,6 +194,6 @@
             }
         });
     }
-</script>
-}
-   
+        </script>
+    }
+

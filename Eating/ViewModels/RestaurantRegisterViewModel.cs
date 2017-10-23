@@ -10,6 +10,10 @@ namespace Eating.ViewModels
     public class RestaurantRegisterViewModel
     {
         [Required]
+        [Display(Name = "公司統一編號")]
+        public string Id { get; set; }
+
+        [Required]
         [StringLength(25)]
         [Display(Name = "登入帳號")]
         public string R_Account { get; set; }

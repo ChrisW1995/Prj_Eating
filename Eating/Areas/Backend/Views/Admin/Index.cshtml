@@ -1,0 +1,28 @@
+﻿
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Backend/Views/Shared/_Layout2.cshtml";
+}
+
+<section class="col-lg-12 connectedSortable ui-sortable">
+    <div class="box box-success" style="position: relative; left: 0px; top: 0px; border-top-color:#545454;">
+        <div class="box-header ui-sortable-handle" style="">
+            <i class="fa fa-info"></i>
+            <h3 class="box-title"><b>申請列表</b></h3>
+        </div>
+        <div class="box-body" style="height:400px; overflow:auto">
+            @{
+                Html.RenderAction("getRList", "Admin", new { index = (ViewBag.index == null? 0:ViewBag.index) });
+            }
+        </div>
+        <div class="box-footer">
+            <div class="input-group">
+                <div class="input-group-btn">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

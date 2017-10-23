@@ -19,10 +19,9 @@ namespace Eating.Models
 
         public DateTime AddTime { get; set; }
 
-        [StringLength(25)]
-        public string C_Id{ get; set; }
+        [Required]
+        public int C_Id{ get; set; }
 
-        [StringLength(25)]
         public string R_Id { get; set; }
 
         public bool CheckStatus { get; set; }

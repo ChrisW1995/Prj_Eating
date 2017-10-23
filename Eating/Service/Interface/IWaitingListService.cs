@@ -23,7 +23,7 @@ namespace Eating.Service.Interface
 
         IEnumerable<WaitingLists> GetAll();
 
-        IEnumerable<WaitingLists> GetWaitingListsByRAccount(string r_Account);
+        IEnumerable<WaitingLists> GetWaitingListsByRAccount(string r_id);
         IEnumerable<WaitingListViewModel> GetJoinCIdWaitingLists(IEnumerable<WaitingLists> WaitingLists);
     }
 }

@@ -22,6 +22,6 @@ namespace Eating.Service.Interface
 
         IEnumerable<Seat> GetAll();
 
-        IEnumerable<Seat> GetSeatByRAccount(string r_Account);
+        IEnumerable<Seat> GetSeatByRAccount(string r_id);
     }
 }

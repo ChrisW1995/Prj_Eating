@@ -5,6 +5,8 @@ using System.Web;
 using AutoMapper;
 using Eating.Models;
 using Eating.ViewModels;
+using Eating.Areas.Backend.Models;
+using Eating.DTOs;
 
 namespace Eating.App_Start
 {
@@ -12,9 +14,18 @@ namespace Eating.App_Start
     {
         public MappingProfile()
         {
+            CreateMap<Customer,CustomerRegisterDTO>();
+            CreateMap<CustomerRegisterDTO, Customer>();
+
+            CreateMap<Restaurant, RestaurantDetailDTO>();
+            CreateMap<RestaurantDetailDTO, Restaurant>();
+
             CreateMap<Restaurant, RestaurantAccountViewModel>();
             CreateMap<RestaurantAccountViewModel, Restaurant>();
 
+            CreateMap<Restaurant, RestaurantStatusVM>();
+            CreateMap<RestaurantStatusVM, Restaurant>();
+            
             CreateMap<Restaurant, RestaurantInfoViewModel>();
             CreateMap<RestaurantInfoViewModel, Restaurant>();
 
@@ -23,6 +34,9 @@ namespace Eating.App_Start
 
             CreateMap<Seat, SeatViewModel>();
             CreateMap<SeatViewModel, Seat>();
+
+            CreateMap<Seat, NewSeatViewModel>();
+            CreateMap<NewSeatViewModel, Seat>();
 
             CreateMap<WaitingLists, WaitingListViewModel>();
             CreateMap<WaitingListViewModel, WaitingLists>();

@@ -307,7 +307,7 @@
                 url: '@Url.Action("GetReservedSeat", "Reserve")',
                 dataSrc:'',
                 data: function(d){
-                   d.name= "@User.Identity.Name",
+                    d.name= "@Request.Cookies["idCookie"].Values["r_id"]",
                     d.date= $("#date").val()
                 },
                 error: function () {

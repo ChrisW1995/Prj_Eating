@@ -10,7 +10,7 @@ namespace Eating.Models
     {
         [Key]
         public int SeatId { get; set; }
-        [StringLength(10)]
+
         public string R_Id { get; set; }
 
         public string SeatName { get; set; }

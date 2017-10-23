@@ -46,15 +46,15 @@ namespace Eating.Service
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Feedback> GetFeedbackByRAccount(string r_Account)
+        public IEnumerable<Feedback> GetFeedbackByRAccount(string r_id)
         {
 
-            return repository.GetAllById(x => x.R_Id == r_Account).ToList();
+            return repository.GetAllById(x => x.R_Id == r_id).ToList();
         }
 
-        public IEnumerable<FeedbacRatingkViewModel> GetRatingVM(string r_Accoun)
+        public IEnumerable<FeedbacRatingkViewModel> GetRatingVM(string r_id)
         {
-            var feedbackList = GetFeedbackByRAccount(r_Accoun).OrderBy(o=>o.Rating).Select(Mapper.Map<Feedback, FeedbacRatingkViewModel>);
+            var feedbackList = GetFeedbackByRAccount(r_id).OrderBy(o=>o.Rating).Select(Mapper.Map<Feedback, FeedbacRatingkViewModel>);
             return feedbackList;
         }
 

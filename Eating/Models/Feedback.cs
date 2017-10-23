@@ -15,7 +15,7 @@ namespace Eating.Models
         public string R_Id { get; set; }
 
         [Required]
-        public string C_Id { get; set; }
+        public int C_Id { get; set; }
 
         [Required]
         public byte  Rating { get; set; }

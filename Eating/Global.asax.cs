@@ -10,6 +10,7 @@ using System.Web.Routing;
 using System.Web.Security;
 using AutoMapper;
 using Eating.App_Start;
+using System.Web.Http;
 
 namespace Eating
 {
@@ -17,6 +18,7 @@ namespace Eating
     {
         protected void Application_Start()
         {
+            GlobalConfiguration.Configure(WebApiConfig.Register);
             Mapper.Initialize(c => c.AddProfile<MappingProfile>());
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
@@ -24,17 +26,19 @@ namespace Eating
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
 
-        protected void Application_OnPostAuthenticationRequest(object sender, EventArgs e)
+     
+        protected void Application_AuthenticateRequest(object sender, EventArgs e)
         {
-            IPrincipal contextUser = Context.User;
-
-            if(contextUser.Identity.AuthenticationType == "Forms")
+            if (Request.IsAuthenticated)
             {
-                FormsAuthenticationTicket ticket = ((FormsIdentity)HttpContext.Current.User.Identity).Ticket;
-
+                // 先取得該使用者的 FormsIdentity
+                FormsIdentity id = (FormsIdentity)User.Identity;
+                // 再取出使用者的 FormsAuthenticationTicket
+                FormsAuthenticationTicket ticket = id.Ticket;
+                // 將儲存在 FormsAuthenticationTicket 中的角色定義取出，並轉成字串陣列
                 string[] roles = ticket.UserData.Split(new char[] { ',' });
-                HttpContext.Current.User = new GenericPrincipal(User.Identity, roles);
-                Thread.CurrentPrincipal = HttpContext.Current.User;
+                // 指派角色到目前這個 HttpContext 的 User 物件去
+                Context.User = new GenericPrincipal(Context.User.Identity, roles);
             }
 
         }

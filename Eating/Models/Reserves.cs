@@ -11,7 +11,8 @@ namespace Eating.Models
     {
         public int Id { get; set; }
 
-        public string C_Id { get; set; }
+        [Required]
+        public int C_Id { get; set; }
 
         public int SeatId { get; set; }
 

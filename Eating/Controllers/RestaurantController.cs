@@ -72,21 +72,24 @@ namespace Eating.Controllers
                 }
 
                 string AuthCode = mailService.GetValidateCode(); //get random code
-               
+
                 Restaurant _newMember = new Restaurant()
                 {
-                     R_Account = registerMember.R_Account,
-                     R_Password = registerMember.R_Password,
-                     R_PhoneNum = registerMember.R_PhoneNum,
-                     R_Name = registerMember.R_Name,
-                     Email = registerMember.Email,
-                      SignUpTime = DateTime.Now,
-                      R_County = registerMember.R_County,
-                      R_Area = registerMember.R_Area,
-                      R_DetailAddress = registerMember.DetailAddr,
-                       AuthCode = AuthCode,
-                       StartTime = registerMember.StartTime,
-                        CloseTime= registerMember.CloseTime
+                    Id = registerMember.Id,
+                    R_Account = registerMember.R_Account,
+                    R_Password = registerMember.R_Password,
+                    R_PhoneNum = registerMember.R_PhoneNum,
+                    R_Name = registerMember.R_Name,
+                    Email = registerMember.Email,
+                    SignUpTime = DateTime.Now,
+                    R_County = registerMember.R_County,
+                    R_Area = registerMember.R_Area,
+                    R_DetailAddress = registerMember.DetailAddr,
+                    AuthCode = AuthCode,
+                    StartTime = registerMember.StartTime,
+                    CloseTime = registerMember.CloseTime,
+                    StatusFlg = false,
+                    isCheck = false
                 };
                
 
@@ -100,7 +103,7 @@ namespace Eating.Controllers
                     Path = Url.Action("EmailValidate", "Restaurant"
                     , new
                     {
-                        UserName = registerMember.R_Account,
+                        UserName = registerMember.Id,
                         AuthCode = AuthCode
                     })
                 };
@@ -158,8 +161,7 @@ namespace Eating.Controllers
 
         public ActionResult Login()
         {
-            if (User.Identity.IsAuthenticated)
-                return RedirectToAction("Index", "Home");
+           
             return View();
         }
 
@@ -171,18 +173,29 @@ namespace Eating.Controllers
             //When ValidateStr is empty string, it'll login successful
             if (string.IsNullOrEmpty(ValidateStr))
             {
+                if(!memberService.isCheck(LoginVM.R_Account))
+                {
+                    ModelState.AddModelError("", "尚未通過真實驗證，請等候通過");
+                    return View();
+                }
+                var r = db.Restaurants.Where(a => a.R_Account == LoginVM.R_Account).SingleOrDefault();
+                var r_id = r.Id;
                 HttpContext.Session.Clear();
                 FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1,
-                    LoginVM.R_Account,
+                    r.R_Name,
                     DateTime.Now,
                     DateTime.Now.AddHours(24),
                     false,
-                    "Admin"
+                    "User"
                     );
-
+                
+                var idCookie = new HttpCookie("idCookie");
+                idCookie.Expires.AddHours(24);
+                idCookie.Values.Add("r_id", r_id.ToString());
                 //Encrypt cookie
                 string enTicket = FormsAuthentication.Encrypt(ticket);
                 Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, enTicket));
+                Response.Cookies.Add(idCookie);
 
                 string decodedUrl = "";
                 if (!string.IsNullOrEmpty(returnUrl))
@@ -209,24 +222,34 @@ namespace Eating.Controllers
             
         }
 
+        [Authorize(Roles = "User")]
         public ActionResult Info()
         {
-            var restaurant = memberService.GetRestaurant(User.Identity.Name);
+            var restaurant = memberService.GetRestaurant(Request.Cookies["idCookie"].Values["r_id"]);
             var infoVM = new RestaurantInfoViewModel();
             Mapper.Map(restaurant, infoVM);
             return View(infoVM);
         }
 
-        public ActionResult Account()
+        public ActionResult accPartial()
         {
-            var account = memberService.GetRestaurant(User.Identity.Name);
-            account.R_Password = null;
-            var accountVM = new RestaurantInfoViewModel();
-            Mapper.Map(account, accountVM);
-            return View(accountVM);
+            var restaurant = memberService.GetRestaurant(Request.Cookies["idCookie"].Values["r_id"]);
+            var accVM = new RestaurantAccountViewModel();
+            Mapper.Map(restaurant, accVM);
+            accVM.R_Password = string.Empty;
+            return PartialView("_AccountPartial", accVM);
         }
 
-        [HttpPost]
+        public ActionResult infoPartial()
+        {
+            var account = memberService.GetRestaurant(Request.Cookies["idCookie"].Values["r_id"]);
+            account.R_Password = null;
+            var infoVM = new RestaurantInfoViewModel();
+            Mapper.Map(account, infoVM);
+            return PartialView("_InfoPartial", infoVM);
+        }
+
+        [Authorize(Roles = "User")]
         public ActionResult SaveInfo(RestaurantInfoViewModel _infoVM)
         {
             if (!ModelState.IsValid)
@@ -235,40 +258,40 @@ namespace Eating.Controllers
             }
 
             var instance = memberService.GetRestaurant(User.Identity.Name);
+
             Mapper.Map(_infoVM, instance);
             var result = memberService.Update(instance);
 
             if (result.Success)
             {
-                TempData["Message"] = "新資料已更新";
-                TempData["classColor"] = "green";
+                TempData["Messageinfo"] = "bootbox.alert('修改完成');";
+                TempData["infoClassColor"] = "green";
 
             }
             else
             {
-                TempData["Message"] = "儲存失敗";
-                TempData["classColor"] = "red";
+                TempData["Messageinfo"] = "bootbox.alert('Error！請重新確認後再試一次');";
+                TempData["infoClassColor"] = "red";
             }
             return RedirectToAction("Info");
 
         }
-        [HttpPost]
-        public ActionResult SaveAccount(RestaurantInfoViewModel r_AccountVM)
+        public ActionResult SaveAccount(RestaurantAccountViewModel r_AccountVM)
         {
-            var _R_AccountVM = new RestaurantInfoViewModel()
+            var _R_AccountVM = new RestaurantAccountViewModel()
             {
                 R_Account = memberService.GetRestaurant(User.Identity.Name).R_Account
             };
             if (!ModelState.IsValid)
             {
-                 return View("Account", _R_AccountVM);
+                 return View("Info", _R_AccountVM);
             }
 
             var checkPassword = memberService.LoginCheck(User.Identity.Name, r_AccountVM.R_Password);
             if(!string.IsNullOrWhiteSpace(checkPassword))
             {
                 ModelState.AddModelError("R_Password", "舊密碼有誤，請重新再試一次");
-                return View("Account", _R_AccountVM);
+                return View("Info", _R_AccountVM);
             }
 
             var restaurant = memberService.GetRestaurant(User.Identity.Name);
@@ -276,16 +299,16 @@ namespace Eating.Controllers
            var result =  memberService.Update(restaurant);
             if (result.Success)
             {
-                TempData["Message"] = "密碼已成功儲存，下次請以新密碼登入";
+                TempData["Messageacc"] = "bootbox.alert('密碼已成功儲存，下次請以新密碼登入');";
                 TempData["classColor"] = "green";
 
             }
             else
             {
-                TempData["Message"] = "儲存失敗";
+                TempData["Messageacc"] = "bootbox.alert('儲存失敗');";
                 TempData["classColor"] = "red";
             }
-            return RedirectToAction("Account");
+            return RedirectToAction("Info");
         }
         [Authorize]
         public ActionResult SignOut()

@@ -12,18 +12,18 @@ using System.Web.Security;
 
 namespace Eating.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "User")]
     public class CouponController : Controller
     {
         private ICouponService couponService = new CouponService();
         private FormsIdentity id;
-        FormsAuthenticationTicket ticket;
+
         // GET: Coupon
         public ActionResult Index()
         {
-            id = (FormsIdentity)User.Identity;
-            ticket = id.Ticket;
-            var query = couponService.GetConponByRAccount(ticket.Name).Select(Mapper.Map<Coupons, CouponListViewModel>);
+            var R_Id = Request.Cookies["idCookie"].Values["r_id"];
+
+            var query = couponService.GetConponByRAccount(R_Id).Select(Mapper.Map<Coupons, CouponListViewModel>);
             return View(query);
         }
         public ActionResult New()
@@ -57,10 +57,13 @@ namespace Eating.Controllers
             //New
             if(couponVM.CouponId == null)
             {
+                var cookie = Request.Cookies["idCookie"];
+                var R_Id = cookie.Values["r_id"];
                 Coupons instance = new Coupons
                 {
+
                     CouponId = Guid.NewGuid().ToString("N"),
-                    R_Id = User.Identity.Name,
+                    R_Id = R_Id,
                     StartTime = couponVM.StartTime,
                     EndTime = couponVM.EndTime,
                     Title = couponVM.Title,

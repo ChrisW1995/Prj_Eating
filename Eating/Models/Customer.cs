@@ -9,6 +9,8 @@ namespace Eating.Models
     public class Customer
     {
         [Key]
+        public int C_Id { get; set; }
+
         [StringLength(25)]
         [Display(Name = "登入帳號")]
         public string C_Account { get; set; }

@@ -4,8 +4,21 @@
     Layout = "~/Views/Shared/_Index.cshtml";
 }
 
-<h2 class="col-md-12" style="text-align:center; font-weight:800;">信箱驗證</h2>
-<hr />
-<div class="col-md-12" style="line-height:100px; text-align:center; border-top:1px solid rgba(255, 255, 255, 0.80);"><p>@ViewData["EmailValidate"]</p></div>
+<div class="row">
+    <div class="col-md-offset-4 col-md-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1" style="background-color:rgba(252, 233, 233, 0.7);border-radius: 15px;">
 
-
+        <div class="col-md-12" style="line-height:100px; text-align:center; "><p class="span-title">@TempData["RegisterState"]</p></div>
+        <div class="row">
+            <div class="col-md-12" style="text-align:center; font-size:26px; margin-top:10px;">
+                <i class="fa fa-mail-forward"></i> <span class="span-title" style="font-size:26px;">信箱驗證</span>
+            </div>
+        </div>
+        <hr style="margin:12px 0px 20px 0px;" />
+        <div class="row">
+            <p  style="color:#ffa700;text-align:center; font-weight:600">*@ViewData["EmailValidate"]</p>
+        </div>
+        <div class="row">
+            <a class="col-md-12" href="/Restaurant/Login" style="padding:10px 0px; text-decoration:none; font-size:18px;color:#FFF; text-align:center;" onmouseover="$(this).css('color','rgba(255, 233, 103, 0.76);')" onmouseout="$(this).css('color','#FFF')">登入去</a>
+        </div>
+        </div>
+    </div>

@@ -21,8 +21,8 @@ namespace Eating.Service.Interface
 
         IEnumerable<Feedback> GetAll();
 
-        IEnumerable<Feedback> GetFeedbackByRAccount(string r_Account);
+        IEnumerable<Feedback> GetFeedbackByRAccount(string r_id);
 
-        IEnumerable<FeedbacRatingkViewModel> GetRatingVM(string r_Accoun);
+        IEnumerable<FeedbacRatingkViewModel> GetRatingVM(string r_id);
     }
 }

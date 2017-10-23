@@ -1,4 +1,4 @@
-﻿@model Eating.ViewModels.SeatViewModel
+﻿@model Eating.ViewModels.NewSeatViewModel
 
 @{
     ViewBag.Title = "SeatForm";
@@ -24,7 +24,7 @@
 
                     <div class="form-group">
                         @Html.LabelFor(model => model.SeatName, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             @Html.TextBoxFor(model => model.SeatName, new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.SeatName, "", new { @class = "text-danger" })
                         </div>
@@ -40,7 +40,7 @@
 
                     <div class="form-group">
                         @Html.LabelFor(model => model.SeatDetail, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
+                        <div class="col-md-6">
                             @Html.TextAreaFor(model => model.SeatDetail, new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.SeatDetail, "", new { @class = "text-danger" })
                         </div>
@@ -88,3 +88,10 @@
                     return SelectItemList;
                 }
             }
+
+@section scripts{
+    <script>
+        @Html.Raw(TempData["seatEditMessage"])
+
+    </script>
+    }

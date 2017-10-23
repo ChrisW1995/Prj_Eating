@@ -22,6 +22,6 @@ namespace Eating.Service.Interface
 
         IEnumerable<Coupons> GetAll();
 
-        IEnumerable<Coupons> GetConponByRAccount(string r_Account);
+        IEnumerable<Coupons> GetConponByRAccount(string r_id);
     }
 }

@@ -66,9 +66,9 @@ namespace Eating.Service
             return this.repository.Get(x => x.SeatId == SeatID);
         }
 
-        public IEnumerable<Seat> GetSeatByRAccount(string r_Account)
+        public IEnumerable<Seat> GetSeatByRAccount(string r_id)
         {
-            return repository.GetAllById(x => x.R_Id == r_Account).ToList();
+            return repository.GetAllById(x => x.R_Id == r_id).ToList();
         }
 
         public bool IsExists(int? SeatID)

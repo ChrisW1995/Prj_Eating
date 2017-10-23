@@ -71,17 +71,17 @@ namespace Eating.Service
             return this.repository.Get(x => x.Id == reserveID);
         }
 
-        public IEnumerable<ReserveViewModel> GetReserveListByRAccount(string r_Account, IEnumerable<Reserves> Reserves)
+        public IEnumerable<ReserveViewModel> GetReserveListByRAccount(string r_id, IEnumerable<Reserves> Reserves)
         { 
-            var seatList = seatService.GetSeatByRAccount(r_Account);
+            var seatList = seatService.GetSeatByRAccount(r_id);
             var query = from reserve in Reserves
                         join seat in seatList on reserve.SeatId equals seat.SeatId
-                        join customer in db.Customers on reserve.C_Id equals customer.C_Account orderby seat.SeatName
+                        join customer in db.Customers on reserve.C_Id equals customer.C_Id orderby seat.SeatName
                         select new ReserveViewModel
                         {
                              Id = reserve.Id,
-                              C_Name = customer.C_Name,
-                              C_PhoneNum = customer.C_PhoneNum,
+                             C_Name = customer.C_Name,
+                             C_PhoneNum = customer.C_PhoneNum,
                              Details = reserve.Details,
                              PeopleNum = reserve.PeopleNum,
                              ReserveTime = reserve.ReserveTime,

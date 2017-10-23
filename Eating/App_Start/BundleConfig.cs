@@ -71,6 +71,12 @@ namespace Eating
                          "~/Content/dist/js/demo.js",
                          "~/Content/dist/js/app.min.js"
                          ));
+
+            bundles.Add(new StyleBundle("~/Content/admin").Include(
+                      "~/Content/Admin.css",
+                      "~/Content/Admin.postcss.css"
+                      ));
+
         }
     }
 }

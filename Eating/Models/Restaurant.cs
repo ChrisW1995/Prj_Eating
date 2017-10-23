@@ -8,8 +8,10 @@ namespace Eating.Models
 {
     public partial class Restaurant
     {
-        
         [Key]
+        [StringLength(32)]
+        public string Id { get; set; }
+
         [StringLength(25)]
         [Display(Name = "登入帳號")]
         public string R_Account { get; set; }
@@ -57,6 +59,14 @@ namespace Eating.Models
         [Display(Name = "結束時間")]
         public TimeSpan CloseTime { get; set; }
         public DateTime SignUpTime { get; set; }
+
+        [Required]
+        public bool StatusFlg { get; set; }
+
+        [Required]
+        public bool isCheck { get; set; }
+
+        public int ReserveTimeSpan { get; set; }
 
         public ICollection<Coupons> Coupons { get; set; }
 

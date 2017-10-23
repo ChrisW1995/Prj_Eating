@@ -29,7 +29,7 @@ namespace Eating.Models
         public DbSet<Customer> Customers { get; set; }
         public DbSet<WaitingLists> WaitingLists { get; set; }
         public DbSet<Reserves> Reserves { get; set; }
-
+        public DbSet<Admins> Admins { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

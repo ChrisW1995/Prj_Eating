@@ -13,11 +13,10 @@ using System.Net;
 namespace Eating.Controllers
 {
 
-    [Authorize]
+    [Authorize(Roles = "User")]
     public class WaitingListController : Controller
     {
         private IWaitingListService waitingListService = new WaitingListService();
-
         // GET: WaitingList
         public ActionResult Index()
         {         
@@ -27,8 +26,8 @@ namespace Eating.Controllers
         [HttpGet]
         public JsonResult GetWaitingList()
         {
-            //logic here for getting your count
-            var R_Id = User.Identity.Name;
+            var R_Id = Request.Cookies["idCookie"].Values["r_id"];
+
             var waitList = waitingListService.GetWaitingListsByRAccount(R_Id);
             var join_query = waitingListService.GetJoinCIdWaitingLists(waitList);
 

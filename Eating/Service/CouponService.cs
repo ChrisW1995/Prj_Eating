@@ -84,9 +84,9 @@ namespace Eating.Service
             return this.repository.Get(x => x.CouponId == couponID);
         }
 
-        public IEnumerable<Coupons> GetConponByRAccount(string r_Account)
+        public IEnumerable<Coupons> GetConponByRAccount(string r_id)
         {
-            return repository.GetAllById(x => x.R_Id == r_Account).ToList();
+            return repository.GetAllById(x => x.R_Id == r_id).ToList();
         }
 
         public bool IsExists(string couponID)

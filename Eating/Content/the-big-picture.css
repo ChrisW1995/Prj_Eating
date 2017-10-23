@@ -3,18 +3,21 @@
  * Copyright 2013-2016 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
  */
-
-body {
-	/*margin-bottom: 50px;*/
-	background: none;
-
-	font-family: "Microsoft JhengHei";
+* {
+    -webkit-overflow-scrolling: touch;
 }
-label, .span-title {
-	color: #FFF;
+body {
+    /*margin-bottom: 50px;*/
+    background: none;
+    overflow-x: hidden;
+
+    font-family: "Microsoft JhengHei";
+}
+.span-title {
+	color: #000;
 }
 .text-danger {
-	color: rgba(255, 233, 103, 0.76);
+    color: rgb(230, 17, 17);
 }
 
 .fa {
@@ -29,19 +32,19 @@ label, .span-title {
 	filter: blur(5px);
 }*/
 .full-bg {
-    background: url('https://static.pexels.com/photos/4309/city-restaurant-table-pavement.jpg');
-    -webkit-filter: blur(3px);
-    -moz-filter: blur(3px);
-    -o-filter: blur(3px);
-    -ms-filter: blur(3px);
-    filter: blur(3px);
+    background: url('/Img/index.jpg');
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: blur(5px);
     position: fixed;
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
     z-index: -1;
-    opacity: 0.95;
+    opacity: 0.68;
     background-size: cover;
 }
 /*html {
@@ -62,7 +65,7 @@ label, .span-title {
 	position: relative;
 	min-height: 70px;
 	margin-bottom: 10px;
-	border: 1px solid transparent;
+
 }
 
 
@@ -74,8 +77,6 @@ label, .span-title {
 }
 .main-block{
 	position:relative;
-	width:100%;
-	height:50px;
 	/*top:550px;*/
    top:10px;
    margin:0 auto;
@@ -85,7 +86,7 @@ label, .span-title {
 .container-fluid > .navbar-collapse {
 	margin-right: 0;
 	margin-left: 0;
-	padding: 8px;
+	padding: 4px;
 	background-color: rgba(15, 15, 15, 0.8);
 }
 .footer {
