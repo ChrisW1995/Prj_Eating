@@ -70,7 +70,7 @@ namespace Eating.Service
 
         public IEnumerable<WaitingLists> GetWaitingListsByRAccount(string r_id)
         {
-            return repository.GetAllById(x => x.R_Id == r_id).Where(s => s.CheckStatus == false).ToList();
+            return repository.GetAllById(x => x.R_Id == r_id).Where(s => s.CheckStatus == false).OrderBy(x => x.CurrentNo).ToList();
         }
 
         public IEnumerable<WaitingLists> GetWaitingListsByCAccount(int c_Account)

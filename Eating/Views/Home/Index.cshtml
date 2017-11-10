@@ -37,14 +37,18 @@
                 type: "GET",
                 url: "/Home/GetRating",
                 data: {
-                    r_id: "@User.Identity.Name",
+                    r_id: "@Request.Cookies["idCookie"].Values["r_id"]",
                 },
                 dataType: "json",
             })
                 .done(function (json) {
                     for (var i = 0; i < 5; i++) {
-                        score.push(json[i].length);
-                        total += json[i].length;
+                        if (json[i] != null) {
+                            score.push(json[i].length);
+                            total += json[i].length;
+                        }
+                       
+                        
                     }
                     GetChart(score, total);
                 })

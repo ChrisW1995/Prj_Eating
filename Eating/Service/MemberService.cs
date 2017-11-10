@@ -59,7 +59,7 @@ namespace Eating.Service
         /// <returns></returns>
         public bool AccountCheck(string Account)
         {
-            Restaurant query = db.Restaurants.Find(Account);
+            Restaurant query = db.Restaurants.SingleOrDefault(a=>a.R_Account == Account);
 
             bool result = (query == null);
             return result;
@@ -146,6 +146,13 @@ namespace Eating.Service
             return repository.Get(r => r.Id == id);
         }
 
+        public RestaurantDetailRankingDTO GetRestaurantAndFeedback(string id)
+        {
+            var r_query = repository.Get(r => r.Id == id);
+            var r_feedback = db.Feedbacks.Where(r => r.R_Id == id).ToList();
+            var restaurantDetailRank = Mapper.Map<Restaurant, RestaurantDetailRankingDTO>(r_query);
+            return restaurantDetailRank;
+        }
         /// <summary>
         /// Get check restaurants
         /// </summary>
@@ -191,7 +198,7 @@ namespace Eating.Service
 
         public IEnumerable<RestaurantDetailDTO> GetAllList()
         {
-            var query = repository.GetAll().Select(Mapper.Map<Restaurant, RestaurantDetailDTO>).ToList();
+            var query = repository.GetAll().Where(f => f.StatusFlg == true).Select(Mapper.Map<Restaurant, RestaurantDetailDTO>).ToList();
             return query;
         }
 

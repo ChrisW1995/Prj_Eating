@@ -9,11 +9,12 @@ using Eating.Service.Interface;
 using Eating.ViewModels;
 using AutoMapper;
 using System.Net;
+using Eating.Areas.Backend.Service;
 
 namespace Eating.Controllers
 {
 
-    [Authorize(Roles = "User")]
+    [CustomAuthorization(LoginPage = "/Restaurant/Login", Roles = "User")]
     public class WaitingListController : Controller
     {
         private IWaitingListService waitingListService = new WaitingListService();

@@ -68,6 +68,13 @@ namespace Eating.Models
 
         public int ReserveTimeSpan { get; set; }
 
+        public double Lat { get; set; }
+
+        public double Lng { get; set; }
+
+        [StringLength(50), Display(Name = "圖片上傳")]
+        public string ImagePath { get; set; }
+
         public ICollection<Coupons> Coupons { get; set; }
 
         public ICollection<Seat> Seats { get; set; }

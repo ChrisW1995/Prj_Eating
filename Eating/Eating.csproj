@@ -18,7 +18,7 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44316</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -216,11 +216,11 @@
     <Compile Include="Areas\Backend\Models\RestaurantStatusVM.cs" />
     <Compile Include="Areas\Backend\Service\AdminService.cs" />
     <Compile Include="Areas\Backend\Service\CustomAuthorization.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Api\ReserveController.cs" />
     <Compile Include="Controllers\Api\RestaurantController.cs" />
+    <Compile Include="Controllers\Api\WaitingController.cs" />
     <Compile Include="Controllers\CouponController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ReserveController.cs" />
     <Compile Include="Controllers\RestaurantController.cs" />
     <Compile Include="Controllers\SeatController.cs" />
@@ -228,7 +228,9 @@
     <Compile Include="Controllers\Api\CustomerController.cs" />
     <Compile Include="DTOs\CustomerLoginDTO.cs" />
     <Compile Include="DTOs\CustomerRegisterDTO.cs" />
+    <Compile Include="DTOs\NewWaitingDTO.cs" />
     <Compile Include="DTOs\RestaurantDetailDTO.cs" />
+    <Compile Include="DTOs\RestaurantDetailRankingDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -340,6 +342,22 @@
     <Compile Include="Migrations\201710140424474_AddRTSProp.cs" />
     <Compile Include="Migrations\201710140424474_AddRTSProp.Designer.cs">
       <DependentUpon>201710140424474_AddRTSProp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711042113164_AddPeopleNumToWLTB.cs" />
+    <Compile Include="Migrations\201711042113164_AddPeopleNumToWLTB.Designer.cs">
+      <DependentUpon>201711042113164_AddPeopleNumToWLTB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711080905580_AddImgagePathColumn.cs" />
+    <Compile Include="Migrations\201711080905580_AddImgagePathColumn.Designer.cs">
+      <DependentUpon>201711080905580_AddImgagePathColumn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711090622083_AddLatAndLonPropToRTb.cs" />
+    <Compile Include="Migrations\201711090622083_AddLatAndLonPropToRTb.Designer.cs">
+      <DependentUpon>201711090622083_AddLatAndLonPropToRTb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711091753093_ChangeLatAndLng.cs" />
+    <Compile Include="Migrations\201711091753093_ChangeLatAndLng.Designer.cs">
+      <DependentUpon>201711091753093_ChangeLatAndLng.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -773,6 +791,9 @@
     <Content Include="Areas\Backend\Views\Admin\_GetRList.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Img\cover.jpeg" />
+    <Content Include="Img\icon\cancel.png" />
+    <Content Include="Img\icon\checked.png" />
+    <Content Include="Img\icon\question-mark.png" />
     <Content Include="Img\index.jpg" />
     <Content Include="Img\logo_new.png" />
     <Content Include="Scripts\bootbox.js" />
@@ -858,6 +879,8 @@
     <Content Include="Scripts\DataTables\responsive.jqueryui.min.js" />
     <Content Include="Scripts\DataTables\responsive.semanticui.js" />
     <Content Include="Scripts\DataTables\responsive.semanticui.min.js" />
+    <None Include="Properties\PublishProfiles\pccu-eating - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\pccu-eating - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
@@ -1773,6 +1796,7 @@
   <ItemGroup>
     <Folder Include="Admin\" />
     <Folder Include="App_Data\" />
+    <Folder Include="Upload\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -1858,6 +1882,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710140424474_AddRTSProp.resx">
       <DependentUpon>201710140424474_AddRTSProp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711042113164_AddPeopleNumToWLTB.resx">
+      <DependentUpon>201711042113164_AddPeopleNumToWLTB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711080905580_AddImgagePathColumn.resx">
+      <DependentUpon>201711080905580_AddImgagePathColumn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711090622083_AddLatAndLonPropToRTb.resx">
+      <DependentUpon>201711090622083_AddLatAndLonPropToRTb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711091753093_ChangeLatAndLng.resx">
+      <DependentUpon>201711091753093_ChangeLatAndLng.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

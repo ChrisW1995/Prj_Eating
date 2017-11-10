@@ -4,29 +4,15 @@
     Layout = "~/Views/Shared/_Index.cshtml";
 }
 
-@*<div class="col-md-12" style="line-height:100px; text-align:center; border-top:1px solid rgba(255, 255, 255, 0.80);"><p class="span-title">@TempData["RegisterState"]</p></div>
-<div class="row">
-    <div class="col-md-12" style="text-align:center; font-size:26px; margin-top:10px;">
-        <i class="fa fa-user" style="color:#f586aa"></i> <span class="span-title" style="font-size:26px;"></span>
-    </div>
-</div>
-<hr style="margin:12px 0px 20px 0px;" />
-<div class="row">
-
-</div>
-<div class="row">
-    <a class="col-md-12" href="/Restaurant/Login" style="padding:10px 0px; text-decoration:none; font-size:18px;color:#FFF; text-align:center;" onmouseover="$(this).css('color','rgba(255, 233, 103, 0.76);')" onmouseout="$(this).css('color','#FFF')">登入去</a>
-</div>*@
-
 
 
 <div class="row">
-    <div class="col-md-offset-4 col-md-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1" style="background-color:rgba(252, 233, 233, 0.7);border-radius: 15px;">
+    <div class="col-md-offset-4 col-md-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1" style="background-color:rgba(252, 233, 233, 0.85);border-radius: 15px;">
 
         <div class="col-md-12" style="line-height:100px; text-align:center; "><p class="span-title"></p></div>
         <div class="row">
             <div class="col-md-12" style="text-align:center; font-size:26px; margin-top:10px;">
-                <i class="fa fa-mail-forward"></i> <span class="span-title" style="font-size:26px;">註冊成功</span>
+                <i class="fa fa-user" style="color:#f586aa"></i> <span class="span-title" style="font-size:26px; font-weight:600;">註冊成功</span>
             </div>
         </div>
         <hr style="margin:12px 0px 20px 0px;" />
@@ -34,7 +20,7 @@
             <p style="color:#f00;text-align:center; font-weight:600">@TempData["RegisterState"]</p>
         </div>
         <div class="row">
-            <a class="col-md-12" href="/Restaurant/Login" style="padding:10px 0px; text-decoration:none; font-size:18px;color:#FFF; text-align:center;" onmouseover="$(this).css('color','rgba(255, 233, 103, 0.76);')" onmouseout="$(this).css('color','#FFF')">登入去</a>
+            <a class="col-md-12" href="/Restaurant/Login" style="padding:10px 0px; text-decoration:none; font-weight:600; font-size:18px;color:#ff6464; text-align:center;" onmouseover="$(this).css('color','#f586aa')" onmouseout="$(this).css('color','#ff6464')">登入去</a>
         </div>
     </div>
 </div>

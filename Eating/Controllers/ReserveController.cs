@@ -9,10 +9,11 @@ using Eating.Service.Interface;
 using Eating.ViewModels;
 using AutoMapper;
 using System.Net;
+using Eating.Areas.Backend.Service;
 
 namespace Eating.Controllers
 {
-    [Authorize(Roles = "User")]
+    [CustomAuthorization(LoginPage = "/Restaurant/Login", Roles = "User")]
     public class ReserveController : Controller
     {
         private IReserveService reserveService = new ReserveService();

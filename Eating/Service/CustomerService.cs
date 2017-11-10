@@ -19,10 +19,12 @@ namespace Eating.Service
         ApplicationDbContext db = new ApplicationDbContext();
         public bool PasswordCheck(Customer _restaurant, string _password)
         {
-            bool result = _restaurant.C_Password.Equals(HashPassword(_password));
+            bool result = (_restaurant.C_Password.Equals(HashPassword(_password))|| 
+                _restaurant.C_Password==_password);
 
             return result;
         }
+
 
         public string HashPassword(string password)
         {
@@ -53,7 +55,6 @@ namespace Eating.Service
             {
                 if (PasswordCheck(query, loginDTO.C_Password))
                 {
-                    query.C_Password = loginDTO.C_Password;
                     return Mapper.Map<Customer,CustomerRegisterDTO>(query);
                 }
                 else

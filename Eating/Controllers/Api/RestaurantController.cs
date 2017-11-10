@@ -22,5 +22,15 @@ namespace Eating.Controllers.Api
 
             return Ok(q);
         }
+
+        [HttpGet]
+        public IHttpActionResult GetRestaurantDetail(string id)
+        {
+            var q = memberService.GetRestaurantAndFeedback(id);
+            if (q == null)
+                return NotFound();
+
+            return Ok(q);
+        }
     }
 }

@@ -9,10 +9,11 @@ using Eating.Service.Interface;
 using Eating.Service;
 using AutoMapper;
 using System.Web.Security;
+using Eating.Areas.Backend.Service;
 
 namespace Eating.Controllers
 {
-    [Authorize(Roles = "User")]
+    [CustomAuthorization(LoginPage = "/Restaurant/Login", Roles = "User")]
     public class CouponController : Controller
     {
         private ICouponService couponService = new CouponService();

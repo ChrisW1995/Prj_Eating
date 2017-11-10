@@ -7,6 +7,7 @@ using Eating.Service;
 using Eating.Areas.Backend.Models;
 using Eating.Areas.Backend.Service;
 using System.Web.Security;
+using System.Net;
 
 namespace Eating.Areas.Backend.Controllers
 {
@@ -30,41 +31,66 @@ namespace Eating.Areas.Backend.Controllers
         }
 
         [CustomAuthorization(LoginPage = "/Backend/Admin/Login", Roles = "Admin")]
-        public ActionResult getRList(int index)
+        public ActionResult getRList(string index)
         {
-            ViewBag.index = index;
-            if (string.IsNullOrEmpty(index.ToString()))
-            {
-                var q = memberService.GetAllCheckList().ToList();
-                return View(q);
-            }
-            else
-            {
-                IEnumerable<RestaurantStatusVM> query = null;
+            //if (string.IsNullOrEmpty(index))
+            //{
+            //    var q = memberService.GetAllCheckList().ToList();
+            //    return View(q);
+            //}
+            //else
+            //{
+            //    IEnumerable<RestaurantStatusVM> query = null;
+            //    int _index = int.Parse(index);
+            //    switch (_index)
+            //    {
+            //        case 0:
+            //            query = memberService.GetAllCheckList().ToList();
+            //            break;
+            //        case 1:
+            //            query = memberService.GetAllCheckList(s => s.StatusFlg == false && s.isCheck == false).ToList();
+            //            break;
+            //        case 2:
+            //            query = memberService.GetAllCheckList(s => s.StatusFlg == false && s.isCheck == true).ToList();
+            //            break;
+            //        case 3:
+            //            query = memberService.GetAllCheckList(s => s.StatusFlg == true).ToList();
+            //            break;
 
-                switch (index)
-                {
-                    case 0:
-                        query = memberService.GetAllCheckList().ToList();
-                        break;
-                    case 1:
-                        query = memberService.GetAllCheckList(s => s.StatusFlg == false && s.isCheck == false).ToList();
-                        break;
-                    case 2:
-                        query = memberService.GetAllCheckList(s => s.StatusFlg == false && s.isCheck == true).ToList();
-                        break;
-                    case 3:
-                        query = memberService.GetAllCheckList(s => s.StatusFlg == true).ToList();
-                        break;
-
-                }
-                return PartialView("_GetRList", query);
+            //    }
+                return PartialView("_GetRList");
             }
-          
+
+        public JsonResult getList(string index)
+        {
+
+            IEnumerable<RestaurantStatusVM> query = null;
+            int _index = int.Parse(index);
+            switch (_index)
+            {
+                case 0:
+                    query = memberService.GetAllCheckList().ToList().OrderBy(t => t.SignUpTime);
+                    break;
+                case 1:
+                    query = memberService.GetAllCheckList(s => s.StatusFlg == false && s.isCheck == false).OrderBy(t=>t.SignUpTime).ToList();
+                    break;
+                case 2:
+                    query = memberService.GetAllCheckList(s => s.StatusFlg == false && s.isCheck == true).OrderByDescending(t => t.SignUpTime).ToList();
+                    break;
+                case 3:
+                    query = memberService.GetAllCheckList(s => s.StatusFlg == true).OrderByDescending(t => t.SignUpTime).ToList();
+                    break;
+
+            }
+            return Json(query, JsonRequestBehavior.AllowGet);
+
+
         }
 
-        public ActionResult Check(string id, bool flg)
+        [HttpPut]
+        public ActionResult Check(string id, bool flg, int index)
         {
+            ViewBag.index = index;
             var query = memberService.GetRestaurant(id);
             query.isCheck = true;
             if (flg)
@@ -75,8 +101,13 @@ namespace Eating.Areas.Backend.Controllers
             {
                 query.StatusFlg = false;
             }
-            memberService.Update(query);
-            return RedirectToAction("Index");
+            var result = memberService.Update(query);
+            if (result.Success)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
+            }
+
+            return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
         }
         [HttpPost]
         public ActionResult Login(AdminLoginVM loginVM, string returnUrl)

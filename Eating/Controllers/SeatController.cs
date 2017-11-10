@@ -8,10 +8,11 @@ using Eating.ViewModels;
 using Eating.Service.Interface;
 using Eating.Service;
 using AutoMapper;
+using Eating.Areas.Backend.Service;
 
 namespace Eating.Controllers
 {
-    [Authorize(Roles = "User")]
+    [CustomAuthorization(LoginPage = "/Restaurant/Login", Roles = "User")]
     public class SeatController : Controller
     {
         private ISeatService seatService = new SeatService();

@@ -10,6 +10,10 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using AutoMapper;
+using System.Web.UI.WebControls;
+using Eating.Areas.Backend.Service;
+using System.IO;
+using System.Xml.Linq;
 
 namespace Eating.Controllers
 {
@@ -23,8 +27,8 @@ namespace Eating.Controllers
         {
             base.Dispose(disposing);
         }
-        // GET: Restaurant
 
+        [AllowAnonymous]
         public ActionResult Register()
         {
             
@@ -47,6 +51,7 @@ namespace Eating.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public ActionResult Register(RestaurantRegisterViewModel registerMember)
         {
             //var errors = ModelState.Values.SelectMany(v => v.Errors);
@@ -59,20 +64,36 @@ namespace Eating.Controllers
                     var area = db.Counties.Where(x => x.CountyName == registerMember.R_County).Select(x => new { Id = x.Id });
 
                     ModelState.AddModelError("R_Account", "該帳號已被註冊，請重新嘗試");
-                    var regist = new RestaurantRegisterViewModel
-                    {
-                        R_Account = null,
-                        R_Password = null,
-                        checkR_Password = null,
-                        Counties = db.Counties,
-                        Areas = area == null ? null : addressService.GetAllAreas(area.First().Id)
-
-                    };
-                    return View(regist);
+                    var registVM = initVM(registerMember);
+                    return View(registVM);
                 }
 
                 string AuthCode = mailService.GetValidateCode(); //get random code
-
+                double lat=0.0, lng=0.0;
+                #region get lat and lon
+                try
+                {
+                    var address = registerMember.R_County + registerMember.R_Area + registerMember.DetailAddr;
+                    var requestUri = string.Format("http://maps.googleapis.com/maps/api/geocode/xml?address={0}", address);
+                    var request = WebRequest.Create(requestUri);
+                    var response = request.GetResponse();
+                    var xdoc = XDocument.Load(response.GetResponseStream());
+                    var result = xdoc.Element("GeocodeResponse").Element("result");
+                    var locationElement = result.Element("geometry").Element("location");
+                    lat = float.Parse(locationElement.Element("lat").Value);
+                    lng = float.Parse(locationElement.Element("lng").Value);
+                    
+                    
+                }
+                catch(Exception e)
+                {
+                    ModelState.AddModelError("DetailAddr", "地址剖析失敗，請確認地址是否有效。");
+                    var registVM = initVM(registerMember);
+                    return View(registVM);
+                }
+                
+                
+                #endregion
                 Restaurant _newMember = new Restaurant()
                 {
                     Id = registerMember.Id,
@@ -89,11 +110,11 @@ namespace Eating.Controllers
                     StartTime = registerMember.StartTime,
                     CloseTime = registerMember.CloseTime,
                     StatusFlg = false,
-                    isCheck = false
+                    isCheck = false,
+                    Lat = lat,
+                    Lng = lng
+                    
                 };
-               
-
-                memberService.Register(_newMember);
 
                 string TempMail = System.IO.File.ReadAllText( 
                     Server.MapPath("~/Views/Shared/RegisterEmailTemplate.html"));
@@ -107,6 +128,8 @@ namespace Eating.Controllers
                         AuthCode = AuthCode
                     })
                 };
+
+                memberService.Register(_newMember);
                 //Write user data to validate mail sample
                 string MailBody = mailService.GetRegisterMailBody(TempMail,
                      registerMember.R_Name,
@@ -115,28 +138,36 @@ namespace Eating.Controllers
 
                 TempData["RegisterState"] = "註冊成功,請到個人信箱驗證Email地址";
 
-                return RedirectToAction("RegisterResult");
+                return View("RegisterResult");
+            }
+            else
+            {
+                var registVM = initVM(registerMember);
+                return View(registVM);
+            }
+            
+            
+        }
+
+        public RestaurantRegisterViewModel initVM(RestaurantRegisterViewModel vm)
+        {
+            int _id = 0;
+            if (vm.R_County != null)
+            {
+                _id = db.Counties.Where(x => x.CountyName == vm.R_County).SingleOrDefault().Id;
             }
 
-            int _id=0;
-            if(registerMember.R_County != null)
-            {
-                 _id = db.Counties.Where(x => x.CountyName == registerMember.R_County).SingleOrDefault().Id;
-            }
-            //產品
             var registVM = new RestaurantRegisterViewModel
             {
                 R_Password = null,
                 checkR_Password = null,
                 Counties = db.Counties,
-                 Areas = (_id == 0? null : addressService.GetAllAreas(_id))
+                Areas = (_id == 0 ? null : addressService.GetAllAreas(_id))
 
             };
-          
-            return View(registVM);
-            
+            return registVM;
         }
-
+        [AllowAnonymous]
         public ActionResult RegisterResult()
         {
             return View();
@@ -222,7 +253,7 @@ namespace Eating.Controllers
             
         }
 
-        [Authorize(Roles = "User")]
+        [CustomAuthorization(LoginPage = "/Restaurant/Login", Roles = "User")]
         public ActionResult Info()
         {
             var restaurant = memberService.GetRestaurant(Request.Cookies["idCookie"].Values["r_id"]);
@@ -249,19 +280,36 @@ namespace Eating.Controllers
             return PartialView("_InfoPartial", infoVM);
         }
 
-        [Authorize(Roles = "User")]
+        
         public ActionResult SaveInfo(RestaurantInfoViewModel _infoVM)
         {
             if (!ModelState.IsValid)
             {
                 return View("Info", _infoVM);
             }
-
-            var instance = memberService.GetRestaurant(User.Identity.Name);
+            
+            var cookie = Request.Cookies["idCookie"];
+            var R_Id = cookie.Values["r_id"];
+            if (!Directory.Exists(Server.MapPath($"~/Upload/{R_Id})")))
+            {
+                DirectoryInfo di = Directory.CreateDirectory(Server.MapPath($"~/Upload/{R_Id}"));
+            }
+            var instance = memberService.GetRestaurant(R_Id);
+            //if has new image to upload  2017/11/8 ChrisWang
+            if (_infoVM.ImageFile != null)
+            {
+                string fileName = Path.GetFileNameWithoutExtension(_infoVM.ImageFile.FileName);
+                string extension = Path.GetExtension(_infoVM.ImageFile.FileName);
+                fileName = fileName + extension;
+                _infoVM.ImagePath = string.Format($"/Upload/{R_Id}/{fileName}");
+                fileName = Path.Combine(Server.MapPath($"/Upload/{R_Id}/"), fileName);
+                _infoVM.ImageFile.SaveAs(fileName);
+            }
+            
 
             Mapper.Map(_infoVM, instance);
             var result = memberService.Update(instance);
-
+            
             if (result.Success)
             {
                 TempData["Messageinfo"] = "bootbox.alert('修改完成');";

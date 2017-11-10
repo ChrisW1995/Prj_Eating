@@ -14,6 +14,9 @@ namespace Eating.App_Start
     {
         public MappingProfile()
         {
+            CreateMap<Restaurant, RestaurantDetailRankingDTO>();
+            CreateMap<RestaurantDetailRankingDTO, Restaurant>();
+
             CreateMap<Customer,CustomerRegisterDTO>();
             CreateMap<CustomerRegisterDTO, Customer>();
 

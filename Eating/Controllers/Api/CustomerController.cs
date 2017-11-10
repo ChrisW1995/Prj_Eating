@@ -16,7 +16,8 @@ namespace Eating
     {
         CustomerService customerService = new CustomerService();
         // GET api/<controller>
-        public IEnumerable<string> Get()
+        [HttpGet]
+        public IEnumerable<string> Get(int id)
         {
             return new string[] { "value1", "value2" };
         }

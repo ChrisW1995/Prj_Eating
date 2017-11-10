@@ -11,7 +11,7 @@
             <i class="fa fa-info"></i>
             <h3 class="box-title"><b>申請列表</b></h3>
         </div>
-        <div class="box-body" style="height:400px; overflow:auto">
+        <div class="box-body" style="height:700px; overflow:auto">
             @{
                 Html.RenderAction("getRList", "Admin", new { index = (ViewBag.index == null? 0:ViewBag.index) });
             }
@@ -24,5 +24,123 @@
         </div>
     </div>
 </section>
+
+@Scripts.Render("~/bundles/lib")
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            getList();
+            $('#ddlStatus').change(function () {
+                reloadDataTable();
+            });
+            $("#DataTables").on("click", '.js-delete', function () {
+                $.ajax({
+                    url: '@Url.Action("Check", "Admin")',
+                    method: "PUT",
+                    data:{
+                        id:$(this).attr('data-r-id'),
+                        flg:$(this).attr('flg'),
+                        index:$("#ddlStatus").val()
+                    }
+                }).done(function () {
+                    reloadDataTable();
+
+                }).fail(function () {
+                    bootbox.alert('Error!');
+                    reloadDataTable();
+                });
+
+            });
+
+        });
+        function getList() {
+            var table = $("#DataTables").DataTable({
+                "language": {
+                    "lengthMenu": "每頁顯示 _MENU_ 筆紀錄",
+                    "zeroRecords": "無資料",
+                    "info": "當前頁數 _PAGE_ of _PAGES_",
+                    "infoEmpty": "抱歉, 無資料可顯示",
+                    "infoFiltered": "(filtered from _MAX_ total records)",
+                    "search": "搜尋",
+                    "paginate": {
+                        "first": "第一頁",
+                        "last": "最後一頁",
+                        "next": "下一頁",
+                        "previous": "前一頁"
+                    }
+                },
+                ajax: {
+                    url: '@Url.Action("getList", "Admin")',
+                    dataSrc: '',
+                    data: function (d) {
+                        d.index = $("#ddlStatus").val();
+                    }
+                },
+                columns: [
+                    {
+                        data: "Id"
+                    },
+                    {
+                        data: "R_Name"
+                    },
+                    {
+                        data: "R_PhoneNum"
+                    },
+                    {
+                        data: "R_County",
+                        render: function (data, type, announcement) {
+                            return announcement.R_County + announcement.R_Area + announcement.R_DetailAddress;
+                        }
+                    },
+                    {
+                        data: "SignUpTime",
+                        render: function (data, type, announcement) {
+                            return announcement.FormattedDate;
+                        }
+                    },
+                    {
+                        data: "StatusFlg",
+                        render: function (data, type, announcement) {
+                            if (announcement.isCheck == false) {
+                                return "<img src='/img/icon/question-mark.png' />"
+                            }
+                            else if (data == true) {
+                                return "<img src='/img/icon/checked.png'/>"
+                            }
+                            else if (data == false && announcement.isCheck == true) {
+                                return "<img src='/img/icon/cancel.png'/>"
+                            }
+                        }
+                    },
+                    {
+                        data: "Id",
+                        render: function (data, type, announcement) {
+                            if (announcement.isCheck == false) {
+                                return "<button type='button' class='btn btn-success js-delete' data-r-id  = " + data + " flg=true><span class='glyphicon glyphicon-ok' ></span> 通過 </button > " +
+                                    "<button type='button' class='btn btn-danger js-delete' data-r-id = " + data + " flg=false><span class='glyphicon glyphicon-remove'></span > 拒絕 </button > ";
+                            }
+                            else if (announcement.StatusFlg == true) {
+                                return "<button class='btn btn-danger js-delete' data-r-id  = " + data + " flg=false><span class='glyphicon glyphicon-remove' ></span > 拒絕 </button > ";
+                            }
+                            else if (announcement.StatusFlg == false && announcement.isCheck == true) {
+                                return "<button class='btn btn-success js-delete' data-r-id=" + data + " flg=true ><span class='glyphicon glyphicon-ok' ></span> 通過 </button > ";
+                            }
+                        }
+                    }
+                ]
+            });
+        }
+
+        function SelectedIndexChanged() {
+            var form = document.getElementById("searchForm");
+            form.submit();
+        }
+        function reloadDataTable() {
+            var table = $('#DataTables').DataTable();
+            table.ajax.reload();
+        }
+
+    </script>
+}
 
 

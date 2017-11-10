@@ -43,6 +43,12 @@ namespace Eating.DTOs
 
         public TimeSpan CloseTime { get; set; }
 
+        public string ImagePath { get; set; }
+
         public int ReserveTimeSpan { get; set; }
+
+        public double Lat { get; set; }
+
+        public double Lng { get; set; }
     }
 }

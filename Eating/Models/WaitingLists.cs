@@ -14,6 +14,9 @@ namespace Eating.Models
         [Required]
         public int CurrentNo { get; set; }
 
+        [Required]
+        public int PeopleNum { get; set; }
+
         [StringLength(200)]
         public string Detail { get; set; }
 

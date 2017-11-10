@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web;
 
 namespace Eating.ViewModels
 {
@@ -43,6 +44,12 @@ namespace Eating.ViewModels
         [Required]
         [Display(Name = "結束時間")]
         public TimeSpan CloseTime { get; set; }
+
+        [Display(Name = "圖片上傳")]
+        public string ImagePath { get; set; }
+
+        public HttpPostedFileBase ImageFile { get; set; }
+
     }
     
 }
