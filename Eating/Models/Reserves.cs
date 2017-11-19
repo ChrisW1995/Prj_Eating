@@ -22,6 +22,9 @@ namespace Eating.Models
         [StringLength(150)]
         public string Details { get; set; }
 
+        [StringLength(200)]
+        public string RegDeviceID { get; set; }
+
         [Required]
         public DateTime ReserveTime { get; set; }
 

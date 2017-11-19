@@ -11,6 +11,7 @@ namespace Eating.ViewModels
     {
         [Required]
         [Display(Name = "公司統一編號")]
+        [MinLength(8, ErrorMessage = "統一編號格式錯誤"), MaxLength(8, ErrorMessage = "統一編號格式錯誤"), ]
         public string Id { get; set; }
 
         [Required]

@@ -75,6 +75,7 @@ namespace Eating.Models
         [StringLength(50), Display(Name = "圖片上傳")]
         public string ImagePath { get; set; }
 
+        public bool waitingStatus { get; set; }
         public ICollection<Coupons> Coupons { get; set; }
 
         public ICollection<Seat> Seats { get; set; }

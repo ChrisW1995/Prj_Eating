@@ -55,6 +55,9 @@
     <Reference Include="Chart.Mvc, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Chart.Mvc.1.0.0.2\lib\net45\Chart.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="FCM.Net, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FCM.Net.1.0.5\lib\net452\FCM.Net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.4.0\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
     </Reference>
@@ -119,8 +122,14 @@
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.4.1\lib\net45\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Extensions, Version=2.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives, Version=4.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Primitives.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -359,6 +368,18 @@
     <Compile Include="Migrations\201711091753093_ChangeLatAndLng.Designer.cs">
       <DependentUpon>201711091753093_ChangeLatAndLng.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711181125036_AddRegIDInWaitingList.cs" />
+    <Compile Include="Migrations\201711181125036_AddRegIDInWaitingList.Designer.cs">
+      <DependentUpon>201711181125036_AddRegIDInWaitingList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711181306520_AddRegIDInWaitingList1.cs" />
+    <Compile Include="Migrations\201711181306520_AddRegIDInWaitingList1.Designer.cs">
+      <DependentUpon>201711181306520_AddRegIDInWaitingList1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711191354273_ChangeWaitingStatus.cs" />
+    <Compile Include="Migrations\201711191354273_ChangeWaitingStatus.Designer.cs">
+      <DependentUpon>201711191354273_ChangeWaitingStatus.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Admins.cs" />
@@ -385,6 +406,7 @@
     <Compile Include="Service\Interface\IReserveService.cs" />
     <Compile Include="Service\Interface\ISeatService.cs" />
     <Compile Include="Service\Interface\IWaitingListService.cs" />
+    <Compile Include="Service\LocalDateTimeService.cs" />
     <Compile Include="Service\ReserveService.cs" />
     <Compile Include="Service\WaitingListService.cs" />
     <Compile Include="Service\MailService.cs" />
@@ -1895,6 +1917,15 @@
     <EmbeddedResource Include="Migrations\201711091753093_ChangeLatAndLng.resx">
       <DependentUpon>201711091753093_ChangeLatAndLng.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711181125036_AddRegIDInWaitingList.resx">
+      <DependentUpon>201711181125036_AddRegIDInWaitingList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711181306520_AddRegIDInWaitingList1.resx">
+      <DependentUpon>201711181306520_AddRegIDInWaitingList1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711191354273_ChangeWaitingStatus.resx">
+      <DependentUpon>201711191354273_ChangeWaitingStatus.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -1930,7 +1961,9 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.3.1\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.3.1\build\Microsoft.Net.Compilers.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
   </Target>
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

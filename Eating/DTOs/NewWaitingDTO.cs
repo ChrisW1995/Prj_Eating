@@ -20,5 +20,9 @@ namespace Eating.DTOs
         [Required]
         public string R_Id { get; set; }
 
+        [Required]
+        [StringLength(200)]
+        public string RegDeviceID { get; set; }
+
     }
 }

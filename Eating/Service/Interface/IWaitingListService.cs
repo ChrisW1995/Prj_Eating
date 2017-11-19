@@ -15,8 +15,9 @@ namespace Eating.Service.Interface
 
         IResult Update(WaitingLists instance);
 
-        IResult Delete(int  waitingID);
+        IResult CancelWaiting(int waitingId);
 
+        void sendNotificationAsync(string r_id);
         bool IsExists(int waitingID);
 
         WaitingLists GetByID(int waitingID);

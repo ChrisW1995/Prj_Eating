@@ -49,7 +49,7 @@ namespace Eating.Repository
 
         public TEntity Get(Expression<Func<TEntity, bool>> predicate)
         {
-            return _context.Set<TEntity>().Where(predicate).FirstOrDefault();
+            return _context.Set<TEntity>().Where(predicate).SingleOrDefault();
         }
 
         public IQueryable<TEntity> GetAll()

@@ -91,9 +91,14 @@ namespace Eating.Controllers
                     var registVM = initVM(registerMember);
                     return View(registVM);
                 }
-                
-                
+
                 #endregion
+                
+                var localTime = DateTime.Now;
+                  
+                TimeZoneInfo destTz =
+                TimeZoneInfo.FindSystemTimeZoneById("China Standard Time");
+                var registTime = TimeZoneInfo.ConvertTime(localTime, TimeZoneInfo.Local, destTz);
                 Restaurant _newMember = new Restaurant()
                 {
                     Id = registerMember.Id,
@@ -102,7 +107,7 @@ namespace Eating.Controllers
                     R_PhoneNum = registerMember.R_PhoneNum,
                     R_Name = registerMember.R_Name,
                     Email = registerMember.Email,
-                    SignUpTime = DateTime.Now,
+                    SignUpTime = registTime,
                     R_County = registerMember.R_County,
                     R_Area = registerMember.R_Area,
                     R_DetailAddress = registerMember.DetailAddr,
@@ -112,7 +117,9 @@ namespace Eating.Controllers
                     StatusFlg = false,
                     isCheck = false,
                     Lat = lat,
-                    Lng = lng
+                    Lng = lng,
+                    waitingStatus = false
+
                     
                 };
 

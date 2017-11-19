@@ -42,6 +42,7 @@ namespace Eating.Controllers
                 var instance = waitingListService.GetByID(Id);
                 instance.CheckStatus = true;
                 waitingListService.Update(instance);
+                waitingListService.sendNotificationAsync(Request.Cookies["idCookie"].Values["r_id"]);
                 return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
             return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);

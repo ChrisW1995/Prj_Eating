@@ -15,5 +15,7 @@ namespace Eating.DTOs
         [Required]
         [StringLength(50)]
         public string C_Password { get; set; }
+
+      
     }
 }

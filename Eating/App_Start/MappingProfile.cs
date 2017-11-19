@@ -41,6 +41,9 @@ namespace Eating.App_Start
             CreateMap<Seat, NewSeatViewModel>();
             CreateMap<NewSeatViewModel, Seat>();
 
+            CreateMap<WaitingLists, NewWaitingDTO>();
+            CreateMap<NewWaitingDTO, WaitingLists>();
+
             CreateMap<WaitingLists, WaitingListViewModel>();
             CreateMap<WaitingListViewModel, WaitingLists>();
 

@@ -27,7 +27,7 @@ namespace Eating.DTOs
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
-
+        public int C_Id { get; set; }
 
 
     }

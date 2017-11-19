@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -26,6 +27,9 @@ namespace Eating.Models
         public int C_Id{ get; set; }
 
         public string R_Id { get; set; }
+
+        [StringLength(200)]
+        public string RegDeviceID { get; set; }
 
         public bool CheckStatus { get; set; }
         public Restaurant Restaurant { get; set; }
