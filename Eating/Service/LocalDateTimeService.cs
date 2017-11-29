@@ -11,7 +11,7 @@ namespace Eating.Service
         {
 
         }
-        public DateTime getLocalDateTime(string location)
+        public DateTime GetLocalDateTime(string location)
         {
             var localTime = DateTime.Now;
             TimeZoneInfo destTz =

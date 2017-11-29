@@ -17,7 +17,6 @@ namespace Eating.Controllers
     public class CouponController : Controller
     {
         private ICouponService couponService = new CouponService();
-        private FormsIdentity id;
 
         // GET: Coupon
         public ActionResult Index()

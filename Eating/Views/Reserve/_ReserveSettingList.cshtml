@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Eating.ViewModels.SetReservationTimeViewModel>
+
+<table class="table table-hover table-striped">
+    <thead>
+        <tr>
+            <th>設定時間</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody  style="font-size:18px;">
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.ReservationTime</td>
+                    <td>
+                        
+                        @Html.ActionLink("刪除", "DelSetTime", new { r_id = item.r_id, time = item.ReservationTime })
+                    </td>
+                </tr>
+              
+            }
+        }
+    </tbody>
+</table>

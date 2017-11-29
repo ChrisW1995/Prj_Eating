@@ -40,7 +40,7 @@ namespace Eating.Areas.Backend.Models
         [Display(Name = "啟用狀態")]
         public bool StatusFlg { get; set; }
 
-        public bool isCheck { get; set; }
+        public bool IsCheck { get; set; }
 
         public string FormattedDate => SignUpTime.ToString();
         public IEnumerable<SelectListItem> StatusList { get; set; }

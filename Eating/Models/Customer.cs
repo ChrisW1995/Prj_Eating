@@ -36,7 +36,7 @@ namespace Eating.Models
 
         public ICollection<WaitingLists> WaitingLists { get; set; }
 
-        public ICollection<Reserves> Reserves { get; set; }
+        public ICollection<Reservations> Reserves { get; set; }
 
         public ICollection<Feedback> Feedbacks { get; set; }
 

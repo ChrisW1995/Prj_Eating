@@ -1,3 +1,18 @@
 ﻿.skin-blue .sidebar-menu > li:hover > a, .skin-blue .sidebar-menu > li.active > a {
     transition: background-color 1s, border-left-color 1s;
 }
+
+@media screen and (max-width: 768px) {
+        #logo-lg img {
+            width: 118px;
+            height: 57px;
+            display: block;
+            margin: 0 auto;
+        }
+}
+
+@media screen and (min-width:769px){
+    #logo-lg img{
+        width:70%;
+    }
+}

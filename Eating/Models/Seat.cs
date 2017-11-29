@@ -9,7 +9,7 @@ namespace Eating.Models
     public class Seat
     {
         [Key]
-        public int SeatId { get; set; }
+        public int Id { get; set; }
 
         public string R_Id { get; set; }
 
@@ -28,6 +28,9 @@ namespace Eating.Models
 
         public Restaurant Restaurant { get; set; }
 
-        public ICollection<Reserves> Reserves { get; set; }
+
+        public ICollection<SetReservationDetails> SetReservationDetails { get; set; }
+
+
     }
 }

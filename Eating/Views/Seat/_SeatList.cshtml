@@ -35,9 +35,9 @@
                     @Html.DisplayFor(modelItem => item.SeatSmoke)
                 </td>
                 <td>
-                    @Html.ActionLink("編輯", "Edit", new { id = item.SeatId }) |
+                    @Html.ActionLink("編輯", "Edit", new { id = item.Id }) |
 
-                    @Html.ActionLink("刪除", "Delete", new { id = item.SeatId }, new { @onclick = "return confirm(\"是否刪除?\");" })
+                    @Html.ActionLink("刪除", "Delete", new { id = item.Id }, new { @onclick = "return confirm(\"是否刪除?\");" })
                 </td>
             </tr>
         }

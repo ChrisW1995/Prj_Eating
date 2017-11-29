@@ -19,7 +19,7 @@ namespace Eating.Service.Interface
 
         Feedback GetByID(int Id);
 
-        IEnumerable<Feedback> GetAll();
+        IEnumerable<Feedback> GetList();
 
         IEnumerable<Feedback> GetFeedbackByRAccount(string r_id);
 

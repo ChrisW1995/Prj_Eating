@@ -24,9 +24,9 @@ namespace Eating.Service
         private ApplicationDbContext db = new ApplicationDbContext();
         private LocalDateTimeService localDateTimeService = new LocalDateTimeService();
 
-        public bool isWaiting(int c_id, string r_id)
+        public bool IsWaiting(int c_id, string r_id)
         {
-            var date = localDateTimeService.getLocalDateTime("China Standard Time").Date;
+            var date = localDateTimeService.GetLocalDateTime("China Standard Time").Date;
             var q = repository.Get(x => x.C_Id == c_id && x.R_Id == r_id && DbFunctions.TruncateTime(x.AddTime) == date && x.CheckStatus == false);
             return q != null ? true : false; 
         }
@@ -68,9 +68,9 @@ namespace Eating.Service
             return result;
         }
 
-        public IEnumerable<WaitingLists> GetAll()
+        public IEnumerable<WaitingLists> GetList()
         {
-            return repository.GetAll();
+            return repository.GetList();
         }
 
         public WaitingLists GetByID(int waitingID)
@@ -80,12 +80,12 @@ namespace Eating.Service
 
         public IEnumerable<WaitingLists> GetWaitingListsByRAccount(string r_id)
         {
-            return repository.GetAllById(x => x.R_Id == r_id).Where(s => s.CheckStatus == false).OrderBy(x => x.CurrentNo).ToList();
+            return repository.GetList(x => x.R_Id == r_id).Where(s => s.CheckStatus == false).OrderBy(x => x.CurrentNo).ToList();
         }
 
         public IEnumerable<WaitingLists> GetWaitingListsByCAccount(int c_Account)
         {
-            return repository.GetAllById(x => x.C_Id == c_Account).ToList();
+            return repository.GetList(x => x.C_Id == c_Account).ToList();
         }
 
         public IEnumerable<WaitingListViewModel> GetJoinCIdWaitingLists(IEnumerable<WaitingLists> WaitingLists)
@@ -105,11 +105,11 @@ namespace Eating.Service
             return q;
         }
 
-        public void sendNotificationAsync(string r_id)
+        public void SendNotificationAsync(string r_id)
         {
             try
             {
-                var q = repository.GetAllById(r => r.R_Id == r_id).OrderByDescending(r => r.CurrentNo).ToList();
+                var q = repository.GetList(r => r.R_Id == r_id).OrderByDescending(r => r.CurrentNo).ToList();
                 var regId = "";
                 var isCallRedId = q.FirstOrDefault().RegDeviceID;
                 if (q.Count() >= 3)
@@ -161,20 +161,20 @@ namespace Eating.Service
             }
             catch(Exception e)
             {
-
+                throw e;
             }
             
             
         }
-        public int getNewCurrentNum(string r_id)
+        public int GetNewCurrentNum(string r_id)
         {
-            var date = localDateTimeService.getLocalDateTime("China Standard Time").Date;
-            var q = repository.GetAllById(x => x.R_Id == r_id && DbFunctions.TruncateTime(x.AddTime) == date).OrderByDescending(i => i.CurrentNo).FirstOrDefault();
+            var date = localDateTimeService.GetLocalDateTime("China Standard Time").Date;
+            var q = repository.GetList(x => x.R_Id == r_id && DbFunctions.TruncateTime(x.AddTime) == date).OrderByDescending(i => i.CurrentNo).FirstOrDefault();
             return q == null ? 1 : q.CurrentNo+1;
         }
         public bool IsExists(int waitingID)
         {
-            return this.repository.GetAll().Any(x => x.Id == waitingID);
+            return this.repository.GetList().Any(x => x.Id == waitingID);
         }
 
         public IResult Update(WaitingLists instance)

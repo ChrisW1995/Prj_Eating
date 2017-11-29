@@ -26,7 +26,7 @@ namespace Eating
         // GET api/<controller>/
         public IHttpActionResult Login(CustomerLoginDTO customerLogin)
         {
-            var query = customerService.login(customerLogin);
+            var query = customerService.Login(customerLogin);
             if(query == null)
             {
                 return NotFound();
@@ -44,7 +44,7 @@ namespace Eating
                 return BadRequest("帳號已被註冊！");
            
             var customer = Mapper.Map<CustomerRegisterDTO, Customer>(customerRegisterDTO);
-            var result = customerService.register(ref customer);
+            var result = customerService.Register(ref customer);
 
             if (result.Success == false)
                 return BadRequest("Error 資料有誤");
@@ -53,14 +53,5 @@ namespace Eating
 
         }
 
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        //// DELETE api/<controller>/5
-        //public void Delete(int id)
-        //{
-        //}
     }
 }

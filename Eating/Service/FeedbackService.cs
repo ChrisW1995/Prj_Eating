@@ -36,7 +36,7 @@ namespace Eating.Service
             return result;
         }
 
-        public IEnumerable<Feedback> GetAll()
+        public IEnumerable<Feedback> GetList()
         {
             throw new NotImplementedException();
         }
@@ -49,7 +49,7 @@ namespace Eating.Service
         public IEnumerable<Feedback> GetFeedbackByRAccount(string r_id)
         {
 
-            return repository.GetAllById(x => x.R_Id == r_id).ToList();
+            return repository.GetList(x => x.R_Id == r_id).ToList();
         }
 
         public IEnumerable<FeedbacRatingkViewModel> GetRatingVM(string r_id)

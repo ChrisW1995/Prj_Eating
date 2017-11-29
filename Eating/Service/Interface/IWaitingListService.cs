@@ -17,12 +17,12 @@ namespace Eating.Service.Interface
 
         IResult CancelWaiting(int waitingId);
 
-        void sendNotificationAsync(string r_id);
+        void SendNotificationAsync(string r_id);
         bool IsExists(int waitingID);
 
         WaitingLists GetByID(int waitingID);
 
-        IEnumerable<WaitingLists> GetAll();
+        IEnumerable<WaitingLists> GetList();
 
         IEnumerable<WaitingLists> GetWaitingListsByRAccount(string r_id);
         IEnumerable<WaitingListViewModel> GetJoinCIdWaitingLists(IEnumerable<WaitingLists> WaitingLists);

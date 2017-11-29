@@ -18,8 +18,8 @@ namespace Eating.Interface
 
         TEntity Get(Expression<Func<TEntity, bool>> predicate);
 
-        IQueryable<TEntity> GetAll();
-        IQueryable<TEntity> GetAllById(Expression<Func<TEntity, bool>> predicate);
+        IQueryable<TEntity> GetList();
+        IQueryable<TEntity> GetList(Expression<Func<TEntity, bool>> predicate);
 
         void SaveChanges();
     }

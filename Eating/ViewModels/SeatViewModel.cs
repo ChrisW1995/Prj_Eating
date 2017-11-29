@@ -8,7 +8,7 @@ namespace Eating.ViewModels
 {
     public class SeatViewModel
     {
-        public int? SeatId { get; set; }
+        public int Id { get; set; }
 
         [StringLength(10)]
         public string R_Id { get; set; }

@@ -20,7 +20,7 @@ namespace Eating.Service.Interface
 
         Seat GetByID(int? SeatID);
 
-        IEnumerable<Seat> GetAll();
+        IEnumerable<Seat> GetList();
 
         IEnumerable<Seat> GetSeatByRAccount(string r_id);
     }

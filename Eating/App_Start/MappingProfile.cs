@@ -14,6 +14,9 @@ namespace Eating.App_Start
     {
         public MappingProfile()
         {
+            CreateMap<Menu, MenuListViewModel>();
+            CreateMap<MenuListViewModel, Menu>();
+
             CreateMap<Restaurant, RestaurantDetailRankingDTO>();
             CreateMap<RestaurantDetailRankingDTO, Restaurant>();
 
@@ -49,6 +52,9 @@ namespace Eating.App_Start
 
             CreateMap<Feedback, FeedbacRatingkViewModel>();
             CreateMap<FeedbacRatingkViewModel, Feedback>();
+
+            CreateMap<SetReservationDetails, SetReservationTimeViewModel>();
+            CreateMap<SetReservationTimeViewModel, SetReservationDetails>();
         }
     }
 }

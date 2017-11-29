@@ -18,10 +18,14 @@ namespace Eating.Controllers
     public class WaitingListController : Controller
     {
         private IWaitingListService waitingListService = new WaitingListService();
+        private MemberService memberService = new MemberService();
         // GET: WaitingList
         public ActionResult Index()
-        {         
-            return View();
+        {
+            var R_Id = Request.Cookies["idCookie"].Values["r_id"];
+            var instance = Mapper.Map<Restaurant, RestaurantInfoViewModel>(memberService.GetRestaurant(R_Id));
+
+            return View(instance);
         }
 
         [HttpGet]
@@ -35,6 +39,7 @@ namespace Eating.Controllers
             return Json(join_query, JsonRequestBehavior.AllowGet);
         }
 
+
         public ActionResult CheckStatus(int Id)
         {
             if (waitingListService.IsExists(Id))
@@ -42,7 +47,7 @@ namespace Eating.Controllers
                 var instance = waitingListService.GetByID(Id);
                 instance.CheckStatus = true;
                 waitingListService.Update(instance);
-                waitingListService.sendNotificationAsync(Request.Cookies["idCookie"].Values["r_id"]);
+                waitingListService.SendNotificationAsync(Request.Cookies["idCookie"].Values["r_id"]);
                 return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
             return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);

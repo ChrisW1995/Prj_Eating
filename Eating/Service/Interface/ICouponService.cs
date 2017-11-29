@@ -20,7 +20,7 @@ namespace Eating.Service.Interface
 
         Coupons  GetByID(string couponID);
 
-        IEnumerable<Coupons> GetAll();
+        IEnumerable<Coupons> GetList();
 
         IEnumerable<Coupons> GetConponByRAccount(string r_id);
     }

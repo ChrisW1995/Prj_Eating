@@ -18,7 +18,7 @@ namespace Eating.ViewModels
         public string Details { get; set; }
 
         [Required]
-        public DateTime ReserveTime { get; set; }
+        public DateTime AddTime { get; set; }
 
         public int SeatId { get; set; }
 
@@ -36,6 +36,6 @@ namespace Eating.ViewModels
 
         public IEnumerable<Seat> Seats { get; set; }
 
-        public string FormattedDate => ReserveTime.ToString("yyyy/MM/dd");
+        public string FormattedDate => AddTime.ToString("yyyy/MM/dd");
     }
 }

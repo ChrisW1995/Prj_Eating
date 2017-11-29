@@ -4,60 +4,69 @@
     ViewBag.CouponTitle = "新增優惠券";
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
-
-<h2>編輯優惠券</h2>
-
-@using (Html.BeginForm("Save", "Coupon")) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.Title,new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
-            </div>
+<section class="col-lg-10 col-lg-offset-1 connectedSortable ui-sortable">
+    <div class="box box-success" style="position: relative; left: 0px; top: 0px;">
+        <div class="box-header ui-sortable-handle" style="">
+            <i class="fa fa-info"></i>
+            <h3 class="box-title"><b>優惠券</b></h3>
         </div>
+        <div class="box-body">
+           @using (Html.BeginForm("Save", "Coupon"))
+           {
+            @Html.AntiForgeryToken()
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Desciption, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.Desciption,new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Desciption, "", new { @class = "text-danger" })
+            <div class="form-horizontal">
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Desciption, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.Desciption, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Desciption, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.StartTime, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.StartTime, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.EndTime, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.EndTime, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.EndTime, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                @Html.HiddenFor(m => m.CouponId)
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="新增" class="btn btn-default" />
+                    </div>
+                </div>
             </div>
+           }
+
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.StartTime, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.StartTime, new { @class = "form-control" } )
-                @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.EndTime, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.EndTime, new { @class = "form-control" } )
-                @Html.ValidationMessageFor(model => model.EndTime, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        @Html.HiddenFor(m => m.CouponId)
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+        <div class="box-footer">
+           
+            <p>
+                @Html.ActionLink("回列表", "Index")
+            </p>
         </div>
     </div>
-}
+</section>
 
-<div>
-    @Html.ActionLink("回列表", "Index")
-</div>
+
+
 
 @section scripts
 {

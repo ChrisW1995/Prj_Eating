@@ -9,7 +9,7 @@ namespace Eating.Models
     public partial class Restaurant
     {
         [Key]
-        [StringLength(32)]
+        [StringLength(8)]
         public string Id { get; set; }
 
         [StringLength(25)]
@@ -75,7 +75,7 @@ namespace Eating.Models
         [StringLength(50), Display(Name = "圖片上傳")]
         public string ImagePath { get; set; }
 
-        public bool waitingStatus { get; set; }
+        public bool WaitListSwitch { get; set; }
         public ICollection<Coupons> Coupons { get; set; }
 
         public ICollection<Seat> Seats { get; set; }
@@ -83,6 +83,12 @@ namespace Eating.Models
         public ICollection<WaitingLists> WaitingLists { get; set; }
 
         public ICollection<Feedback> Feedbacks { get; set; }
+
+        public ICollection<Menu> Menus { get; set; }
+
+        public ICollection<SetReservationDetails> SetReservationDetails { get; set; }
+
+
 
     }
 }

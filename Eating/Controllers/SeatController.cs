@@ -16,6 +16,7 @@ namespace Eating.Controllers
     public class SeatController : Controller
     {
         private ISeatService seatService = new SeatService();
+        private IReservationService reservationService = new ReservationService();
         // GET: Seat
         public ActionResult Index()
         {
@@ -28,28 +29,28 @@ namespace Eating.Controllers
             var result = seatService.Delete(id);
             if (result.Success)
             {
-                ViewBag.JS = "刪除成功";
+                TempData["Error"] = "刪除成功";
             }
             else
             {
-                ViewBag.JS = "刪除失敗，請重新再試一次";
+                TempData["Error"] = "刪除失敗，請重新再試一次";
             }
             return RedirectToAction("Index");
         }
 
-        public ActionResult getSeatList()
+        public ActionResult GetSeatList()
         {
             var R_Id = Request.Cookies["idCookie"].Values["r_id"];
             var SeatList = seatService.GetSeatByRAccount(R_Id).Select(Mapper.Map<Seat, SeatViewModel>);
             return PartialView("_SeatList", SeatList);
         }
 
-        public ActionResult getNewSeatPartial()
+        public ActionResult GetNewSeatPartial()
         {
             return PartialView("_NewSeat");
         }
 
-        public ActionResult getLocationPartial(SeatViewModel seatVM)
+        public ActionResult GetLocationPartial(SeatViewModel seatVM)
         {
             var R_Id = Request.Cookies["idCookie"].Values["r_id"];
 
@@ -74,6 +75,22 @@ namespace Eating.Controllers
                 var instance = Mapper.Map<NewSeatViewModel, Seat>(SeatVM);
                 instance.R_Id = R_Id;
                 var result = seatService.Create(instance);
+                var times = reservationService.GetSettingList(R_Id);
+                if(times.Count()!= 0)
+                {
+                    var seatId = instance.Id;
+                    foreach(var time in times)
+                    {
+                        var time_instance = new SetReservationDetails()
+                       {
+                            R_id = R_Id,
+                            ReservationTime = time.ReservationTime,
+                            SeatId = seatId
+                        };
+                        reservationService.CreateTime(time_instance);
+                    }
+                }
+                
                 string msg = result.Success == true ?  "" : "bootbox.alert('錯誤，請重新再試一次！');";
                 TempData["seatMessage"] = msg;
                 return RedirectToAction("Index");
@@ -115,7 +132,7 @@ namespace Eating.Controllers
         {
             foreach(var item in SeatViewModel)
             {
-                var seat = seatService.GetByID(item.SeatId);
+                var seat = seatService.GetByID(item.Id);
                 seat.location_X = item.location_X;
                 seat.location_Y = item.location_Y;
                 var result = seatService.Update(seat);

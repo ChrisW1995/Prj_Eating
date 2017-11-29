@@ -58,10 +58,11 @@ namespace Eating.Service
         /// <param name="ToEmail"></param>
         public void SendRegisterMail(string MailBody, string ToEmail)
         {
-            SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
-            SmtpServer.Port = 587;
+               SmtpClient SmtpServer = new SmtpClient("relay-hosting.secureserver.net");
+            SmtpServer.Port = 25;
             SmtpServer.Credentials = new System.Net.NetworkCredential(mail_Account, mail_Password);
-            SmtpServer.EnableSsl = true;
+            SmtpServer.EnableSsl = false;
+            SmtpServer.UseDefaultCredentials = false;
             SmtpServer.DeliveryMethod = SmtpDeliveryMethod.Network;
             MailMessage mail = new MailMessage();
             mail.From = new MailAddress(mail_Address);

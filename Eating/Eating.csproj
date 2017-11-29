@@ -18,7 +18,8 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort>44316</IISExpressSSLPort>
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -225,7 +226,7 @@
     <Compile Include="Areas\Backend\Models\RestaurantStatusVM.cs" />
     <Compile Include="Areas\Backend\Service\AdminService.cs" />
     <Compile Include="Areas\Backend\Service\CustomAuthorization.cs" />
-    <Compile Include="Controllers\Api\ReserveController.cs" />
+    <Compile Include="Controllers\Api\ReservationController.cs" />
     <Compile Include="Controllers\Api\RestaurantController.cs" />
     <Compile Include="Controllers\Api\WaitingController.cs" />
     <Compile Include="Controllers\CouponController.cs" />
@@ -238,154 +239,33 @@
     <Compile Include="DTOs\CustomerLoginDTO.cs" />
     <Compile Include="DTOs\CustomerRegisterDTO.cs" />
     <Compile Include="DTOs\NewWaitingDTO.cs" />
+    <Compile Include="DTOs\ReservationTimeDTO.cs" />
     <Compile Include="DTOs\RestaurantDetailDTO.cs" />
     <Compile Include="DTOs\RestaurantDetailRankingDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Interface\IResult.cs" />
-    <Compile Include="Migrations\201708172114090_Inittail.cs" />
-    <Compile Include="Migrations\201708172114090_Inittail.Designer.cs">
-      <DependentUpon>201708172114090_Inittail.cs</DependentUpon>
+    <Compile Include="Interface\ISetTimeRepository.cs" />
+    <Compile Include="Migrations\201711280951563_init.cs" />
+    <Compile Include="Migrations\201711280951563_init.Designer.cs">
+      <DependentUpon>201711280951563_init.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201708180612347_insertData.cs" />
-    <Compile Include="Migrations\201708180612347_insertData.Designer.cs">
-      <DependentUpon>201708180612347_insertData.cs</DependentUpon>
+    <Compile Include="Migrations\201711290312353_Change_Table.cs" />
+    <Compile Include="Migrations\201711290312353_Change_Table.Designer.cs">
+      <DependentUpon>201711290312353_Change_Table.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201708210245073_ChangeCountryProp.cs" />
-    <Compile Include="Migrations\201708210245073_ChangeCountryProp.Designer.cs">
-      <DependentUpon>201708210245073_ChangeCountryProp.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708220644144_changeAnnotation.cs" />
-    <Compile Include="Migrations\201708220644144_changeAnnotation.Designer.cs">
-      <DependentUpon>201708220644144_changeAnnotation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708261900451_CouponTb.cs" />
-    <Compile Include="Migrations\201708261900451_CouponTb.Designer.cs">
-      <DependentUpon>201708261900451_CouponTb.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708262134013_ChangeCouponIdProp.cs" />
-    <Compile Include="Migrations\201708262134013_ChangeCouponIdProp.Designer.cs">
-      <DependentUpon>201708262134013_ChangeCouponIdProp.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708280251493_ChangeCouponTbTitleColumn.cs" />
-    <Compile Include="Migrations\201708280251493_ChangeCouponTbTitleColumn.Designer.cs">
-      <DependentUpon>201708280251493_ChangeCouponTbTitleColumn.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708302046282_ChangeCouponKeyColumn.cs" />
-    <Compile Include="Migrations\201708302046282_ChangeCouponKeyColumn.Designer.cs">
-      <DependentUpon>201708302046282_ChangeCouponKeyColumn.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709020847059_addNewSeatTbAndChangeCountyTbProp..cs" />
-    <Compile Include="Migrations\201709020847059_addNewSeatTbAndChangeCountyTbProp..Designer.cs">
-      <DependentUpon>201709020847059_addNewSeatTbAndChangeCountyTbProp..cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709020856247_AddSeatTbAndFKToDb.cs" />
-    <Compile Include="Migrations\201709020856247_AddSeatTbAndFKToDb.Designer.cs">
-      <DependentUpon>201709020856247_AddSeatTbAndFKToDb.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709061519283_AddNewWaitingListTb.cs" />
-    <Compile Include="Migrations\201709061519283_AddNewWaitingListTb.Designer.cs">
-      <DependentUpon>201709061519283_AddNewWaitingListTb.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709090820505_AddNewTbReserves.cs" />
-    <Compile Include="Migrations\201709090820505_AddNewTbReserves.Designer.cs">
-      <DependentUpon>201709090820505_AddNewTbReserves.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709120147220_AddNewColumnCheckStatusToWaitingList.cs" />
-    <Compile Include="Migrations\201709120147220_AddNewColumnCheckStatusToWaitingList.Designer.cs">
-      <DependentUpon>201709120147220_AddNewColumnCheckStatusToWaitingList.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709120625413_ChangeTbReserveProp.cs" />
-    <Compile Include="Migrations\201709120625413_ChangeTbReserveProp.Designer.cs">
-      <DependentUpon>201709120625413_ChangeTbReserveProp.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709132152057_ChangeTbProp.cs" />
-    <Compile Include="Migrations\201709132152057_ChangeTbProp.Designer.cs">
-      <DependentUpon>201709132152057_ChangeTbProp.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709141856191_ChangeTbPropRegistOpenAndCloseTime.cs" />
-    <Compile Include="Migrations\201709141856191_ChangeTbPropRegistOpenAndCloseTime.Designer.cs">
-      <DependentUpon>201709141856191_ChangeTbPropRegistOpenAndCloseTime.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709160930202_ChangeRTbPropAddress.cs" />
-    <Compile Include="Migrations\201709160930202_ChangeRTbPropAddress.Designer.cs">
-      <DependentUpon>201709160930202_ChangeRTbPropAddress.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709161159483_AddSeatXANDYLocation.cs" />
-    <Compile Include="Migrations\201709161159483_AddSeatXANDYLocation.Designer.cs">
-      <DependentUpon>201709161159483_AddSeatXANDYLocation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709191326563_NewTbFeedbacks.cs" />
-    <Compile Include="Migrations\201709191326563_NewTbFeedbacks.Designer.cs">
-      <DependentUpon>201709191326563_NewTbFeedbacks.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709191541013_AddNewTbCustomerCoupon.cs" />
-    <Compile Include="Migrations\201709191541013_AddNewTbCustomerCoupon.Designer.cs">
-      <DependentUpon>201709191541013_AddNewTbCustomerCoupon.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709270606121_ChangeSeatRIdLengthBug.cs" />
-    <Compile Include="Migrations\201709270606121_ChangeSeatRIdLengthBug.Designer.cs">
-      <DependentUpon>201709270606121_ChangeSeatRIdLengthBug.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710020220475_changeRTBAddIdProp.cs" />
-    <Compile Include="Migrations\201710020220475_changeRTBAddIdProp.Designer.cs">
-      <DependentUpon>201710020220475_changeRTBAddIdProp.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710020358175_AddRTbStatusFlg.cs" />
-    <Compile Include="Migrations\201710020358175_AddRTbStatusFlg.Designer.cs">
-      <DependentUpon>201710020358175_AddRTbStatusFlg.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710030540535_AddRTbisCheck.cs" />
-    <Compile Include="Migrations\201710030540535_AddRTbisCheck.Designer.cs">
-      <DependentUpon>201710030540535_AddRTbisCheck.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710040658524_AddAdminTb.cs" />
-    <Compile Include="Migrations\201710040658524_AddAdminTb.Designer.cs">
-      <DependentUpon>201710040658524_AddAdminTb.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710090630289_AddIdPropC_Id.cs" />
-    <Compile Include="Migrations\201710090630289_AddIdPropC_Id.Designer.cs">
-      <DependentUpon>201710090630289_AddIdPropC_Id.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710140424474_AddRTSProp.cs" />
-    <Compile Include="Migrations\201710140424474_AddRTSProp.Designer.cs">
-      <DependentUpon>201710140424474_AddRTSProp.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711042113164_AddPeopleNumToWLTB.cs" />
-    <Compile Include="Migrations\201711042113164_AddPeopleNumToWLTB.Designer.cs">
-      <DependentUpon>201711042113164_AddPeopleNumToWLTB.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711080905580_AddImgagePathColumn.cs" />
-    <Compile Include="Migrations\201711080905580_AddImgagePathColumn.Designer.cs">
-      <DependentUpon>201711080905580_AddImgagePathColumn.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711090622083_AddLatAndLonPropToRTb.cs" />
-    <Compile Include="Migrations\201711090622083_AddLatAndLonPropToRTb.Designer.cs">
-      <DependentUpon>201711090622083_AddLatAndLonPropToRTb.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711091753093_ChangeLatAndLng.cs" />
-    <Compile Include="Migrations\201711091753093_ChangeLatAndLng.Designer.cs">
-      <DependentUpon>201711091753093_ChangeLatAndLng.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711181125036_AddRegIDInWaitingList.cs" />
-    <Compile Include="Migrations\201711181125036_AddRegIDInWaitingList.Designer.cs">
-      <DependentUpon>201711181125036_AddRegIDInWaitingList.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711181306520_AddRegIDInWaitingList1.cs" />
-    <Compile Include="Migrations\201711181306520_AddRegIDInWaitingList1.Designer.cs">
-      <DependentUpon>201711181306520_AddRegIDInWaitingList1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201711191354273_ChangeWaitingStatus.cs" />
-    <Compile Include="Migrations\201711191354273_ChangeWaitingStatus.Designer.cs">
-      <DependentUpon>201711191354273_ChangeWaitingStatus.cs</DependentUpon>
+    <Compile Include="Migrations\201711290321193_Add_FK_In_SetTimeTB.cs" />
+    <Compile Include="Migrations\201711290321193_Add_FK_In_SetTimeTB.Designer.cs">
+      <DependentUpon>201711290321193_Add_FK_In_SetTimeTB.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Admins.cs" />
+    <Compile Include="Models\Menu.cs" />
+    <Compile Include="Models\SetReservationDetails.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Feedback.cs" />
-    <Compile Include="Models\Reserves.cs" />
+    <Compile Include="Models\Reservations.cs" />
     <Compile Include="Models\WaitingLists.cs" />
     <Compile Include="Models\Area.cs" />
     <Compile Include="Models\County.cs" />
@@ -397,17 +277,20 @@
     <Compile Include="Repository\GenericRepository.cs" />
     <Compile Include="Models\Restaurant.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\SetTimeRepository.cs" />
     <Compile Include="Service\AddressService.cs" />
     <Compile Include="Service\CouponService.cs" />
     <Compile Include="Service\CustomerService.cs" />
     <Compile Include="Service\FeedbackService.cs" />
+    <Compile Include="Service\FilesHelper.cs" />
+    <Compile Include="Service\ImageHandler.cs" />
     <Compile Include="Service\Interface\ICouponService.cs" />
     <Compile Include="Service\Interface\IFeedBackService.cs" />
-    <Compile Include="Service\Interface\IReserveService.cs" />
+    <Compile Include="Service\Interface\IReservationService.cs" />
     <Compile Include="Service\Interface\ISeatService.cs" />
     <Compile Include="Service\Interface\IWaitingListService.cs" />
     <Compile Include="Service\LocalDateTimeService.cs" />
-    <Compile Include="Service\ReserveService.cs" />
+    <Compile Include="Service\ReservationService.cs" />
     <Compile Include="Service\WaitingListService.cs" />
     <Compile Include="Service\MailService.cs" />
     <Compile Include="Service\MemberService.cs" />
@@ -416,18 +299,34 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\CouponListViewModel.cs" />
     <Compile Include="ViewModels\FeedbacRatingkViewModel.cs" />
+    <Compile Include="ViewModels\FilesViewModel.cs" />
     <Compile Include="ViewModels\MemberLoginViewModel.cs" />
+    <Compile Include="ViewModels\MenuListViewModel.cs" />
     <Compile Include="ViewModels\ReserveViewModel.cs" />
     <Compile Include="ViewModels\RestaurantInfoViewModel.cs" />
     <Compile Include="ViewModels\RestaurantAccountViewModel.cs" />
     <Compile Include="ViewModels\RestaurantRegisterViewModel.cs" />
     <Compile Include="ViewModels\NewSeatViewModel.cs" />
     <Compile Include="ViewModels\SeatViewModel.cs" />
+    <Compile Include="ViewModels\SetReservationTimeViewModel.cs" />
     <Compile Include="ViewModels\WaitingListViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Admin.css" />
     <Content Include="Content\Admin.postcss.css" />
+    <Content Include="Content\blueimp-gallery2\css\blueimp-gallery-indicator.css" />
+    <Content Include="Content\blueimp-gallery2\css\blueimp-gallery-indicator.min.css" />
+    <Content Include="Content\blueimp-gallery2\css\blueimp-gallery-video.css" />
+    <Content Include="Content\blueimp-gallery2\css\blueimp-gallery-video.min.css" />
+    <Content Include="Content\blueimp-gallery2\css\blueimp-gallery.css" />
+    <Content Include="Content\blueimp-gallery2\css\blueimp-gallery.min.css" />
+    <Content Include="Content\blueimp-gallery2\img\error.png" />
+    <Content Include="Content\blueimp-gallery2\img\error.svg" />
+    <Content Include="Content\blueimp-gallery2\img\loading.gif" />
+    <Content Include="Content\blueimp-gallery2\img\play-pause.png" />
+    <Content Include="Content\blueimp-gallery2\img\play-pause.svg" />
+    <Content Include="Content\blueimp-gallery2\img\video-play.png" />
+    <Content Include="Content\blueimp-gallery2\img\video-play.svg" />
     <Content Include="Content\bootstrap-datetimepicker.css" />
     <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -664,6 +563,12 @@
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery-ui.structure.css" />
     <Content Include="Content\jquery-ui.theme.css" />
+    <Content Include="Content\jQuery.FileUpload\css\jquery.fileupload-noscript.css" />
+    <Content Include="Content\jQuery.FileUpload\css\jquery.fileupload-ui-noscript.css" />
+    <Content Include="Content\jQuery.FileUpload\css\jquery.fileupload-ui.css" />
+    <Content Include="Content\jQuery.FileUpload\css\jquery.fileupload.css" />
+    <Content Include="Content\jQuery.FileUpload\img\loading.gif" />
+    <Content Include="Content\jQuery.FileUpload\img\progressbar.gif" />
     <Content Include="Content\Layout2_css.css" />
     <Content Include="Content\SideMenu.css" />
     <Content Include="Content\the-big-picture.css" />
@@ -811,13 +716,32 @@
     <Content Include="Areas\Backend\Views\Admin\Login.cshtml" />
     <Content Include="Areas\Backend\Views\Shared\_AdminLoginPartial.cshtml" />
     <Content Include="Areas\Backend\Views\Admin\_GetRList.cshtml" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\cw30cmweb.com - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Img\cover.jpeg" />
     <Content Include="Img\icon\cancel.png" />
     <Content Include="Img\icon\checked.png" />
     <Content Include="Img\icon\question-mark.png" />
+    <Content Include="Img\icon_single.png" />
     <Content Include="Img\index.jpg" />
     <Content Include="Img\logo_new.png" />
+    <Content Include="Scripts\blueimp-gallery2\js\blueimp-gallery-fullscreen.js" />
+    <Content Include="Scripts\blueimp-gallery2\js\blueimp-gallery-fullscreen.min.js" />
+    <Content Include="Scripts\blueimp-gallery2\js\blueimp-gallery-indicator.js" />
+    <Content Include="Scripts\blueimp-gallery2\js\blueimp-gallery-indicator.min.js" />
+    <Content Include="Scripts\blueimp-gallery2\js\blueimp-gallery-video.js" />
+    <Content Include="Scripts\blueimp-gallery2\js\blueimp-gallery-video.min.js" />
+    <Content Include="Scripts\blueimp-gallery2\js\blueimp-gallery-vimeo.js" />
+    <Content Include="Scripts\blueimp-gallery2\js\blueimp-gallery-vimeo.min.js" />
+    <Content Include="Scripts\blueimp-gallery2\js\blueimp-gallery-youtube.js" />
+    <Content Include="Scripts\blueimp-gallery2\js\blueimp-gallery-youtube.min.js" />
+    <Content Include="Scripts\blueimp-gallery2\js\blueimp-gallery.js" />
+    <Content Include="Scripts\blueimp-gallery2\js\blueimp-gallery.min.js" />
+    <Content Include="Scripts\blueimp-gallery2\js\blueimp-helper.js" />
+    <Content Include="Scripts\blueimp-gallery2\js\blueimp-helper.min.js" />
+    <Content Include="Scripts\blueimp-gallery2\js\jquery.blueimp-gallery.js" />
+    <Content Include="Scripts\blueimp-gallery2\js\jquery.blueimp-gallery.min.js" />
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
@@ -903,6 +827,14 @@
     <Content Include="Scripts\DataTables\responsive.semanticui.min.js" />
     <None Include="Properties\PublishProfiles\pccu-eating - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\pccu-eating - Web Deploy.pubxml" />
+    <Content Include="Scripts\blueimp-gallery2\js\blueimp-gallery-fullscreen.min.js.map" />
+    <Content Include="Scripts\blueimp-gallery2\js\blueimp-gallery-indicator.min.js.map" />
+    <Content Include="Scripts\blueimp-gallery2\js\blueimp-gallery-video.min.js.map" />
+    <Content Include="Scripts\blueimp-gallery2\js\blueimp-gallery-vimeo.min.js.map" />
+    <Content Include="Scripts\blueimp-gallery2\js\blueimp-gallery-youtube.min.js.map" />
+    <Content Include="Scripts\blueimp-gallery2\js\blueimp-gallery.min.js.map" />
+    <Content Include="Scripts\blueimp-gallery2\js\blueimp-helper.min.js.map" />
+    <Content Include="Scripts\blueimp-gallery2\js\jquery.blueimp-gallery.min.js.map" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
@@ -913,6 +845,20 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
+    <Content Include="Scripts\jQuery.FileUpload\cors\jquery.postmessage-transport.js" />
+    <Content Include="Scripts\jQuery.FileUpload\cors\jquery.xdr-transport.js" />
+    <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload-angular.js" />
+    <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload-audio.js" />
+    <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload-image.js" />
+    <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload-jquery-ui.js" />
+    <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload-process.js" />
+    <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload-ui.js" />
+    <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload-validate.js" />
+    <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload-video.js" />
+    <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload.js" />
+    <Content Include="Scripts\jQuery.FileUpload\jquery.iframe-transport.js" />
+    <Content Include="Scripts\jQuery.FileUpload\load-image.all.min.js" />
+    <Content Include="Scripts\jQuery.FileUpload\tmpl.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -1744,28 +1690,9 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\ConfirmEmail.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Account\ResetPassword.cshtml" />
-    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\SendCode.cshtml" />
-    <Content Include="Views\Account\VerifyCode.cshtml" />
-    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
-    <Content Include="Views\Manage\ChangePassword.cshtml" />
-    <Content Include="Views\Manage\Index.cshtml" />
-    <Content Include="Views\Manage\ManageLogins.cshtml" />
-    <Content Include="Views\Manage\SetPassword.cshtml" />
-    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Restaurant\Register.cshtml" />
@@ -1814,117 +1741,32 @@
     <Content Include="Views\Seat\_NewSeat.cshtml" />
     <Content Include="Views\Seat\_SeatLocation.cshtml" />
     <Content Include="Views\Seat\_SeatList.cshtml" />
+    <Content Include="Views\Reserve\_SetReservePart.cshtml" />
+    <Content Include="Views\Reserve\_ReserveSettingList.cshtml" />
+    <Content Include="Views\Restaurant\View.cshtml" />
+    <Content Include="web_lowtrust.config" />
+    <Content Include="Views\Restaurant\Menu.cshtml" />
+    <Content Include="Views\Restaurant\_MenuUpload.cshtml" />
+    <Content Include="Views\Restaurant\_MenuList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Admin\" />
     <Folder Include="App_Data\" />
-    <Folder Include="Upload\" />
+    <Folder Include="Upload\Menu\" />
+    <Folder Include="Upload\Temp\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201708172114090_Inittail.resx">
-      <DependentUpon>201708172114090_Inittail.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201711280951563_init.resx">
+      <DependentUpon>201711280951563_init.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708180612347_insertData.resx">
-      <DependentUpon>201708180612347_insertData.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201711290312353_Change_Table.resx">
+      <DependentUpon>201711290312353_Change_Table.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708210245073_ChangeCountryProp.resx">
-      <DependentUpon>201708210245073_ChangeCountryProp.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708220644144_changeAnnotation.resx">
-      <DependentUpon>201708220644144_changeAnnotation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708261900451_CouponTb.resx">
-      <DependentUpon>201708261900451_CouponTb.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708262134013_ChangeCouponIdProp.resx">
-      <DependentUpon>201708262134013_ChangeCouponIdProp.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708280251493_ChangeCouponTbTitleColumn.resx">
-      <DependentUpon>201708280251493_ChangeCouponTbTitleColumn.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708302046282_ChangeCouponKeyColumn.resx">
-      <DependentUpon>201708302046282_ChangeCouponKeyColumn.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709020847059_addNewSeatTbAndChangeCountyTbProp..resx">
-      <DependentUpon>201709020847059_addNewSeatTbAndChangeCountyTbProp..cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709020856247_AddSeatTbAndFKToDb.resx">
-      <DependentUpon>201709020856247_AddSeatTbAndFKToDb.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709061519283_AddNewWaitingListTb.resx">
-      <DependentUpon>201709061519283_AddNewWaitingListTb.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709090820505_AddNewTbReserves.resx">
-      <DependentUpon>201709090820505_AddNewTbReserves.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709120147220_AddNewColumnCheckStatusToWaitingList.resx">
-      <DependentUpon>201709120147220_AddNewColumnCheckStatusToWaitingList.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709120625413_ChangeTbReserveProp.resx">
-      <DependentUpon>201709120625413_ChangeTbReserveProp.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709132152057_ChangeTbProp.resx">
-      <DependentUpon>201709132152057_ChangeTbProp.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709141856191_ChangeTbPropRegistOpenAndCloseTime.resx">
-      <DependentUpon>201709141856191_ChangeTbPropRegistOpenAndCloseTime.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709160930202_ChangeRTbPropAddress.resx">
-      <DependentUpon>201709160930202_ChangeRTbPropAddress.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709161159483_AddSeatXANDYLocation.resx">
-      <DependentUpon>201709161159483_AddSeatXANDYLocation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709191326563_NewTbFeedbacks.resx">
-      <DependentUpon>201709191326563_NewTbFeedbacks.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709191541013_AddNewTbCustomerCoupon.resx">
-      <DependentUpon>201709191541013_AddNewTbCustomerCoupon.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709270606121_ChangeSeatRIdLengthBug.resx">
-      <DependentUpon>201709270606121_ChangeSeatRIdLengthBug.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710020220475_changeRTBAddIdProp.resx">
-      <DependentUpon>201710020220475_changeRTBAddIdProp.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710020358175_AddRTbStatusFlg.resx">
-      <DependentUpon>201710020358175_AddRTbStatusFlg.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710030540535_AddRTbisCheck.resx">
-      <DependentUpon>201710030540535_AddRTbisCheck.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710040658524_AddAdminTb.resx">
-      <DependentUpon>201710040658524_AddAdminTb.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710090630289_AddIdPropC_Id.resx">
-      <DependentUpon>201710090630289_AddIdPropC_Id.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710140424474_AddRTSProp.resx">
-      <DependentUpon>201710140424474_AddRTSProp.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711042113164_AddPeopleNumToWLTB.resx">
-      <DependentUpon>201711042113164_AddPeopleNumToWLTB.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711080905580_AddImgagePathColumn.resx">
-      <DependentUpon>201711080905580_AddImgagePathColumn.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711090622083_AddLatAndLonPropToRTb.resx">
-      <DependentUpon>201711090622083_AddLatAndLonPropToRTb.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711091753093_ChangeLatAndLng.resx">
-      <DependentUpon>201711091753093_ChangeLatAndLng.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711181125036_AddRegIDInWaitingList.resx">
-      <DependentUpon>201711181125036_AddRegIDInWaitingList.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711181306520_AddRegIDInWaitingList1.resx">
-      <DependentUpon>201711181306520_AddRegIDInWaitingList1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201711191354273_ChangeWaitingStatus.resx">
-      <DependentUpon>201711191354273_ChangeWaitingStatus.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201711290321193_Add_FK_In_SetTimeTB.resx">
+      <DependentUpon>201711290321193_Add_FK_In_SetTimeTB.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

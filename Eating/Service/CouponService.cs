@@ -74,9 +74,9 @@ namespace Eating.Service
             return result;
         }
 
-        public IEnumerable<Coupons> GetAll()
+        public IEnumerable<Coupons> GetList()
         {
-          return repository.GetAll();
+          return repository.GetList();
         }
 
         public Coupons GetByID(string couponID)
@@ -86,12 +86,12 @@ namespace Eating.Service
 
         public IEnumerable<Coupons> GetConponByRAccount(string r_id)
         {
-            return repository.GetAllById(x => x.R_Id == r_id).ToList();
+            return repository.GetList(x => x.R_Id == r_id).ToList();
         }
 
         public bool IsExists(string couponID)
         {
-            return this.repository.GetAll().Any(x => x.CouponId == couponID);
+            return this.repository.GetList().Any(x => x.CouponId == couponID);
         }
 
         

@@ -31,37 +31,13 @@ namespace Eating.Areas.Backend.Controllers
         }
 
         [CustomAuthorization(LoginPage = "/Backend/Admin/Login", Roles = "Admin")]
-        public ActionResult getRList(string index)
+        public ActionResult GetRList(string index)
         {
-            //if (string.IsNullOrEmpty(index))
-            //{
-            //    var q = memberService.GetAllCheckList().ToList();
-            //    return View(q);
-            //}
-            //else
-            //{
-            //    IEnumerable<RestaurantStatusVM> query = null;
-            //    int _index = int.Parse(index);
-            //    switch (_index)
-            //    {
-            //        case 0:
-            //            query = memberService.GetAllCheckList().ToList();
-            //            break;
-            //        case 1:
-            //            query = memberService.GetAllCheckList(s => s.StatusFlg == false && s.isCheck == false).ToList();
-            //            break;
-            //        case 2:
-            //            query = memberService.GetAllCheckList(s => s.StatusFlg == false && s.isCheck == true).ToList();
-            //            break;
-            //        case 3:
-            //            query = memberService.GetAllCheckList(s => s.StatusFlg == true).ToList();
-            //            break;
-
-            //    }
+           
                 return PartialView("_GetRList");
             }
 
-        public JsonResult getList(string index)
+        public JsonResult GetList(string index)
         {
 
             IEnumerable<RestaurantStatusVM> query = null;
@@ -87,7 +63,7 @@ namespace Eating.Areas.Backend.Controllers
 
         }
 
-        [HttpPut]
+        [HttpPost]
         public ActionResult Check(string id, bool flg, int index)
         {
             ViewBag.index = index;

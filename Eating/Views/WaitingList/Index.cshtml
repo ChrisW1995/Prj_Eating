@@ -1,18 +1,102 @@
-﻿@model IEnumerable<Eating.ViewModels.WaitingListViewModel>
+﻿@model Eating.ViewModels.RestaurantInfoViewModel
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
+<style>
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+    }
+
+        .switch input {
+            display: none;
+        }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+    input:checked + .slider {
+        background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 34px;
+        }
+
+            .slider.round:before {
+                border-radius: 50%;
+            }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+</style>
+@{ string isCheck = Model.WaitListSwitch == true ? "checked" : "";}
 
 <section class="col-lg-12 connectedSortable ui-sortable">
     <div class="box box-danger" style="position: relative; left: 0px; top: 0px;">
+       
         <div class="box-header ui-sortable-handle" style="">
             <i class="fa fa-info"></i>
 
             <h3 class="box-title"><b>候位列表</b></h3>
         </div>
+        
+        <div style="" class="box-body">
+            <div style="text-align:right; font-weight:700; height:100%; font-size:18px; line-height:30px;" class="col-md-1 col-md-offset-4 col-xs-2 col-xs-offset-2">OFF</div>
+            <div style="text-align:center;" class="col-md-2 col-xs-4">
+               <label class="switch">
+                    <input type="checkbox" id="waitStatus" @isCheck>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <span style="font-weight:700; text-align:left; font-size:18px;  line-height:30px;" class="col-md-1 col-xs-2">ON</span>
+        </div>
+        
         <div class="box-body">
+       
             <table class="table " id="DataTables">
                 <thead>
                     <tr>
@@ -51,11 +135,10 @@
             @Scripts.Render("~/bundles/lib")
             @section scripts
 {
-                <script>
+    <script>
     $(document).ready(function () {
         var timeoutId;
        timeoutId = setInterval(GetAreas, 3000);
-
        var table = $("#DataTables").DataTable({
            "sScrollY": 465,
            "language": {
@@ -99,13 +182,25 @@
                     }
                 }
             ]
+       });
+        $("#waitStatus").on("click", function () {
+            $.ajax({
+                url: "/Restaurant/ChangeWaitStatus",
+                method: "POST",
+                data: { b: $("#waitStatus").is(':checked') },
+                dataType: ""
+            }).done(function (msg) {
+                
+            }).fail(function (jqXHR, textStatus) {
+                    alert("Request failed: " + textStatus);
+            });
         });
         $("#DataTables").on("click", '.js-delete',function () {
             clearInterval(timeoutId);
             if (confirm("確認叫號")) {
                 $.ajax({
                     url: '/WaitingList/CheckStatus/' + $(this).attr('data-customer-id'),
-                    method: "PUT",
+                    method: "POST",
                     success: function () {
                         timeoutId = setInterval(GetAreas, 3000);
                         GetAreas();
@@ -118,7 +213,6 @@
                 });
             }
         });
-
 
     });
 

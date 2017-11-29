@@ -14,12 +14,6 @@ namespace Eating.Repository
     {
         private ApplicationDbContext _context { get; set; }
         
-
-        //public GenericRepository(DbContext Context)
-        //{
-        //    _context = Context ?? throw new ArgumentNullException("context");
-        //}
-
         public GenericRepository(ApplicationDbContext Context)
         {
             if (Context == null)
@@ -52,12 +46,12 @@ namespace Eating.Repository
             return _context.Set<TEntity>().Where(predicate).SingleOrDefault();
         }
 
-        public IQueryable<TEntity> GetAll()
+        public IQueryable<TEntity> GetList()
         {
             return _context.Set<TEntity>().AsQueryable();
         }
 
-        public IQueryable<TEntity> GetAllById(Expression<Func<TEntity, bool>> predicate)
+        public IQueryable<TEntity> GetList(Expression<Func<TEntity, bool>> predicate)
         {
             return _context.Set<TEntity>().Where(predicate).AsQueryable(); ;
         }

@@ -13,7 +13,7 @@
         </div>
         <div class="box-body" style="height:700px; overflow:auto">
             @{
-                Html.RenderAction("getRList", "Admin", new { index = (ViewBag.index == null? 0:ViewBag.index) });
+                Html.RenderAction("GetRList", "Admin", new { index = (ViewBag.index == null? 0:ViewBag.index) });
             }
         </div>
         <div class="box-footer">
@@ -36,7 +36,7 @@
             $("#DataTables").on("click", '.js-delete', function () {
                 $.ajax({
                     url: '@Url.Action("Check", "Admin")',
-                    method: "PUT",
+                    method: "POST",
                     data:{
                         id:$(this).attr('data-r-id'),
                         flg:$(this).attr('flg'),
@@ -70,7 +70,7 @@
                     }
                 },
                 ajax: {
-                    url: '@Url.Action("getList", "Admin")',
+                    url: '@Url.Action("GetList", "Admin")',
                     dataSrc: '',
                     data: function (d) {
                         d.index = $("#ddlStatus").val();
@@ -99,15 +99,15 @@
                         }
                     },
                     {
-                        data: "StatusFlg",
+                        data: "",
                         render: function (data, type, announcement) {
-                            if (announcement.isCheck == false) {
+                            if (announcement.IsCheck == false) {
                                 return "<img src='/img/icon/question-mark.png' />"
                             }
-                            else if (data == true) {
+                            else if (announcement.StatusFlg == true) {
                                 return "<img src='/img/icon/checked.png'/>"
                             }
-                            else if (data == false && announcement.isCheck == true) {
+                            else if (announcement.StatusFlg == false && announcement.IsCheck == true) {
                                 return "<img src='/img/icon/cancel.png'/>"
                             }
                         }
@@ -115,14 +115,14 @@
                     {
                         data: "Id",
                         render: function (data, type, announcement) {
-                            if (announcement.isCheck == false) {
+                            if (announcement.IsCheck == false) {
                                 return "<button type='button' class='btn btn-success js-delete' data-r-id  = " + data + " flg=true><span class='glyphicon glyphicon-ok' ></span> 通過 </button > " +
                                     "<button type='button' class='btn btn-danger js-delete' data-r-id = " + data + " flg=false><span class='glyphicon glyphicon-remove'></span > 拒絕 </button > ";
                             }
                             else if (announcement.StatusFlg == true) {
                                 return "<button class='btn btn-danger js-delete' data-r-id  = " + data + " flg=false><span class='glyphicon glyphicon-remove' ></span > 拒絕 </button > ";
                             }
-                            else if (announcement.StatusFlg == false && announcement.isCheck == true) {
+                            else if (announcement.StatusFlg == false && announcement.IsCheck == true) {
                                 return "<button class='btn btn-success js-delete' data-r-id=" + data + " flg=true ><span class='glyphicon glyphicon-ok' ></span> 通過 </button > ";
                             }
                         }

@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "Info";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+@Styles.Render("~/Content/fileupload")
+
+<script>
+    var $form = null;
+    $(function () {
+
+        $form = $('#fileupload').fileupload({
+            dataType: 'json'
+        });
+
+    });
+    $('#fileupload').addClass('fileupload-processing');
+
+
+
+    $.ajax({
+        type: 'GET',
+        contentType: "application/json; charset=utf-8",
+        url: '/FileUpload/GetFileList',
+        success: function (data) {
+
+
+            $('#fileupload').fileupload('option', 'done').call($('#fileupload'), $.Event('done'), { result: { files: data.files } })
+            $('#fileupload').removeClass('fileupload-processing');
+        }
+
+    }
+
+    );
+</script>
+
+<section class="col-lg-6 connectedSortable ui-sortable">
+    <div class="box box-info" style="position: relative; left: 0px; top: 0px;">
+        <div class="box-header ui-sortable-handle" style="">
+            <i class="fa fa-info"></i>
+
+            <h3 class="box-title"><b>新增菜單</b></h3>
+        </div>
+        <div class="box-body">
+            @{
+                @Html.Partial("_MenuUpload")
+            }
+        </div>
+        <div class="box-footer clearfix">
+
+        </div>
+    </div>
+</section>
+<section class="col-lg-6 connectedSortable ui-sortable">
+    <div class="box box-info" style="position: relative; left: 0px; top: 0px;">
+        <div class="box-header ui-sortable-handle" style="">
+            <i class="fa fa-info"></i>
+
+            <h3 class="box-title"><b>編輯菜單</b></h3>
+        </div>
+        <div class="box-body">
+            @{
+                Html.RenderAction("MenuList","Restaurant");
+            }
+        </div>
+        <div class="box-footer clearfix">
+
+        </div>
+    </div>
+</section>
+@Scripts.Render("~/bundles/jQuery-File-Upload")

@@ -50,5 +50,7 @@ namespace Eating.DTOs
         public double Lat { get; set; }
 
         public double Lng { get; set; }
+
+        public bool WaitSwitch { get; set; }
     }
 }

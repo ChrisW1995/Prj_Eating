@@ -141,6 +141,10 @@ namespace Eating.Service
             return result;
         }
 
+        public bool CheckId(string id)
+        {
+            return repository.Get(x => x.Id == id) != null ? true : false;  
+        }
         public Restaurant GetRestaurant(string id)
         {
             return repository.Get(r => r.Id == id);
@@ -198,7 +202,7 @@ namespace Eating.Service
 
         public IEnumerable<RestaurantDetailDTO> GetAllList()
         {
-            var query = repository.GetAll().Where(f => f.StatusFlg == true).Select(Mapper.Map<Restaurant, RestaurantDetailDTO>).ToList();
+            var query = repository.GetList().Where(f => f.StatusFlg == true).Select(Mapper.Map<Restaurant, RestaurantDetailDTO>).ToList();
             return query;
         }
 

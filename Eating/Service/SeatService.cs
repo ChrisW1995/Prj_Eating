@@ -12,7 +12,6 @@ namespace Eating.Service
     public class SeatService : ISeatService
     {
         private IRepository<Seat> repository = new GenericRepository<Seat>(new ApplicationDbContext());
-
         public IResult Create(Seat instance)
         {
             if (instance == null)
@@ -26,6 +25,7 @@ namespace Eating.Service
             {
                 repository.Create(instance);
                 result.Success = true;
+                
             }
             catch (Exception ex)
             {
@@ -56,24 +56,24 @@ namespace Eating.Service
             return result;
         }
 
-        public IEnumerable<Seat> GetAll()
+        public IEnumerable<Seat> GetList()
         {
-            return repository.GetAll();
+            return repository.GetList();
         }
 
         public Seat GetByID(int? SeatID)
         {
-            return this.repository.Get(x => x.SeatId == SeatID);
+            return this.repository.Get(x => x.Id == SeatID);
         }
 
         public IEnumerable<Seat> GetSeatByRAccount(string r_id)
         {
-            return repository.GetAllById(x => x.R_Id == r_id).ToList();
+            return repository.GetList(x => x.R_Id == r_id).ToList();
         }
 
         public bool IsExists(int? SeatID)
         {
-            return this.repository.GetAll().Any(x => x.SeatId == SeatID);
+            return this.repository.GetList().Any(x => x.Id == SeatID);
         }
 
         public IResult Update(Seat instance)

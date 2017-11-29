@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<Eating.Areas.Backend.Models.RestaurantStatusVM>
 @functions{
-    public List<SelectListItem> getStatusList()
+    public List<SelectListItem> GetStatusList()
     {
 
         List <SelectListItem> items = new List<SelectListItem>();
@@ -13,7 +13,7 @@
         return items;
     }
         }
-    @Html.DropDownList("ddlStatus", new SelectList(getStatusList(), "Value","Text", Convert.ToString(ViewBag.index)))
+    @Html.DropDownList("ddlStatus", new SelectList(GetStatusList(), "Value","Text", Convert.ToString(ViewBag.index)))
 
 
 

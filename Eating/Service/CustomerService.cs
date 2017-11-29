@@ -48,7 +48,7 @@ namespace Eating.Service
             return (q != null ? true : false);
         }
   
-        public CustomerRegisterDTO login(CustomerLoginDTO loginDTO)
+        public CustomerRegisterDTO Login(CustomerLoginDTO loginDTO)
         {
             var query = db.Customers.Where(a => a.C_Account == loginDTO.C_Account).SingleOrDefault();
             if (query != null)
@@ -67,7 +67,7 @@ namespace Eating.Service
                 return null;
             }
         }
-        public IResult register(ref Customer instance)
+        public IResult Register(ref Customer instance)
         {
             instance.SignUpTime = DateTime.Now;
             instance.C_Password = HashPassword(instance.C_Password);

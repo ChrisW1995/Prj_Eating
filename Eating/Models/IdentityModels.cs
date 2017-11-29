@@ -28,15 +28,18 @@ namespace Eating.Models
         public DbSet<Seat> Seats { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<WaitingLists> WaitingLists { get; set; }
-        public DbSet<Reserves> Reserves { get; set; }
+        public DbSet<Reservations> Reservations { get; set; }
         public DbSet<Admins> Admins { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
+        public DbSet<SetReservationDetails> SetReservationDetails { get; set; }
+        public DbSet<Menu> Menus { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+
             modelBuilder.Entity<Area>()
                  .HasRequired<County>(c => c.County)
                  .WithMany(a => a.Areas)
@@ -62,15 +65,23 @@ namespace Eating.Models
                  .WithMany(w => w.WaitingLists)
                  .HasForeignKey(c => c.C_Id);
 
-            modelBuilder.Entity<Reserves>()
-                  .HasRequired(s => s.Seat)
-                  .WithMany(w => w.Reserves)
-                  .HasForeignKey(r => r.SeatId);
-
-            modelBuilder.Entity<Reserves>()
+     
+            modelBuilder.Entity<Reservations>()
                  .HasRequired<Customer>(r => r.Customer)
                  .WithMany(w => w.Reserves)
                  .HasForeignKey(c => c.C_Id);
+
+            modelBuilder.Entity<Reservations>()
+                .HasRequired<SetReservationDetails>(s => s.SetReservationDetails)
+                .WithMany(r => r.Reservations)
+                .HasForeignKey(i => i.ReservationTimeId);
+                
+
+            modelBuilder.Entity<SetReservationDetails>()
+                .HasRequired<Seat>(s => s.Seat)
+                .WithMany(s => s.SetReservationDetails)
+                .HasForeignKey(i => i.SeatId);
+              
 
             modelBuilder.Entity<Feedback>()
                 .HasRequired(r => r.Restaurant)
@@ -81,6 +92,17 @@ namespace Eating.Models
                 .HasRequired(c => c.Customer)
                 .WithMany(f => f.Feedbacks)
                 .HasForeignKey(f => f.C_Id);
+
+            modelBuilder.Entity<Menu>()
+               .HasRequired(r => r.Restaurant)
+               .WithMany(m => m.Menus)
+               .HasForeignKey(f => f.R_Id);
+
+            modelBuilder.Entity<SetReservationDetails>()
+               .HasRequired(r => r.Restaurant)
+               .WithMany(m => m.SetReservationDetails)
+               .HasForeignKey(i => i.R_id)
+               .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Coupons>()
                 .HasMany(c =>c.Customers)
