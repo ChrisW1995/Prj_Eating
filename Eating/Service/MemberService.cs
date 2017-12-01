@@ -12,6 +12,9 @@ using Eating.Areas.Backend.Models;
 using AutoMapper;
 using System.Linq.Expressions;
 using Eating.DTOs;
+using System.Net;
+using System.IO;
+using System.Xml.Linq;
 
 namespace Eating.Service
 {
@@ -30,6 +33,27 @@ namespace Eating.Service
             db.SaveChanges();
         }
         
+        public bool IdIsExist(string id)
+        {
+            string Url = $"http://data.gcis.nat.gov.tw/od/data/api/5F64D864-61CB-4D0D-8AD9-492047CC1EA6?$format=xml&$filter=Business_Accounting_NO eq {id}";
+            var request = WebRequest.Create(Url) as HttpWebRequest;
+            var response = request.GetResponse();
+
+            Stream receiveStream = response.GetResponseStream();
+            StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8);
+
+            var result = readStream.ReadToEnd();
+            var xml = XElement.Parse(result);
+            if (xml.Elements("row").FirstOrDefault() == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
+        }
         /// <summary>
         /// 加密Password
         /// </summary>

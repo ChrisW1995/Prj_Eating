@@ -51,6 +51,6 @@ namespace Eating.DTOs
 
         public double Lng { get; set; }
 
-        public bool WaitSwitch { get; set; }
+        public bool WaitListSwitch { get; set; }
     }
 }

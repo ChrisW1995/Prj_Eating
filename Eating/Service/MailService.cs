@@ -9,7 +9,7 @@ namespace Eating.Service
     public class MailService
     {
         private string mail_Account = "abc470708";
-        private string mail_Password = "0910602142";
+        private string mail_Password = "ivqqwaowmgirwkva";
         private string mail_Address = "abc470708@gmail.com";
 
         /// <summary>
@@ -58,19 +58,19 @@ namespace Eating.Service
         /// <param name="ToEmail"></param>
         public void SendRegisterMail(string MailBody, string ToEmail)
         {
-               SmtpClient SmtpServer = new SmtpClient("relay-hosting.secureserver.net");
-            SmtpServer.Port = 25;
-            SmtpServer.Credentials = new System.Net.NetworkCredential(mail_Account, mail_Password);
-            SmtpServer.EnableSsl = false;
-            SmtpServer.UseDefaultCredentials = false;
-            SmtpServer.DeliveryMethod = SmtpDeliveryMethod.Network;
-            MailMessage mail = new MailMessage();
-            mail.From = new MailAddress(mail_Address);
-            mail.To.Add(ToEmail);
-            mail.Subject = "會員註冊驗證信"; //mail topic
-            mail.Body = MailBody; // mail main content
-            mail.IsBodyHtml = true;
-            SmtpServer.Send(mail);
+            using (var mySmtp = new SmtpClient("smtp.gmail.com", 587))
+            {
+                mySmtp.Credentials =
+                    new System.Net.NetworkCredential(mail_Account, mail_Password);
+                mySmtp.EnableSsl = true;
+                MailMessage mail = new MailMessage();
+                mail.From = new MailAddress(mail_Address);
+                mail.To.Add(ToEmail);
+                mail.Subject = "會員註冊驗證信"; //mail topic
+                mail.Body = MailBody; // mail main content
+                mail.IsBodyHtml = true;
+                mySmtp.Send(mail);
+            }
         }
     }
 }

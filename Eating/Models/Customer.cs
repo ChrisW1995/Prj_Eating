@@ -42,5 +42,7 @@ namespace Eating.Models
 
         public ICollection<Coupons> Coupons { get; set; }
 
+        public int VerifyCode { get; set; }
+
     }
 }

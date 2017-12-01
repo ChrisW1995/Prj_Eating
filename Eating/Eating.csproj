@@ -18,8 +18,7 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort>
-    </IISExpressSSLPort>
+    <IISExpressSSLPort>44389</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -238,6 +237,7 @@
     <Compile Include="Controllers\Api\CustomerController.cs" />
     <Compile Include="DTOs\CustomerLoginDTO.cs" />
     <Compile Include="DTOs\CustomerRegisterDTO.cs" />
+    <Compile Include="DTOs\CustomerVerifyDTO.cs" />
     <Compile Include="DTOs\NewWaitingDTO.cs" />
     <Compile Include="DTOs\ReservationTimeDTO.cs" />
     <Compile Include="DTOs\RestaurantDetailDTO.cs" />
@@ -258,6 +258,10 @@
     <Compile Include="Migrations\201711290321193_Add_FK_In_SetTimeTB.cs" />
     <Compile Include="Migrations\201711290321193_Add_FK_In_SetTimeTB.Designer.cs">
       <DependentUpon>201711290321193_Add_FK_In_SetTimeTB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712010528382_Add_VerifyCode_In_Customer.cs" />
+    <Compile Include="Migrations\201712010528382_Add_VerifyCode_In_Customer.Designer.cs">
+      <DependentUpon>201712010528382_Add_VerifyCode_In_Customer.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admins.cs" />
@@ -1767,6 +1771,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711290321193_Add_FK_In_SetTimeTB.resx">
       <DependentUpon>201711290321193_Add_FK_In_SetTimeTB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712010528382_Add_VerifyCode_In_Customer.resx">
+      <DependentUpon>201712010528382_Add_VerifyCode_In_Customer.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

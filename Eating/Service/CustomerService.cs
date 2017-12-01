@@ -25,7 +25,32 @@ namespace Eating.Service
             return result;
         }
 
+        public bool PhoneNumIsDuplicate(string phone)
+        {
+            var query = repository.GetList(p => p.C_PhoneNum == phone).SingleOrDefault();
+            if (query == null)
+                return false;
+            else
+                return true;
+        }
+        public bool Verify(int id, int code)
+        {
+            var instance = repository.Get(i => i.C_Id == id);
+            if (instance.VerifyCode != code)
+                return false;
+            else
+            {
+                instance.VerifyCode = 0;
+                repository.Update(instance);
+                return true;
+            }
+        }
 
+        public Customer GetCustomer(int id)
+        {
+            var instance = repository.Get(i => i.C_Id == id);
+            return instance;
+        }
         public string HashPassword(string password)
         {
             string saltKey = "SDajg83Q2hrgsd9GFjdeSflm3gh5H";

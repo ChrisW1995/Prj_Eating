@@ -262,6 +262,8 @@ namespace Eating.Controllers
             return View();
         }
 
+        
+
         [HttpPost]
         public ActionResult Login(MemberLoginViewModel LoginVM, string returnUrl)
         {
@@ -324,6 +326,12 @@ namespace Eating.Controllers
 
             if (ModelState.IsValid)
             {
+                if (!memberService.IdIsExist(registerMember.Id))
+                {
+                    ModelState.AddModelError("Id", "無效之統一編號，請重新確認");
+                    var registVM = InitVM(registerMember);
+                    return View(registVM);
+                }
                 if (memberService.CheckId(registerMember.Id))
                 {
                     var area = db.Counties.Where(x => x.CountyName == registerMember.R_County).Select(x => new { Id = x.Id });
