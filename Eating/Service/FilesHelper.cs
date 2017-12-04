@@ -41,6 +41,13 @@ namespace Eating.Service
             this.tempPath = tempPath;
             this.serverMapPath = serverMapPath;
         }
+        public FilesHelper(String StorageRoot, String UrlBase, String tempPath, String serverMapPath)
+        {
+            this.StorageRoot = StorageRoot;
+            this.UrlBase = UrlBase;
+            this.tempPath = tempPath;
+            this.serverMapPath = serverMapPath;
+        }
 
         public void DeleteFiles(String pathToDelete)
         {
@@ -69,21 +76,21 @@ namespace Eating.Service
  
             String fullPath = Path.Combine(StorageRoot, file);
             System.Diagnostics.Debug.WriteLine(fullPath);
-            System.Diagnostics.Debug.WriteLine(System.IO.File.Exists(fullPath));
+            System.Diagnostics.Debug.WriteLine(File.Exists(fullPath));
             String thumbPath = "/" + file + "80x80.jpg";
             String partThumb1 = Path.Combine(StorageRoot, "thumbs");
             String partThumb2 = Path.Combine(partThumb1, file + "80x80.jpg");
 
             System.Diagnostics.Debug.WriteLine(partThumb2);
-            System.Diagnostics.Debug.WriteLine(System.IO.File.Exists(partThumb2));
-            if (System.IO.File.Exists(fullPath))
+            System.Diagnostics.Debug.WriteLine(File.Exists(partThumb2));
+            if (File.Exists(fullPath))
             {
                 //delete thumb 
-                if (System.IO.File.Exists(partThumb2))
+                if (File.Exists(partThumb2))
                 {
-                    System.IO.File.Delete(partThumb2);
+                    File.Delete(partThumb2);
                 }
-                System.IO.File.Delete(fullPath);
+                File.Delete(fullPath);
                 String succesMessage = "Ok";
                 return succesMessage;
             }
@@ -246,7 +253,7 @@ namespace Eating.Service
                 string extansion = splited[1].ToLower();
                 if(extansion.Equals("jpeg") || extansion.Equals("jpg") || extansion.Equals("png") || extansion.Equals("gif"))
                 {
-                    String thumbnailUrl = UrlBase + "thumbs/" + Path.GetFileNameWithoutExtension(FileName) + "80x80.jpg";
+                    String thumbnailUrl = UrlBase + "/thumbs/" + Path.GetFileNameWithoutExtension(FileName) + "80x80.jpg";
                     return thumbnailUrl;
                 }
                 else
@@ -288,6 +295,20 @@ namespace Eating.Service
             }
             return Filess;
         }
+
+        //public bool DeleteFile(string _path)
+        //{
+        //    string path = HostingEnvironment.MapPath(_path);
+
+        //    System.Diagnostics.Debug.WriteLine(path);
+        //    if (File.Exists(path))
+        //    {
+        //        File.Delete(path);
+        //        return true;
+        //    }
+        //    return false;
+
+        //}
     }
     public class ViewDataUploadFilesResult
     {

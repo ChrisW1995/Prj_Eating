@@ -14,14 +14,14 @@ namespace Eating
                 "~/Scripts/jquery-{version}.js",
                 "~/Scripts/jquery-ui-{version}.js",
                 "~/Scripts/jquery.validate*",
-                        "~/Scripts/bootbox.js",
+                "~/Scripts/bootstrap.js",
                         "~/Scripts/DataTables/jquery.dataTables.js",
                          "~/Scripts/DataTables/dataTables.bootstrap.js",
                          "~/Scripts/Chart.js",
-                         "~/Scripts/bootbox.js",
                         "~/Scripts/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.js",
                          "~/Content/dist/js/demo.js",
-                         "~/Content/dist/js/app.js"
+                         "~/Content/dist/js/app.js",
+                       "~/Scripts/bootbox.js"
                          ));
 
             // 使用開發版本的 Modernizr 進行開發並學習。然後，當您

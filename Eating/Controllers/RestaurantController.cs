@@ -171,6 +171,28 @@ namespace Eating.Controllers
         }
 
         [HttpPost]
+        public ActionResult SaveMenuName(int id, string name)
+        {
+            if(memberService.SaveMenu(id, name))
+                return new HttpStatusCodeResult(HttpStatusCode.OK);            
+            else
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+        }
+
+        [HttpPost]
+        public ActionResult DeleteMenu(int id)
+        {
+            var R_Id = Request.Cookies["idCookie"].Values["r_id"];
+            if (memberService.DelMenu(id, R_Id))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
+            }
+            
+            else
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+        [HttpPost]
         public JsonResult Upload(ICollection<string> listNames)
         {
             var R_Id = Request.Cookies["idCookie"].Values["r_id"];
@@ -454,7 +476,7 @@ namespace Eating.Controllers
         public ActionResult MenuList()
         {
             var R_id = Request.Cookies["idCookie"].Values["r_id"];
-            var list = db.Menus.Where(r => r.R_Id == R_id).Select(Mapper.Map<Models.Menu, MenuListViewModel>).ToList();
+            var list = memberService.GetMenuList(R_id);
             return PartialView("_MenuList",list);
         }
         public ActionResult AccPartial()

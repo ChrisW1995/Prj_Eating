@@ -11,7 +11,7 @@ namespace Eating.ViewModels
         public int Id { get; set; }
 
         [StringLength(50)]
-        public string Name { get; set; }
+        public string FoodName { get; set; }
 
         public string ImgPath { get; set; }
 

@@ -1,9 +1,9 @@
 ﻿@model IEnumerable<Eating.ViewModels.MenuListViewModel>
 
-<table class="table">
+<table class="table" id="menu-table">
     <thead>
         <tr>
-            <th>              
+            <th>
             </th>
             <th>
                 名稱
@@ -15,22 +15,31 @@
     <tbody>
         @if (Model != null)
         {
-            for(int i = 0; i < Model.Count() ; i++)
+            for (int i = 0; i < Model.Count(); i++)
             {
-                <tr>
-                    <td class="col-md-3">
-                        <img src="@Model.ElementAt(i).ImgPath" style="height:10%;"/>
-                    </td>
+                <tr class="">
                     <td class="col-md-2">
-                        <input class="form-control " type="text" name="MenuListViewModel[@i].Name"/>
+                        <span class="preview">
+                            <a href="@Model.ElementAt(i).ImgPath" title="@Model.ElementAt(i).FoodName" download="@Model.ElementAt(i).FoodName" data-gallery>
+                              @{ var thumbUrl = Model.ElementAt(i).ImgPath.Insert(Model.ElementAt(i).ImgPath.LastIndexOf('/'), "/thumbs");
+                                  thumbUrl = thumbUrl.Insert(thumbUrl.LastIndexOf('.'), "80x80");
+                                  thumbUrl = thumbUrl.Replace(thumbUrl.Substring(thumbUrl.LastIndexOf(".")), ".jpg");
+                                  var inputNameId = "menuName" + i;}
+                                <img src="@thumbUrl" />
+                            </a>
+                        </span>
                     </td>
-                    <td class="col-md-3 col-md-offset-1">
-                        <button class="btn btn-default" type="submit" value="">test</button>
+                    <td class="col-md-3">
+                        <input class="form-control " type="text" name="MenuListViewModel[@i].Name" id="@inputNameId" value="@Model.ElementAt(i).FoodName" />
+                    </td>
+                    <td class="col-md-3 col-md-offset-2">
+                        <button class='btn btn-success js-save' menu-id="@Model.ElementAt(i).Id" flg=true><span class='glyphicon glyphicon-ok'></span> 儲存 </button>
+                        <button class='btn btn-danger js-delete' menu-id="@Model.ElementAt(i).Id" flg=true><span class='glyphicon glyphicon-remove'></span> 刪除 </button>
                     </td>
 
                 </tr>
             }
         }
-        
+
     </tbody>
 </table>

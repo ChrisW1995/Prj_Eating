@@ -15,6 +15,7 @@ using Eating.DTOs;
 using System.Net;
 using System.IO;
 using System.Xml.Linq;
+using System.Web.Hosting;
 
 namespace Eating.Service
 {
@@ -22,6 +23,7 @@ namespace Eating.Service
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         private IRepository<Restaurant> repository = new GenericRepository<Restaurant>(new ApplicationDbContext());
+        private IRepository<Menu> menuRep = new GenericRepository<Menu>(new ApplicationDbContext());
         /// <summary>
         /// Save restaurant new user info to database
         /// </summary>
@@ -228,6 +230,52 @@ namespace Eating.Service
         {
             var query = repository.GetList().Where(f => f.StatusFlg == true).Select(Mapper.Map<Restaurant, RestaurantDetailDTO>).ToList();
             return query;
+        }
+
+        public IEnumerable<MenuListViewModel> GetMenuList(string r_id)
+        {
+            var lists = menuRep.GetList(r => r.R_Id == r_id).Select(Mapper.Map<Models.Menu, MenuListViewModel>).ToList();
+            return lists;
+        }
+
+        public bool SaveMenu(int id, string name)
+        {
+            try
+            {
+                var query = menuRep.Get(i => i.Id == id);
+                query.FoodName = name;
+                menuRep.Update(query);
+                return true;
+            }
+            catch(Exception e)
+            {
+                throw e;  
+            }
+            
+        }
+
+        public bool DelMenu(int id, string R_Id)
+        {
+            try
+            {
+                var query = menuRep.Get(i => i.Id == id);
+                string tempPath = "~/Upload/Temp/";
+                string serverMapPath = $"~/Upload/Menu/{R_Id}";
+                string UrlBase = $"/Upload/Menu/{R_Id}";
+                string StorageRoot = Path.Combine(HostingEnvironment.MapPath(serverMapPath));
+                FilesHelper filesHelper = new FilesHelper(StorageRoot, UrlBase, tempPath, serverMapPath);
+                string imgPath = query.ImgPath;
+                string filename = imgPath.Substring(imgPath.LastIndexOf('/')+1);
+                filesHelper.DeleteFile(filename);
+                
+                menuRep.Delete(query);
+
+                return true;
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
         }
 
     }

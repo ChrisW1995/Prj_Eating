@@ -11,7 +11,7 @@
             <div class="col-md-2">
                 @Html.TextBoxFor(m =>m.SeatName,"", new { @class="form-control"})
                 @Html.ValidationMessageFor(model => model.SeatName, "", new { @class = "text-danger" })
-                @Html.HiddenFor(m => m.SeatId,0)
+                @Html.HiddenFor(m => m.Id,0)
             </div>
         </div>
         <div class="form-group">

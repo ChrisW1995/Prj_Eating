@@ -5,6 +5,49 @@
 @Styles.Render("~/Content/fileupload")
 
 <script>
+    $(document).ready(function () {
+        $(".js-save").on("click",  function () {
+            var $row = $(this).closest("tr");    // Find the row
+            var $text = $row.find("input").val(); // Find the text
+            $.ajax({
+                url: '@Url.Action("SaveMenuName", "Restaurant")',
+                    method: "POST",
+                    data:{
+                        id:$(this).attr('menu-id'),
+                        name: $text
+                    }
+            }).done(function () {
+                $row.css("background", "#94ed94");
+
+                }).fail(function () {
+                    $row.css("background", "red");
+
+                });
+
+        });
+
+        $(".js-delete").on("click", function () {
+            var tr = $(this).closest('tr');
+                $.ajax({
+                    url: '@Url.Action("DeleteMenu", "Restaurant")',
+                    method: "POST",
+                    data:{
+                        id: $(this).attr('menu-id')
+                    }
+                }).done(function () {        
+                    tr.css("background-color", "#e2e2e2");
+                    tr.fadeOut(400, function () {
+                        tr.remove();
+                    });
+
+                }).fail(function () {
+                    bootbox.alert('Error!');
+                });
+            });
+    });
+
+
+
     var $form = null;
     $(function () {
 
@@ -33,7 +76,7 @@
     );
 </script>
 
-<section class="col-lg-6 connectedSortable ui-sortable">
+<section class="col-lg-7 connectedSortable ui-sortable">
     <div class="box box-info" style="position: relative; left: 0px; top: 0px;">
         <div class="box-header ui-sortable-handle" style="">
             <i class="fa fa-info"></i>
@@ -50,7 +93,7 @@
         </div>
     </div>
 </section>
-<section class="col-lg-6 connectedSortable ui-sortable">
+<section class="col-lg-5 connectedSortable ui-sortable">
     <div class="box box-info" style="position: relative; left: 0px; top: 0px;">
         <div class="box-header ui-sortable-handle" style="">
             <i class="fa fa-info"></i>

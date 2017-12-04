@@ -69,7 +69,7 @@ namespace Eating.Controllers
                 return View("Index", SeatVM);
             }
             //New
-            if(SeatVM.SeatId == 0 || SeatVM.SeatId == null)
+            if(SeatVM.Id == 0 || SeatVM.Id == null)
             {
                 
                 var instance = Mapper.Map<NewSeatViewModel, Seat>(SeatVM);
@@ -97,13 +97,13 @@ namespace Eating.Controllers
             }
             else
             {
-                var SeatInDb = seatService.GetByID(SeatVM.SeatId);
+                var SeatInDb = seatService.GetByID(SeatVM.Id);
                 Mapper.Map(SeatVM, SeatInDb);
                 SeatInDb.R_Id = R_Id;
                 var result = seatService.Update(SeatInDb);
                 string msg = result.Success == true ? "bootbox.alert('修改成功', function(){ location.replace('/Seat/Index'); });" : "bootbox.alert('錯誤，請重新再試一次！');";
                 TempData["seatEditMessage"] = msg;
-                return View("SeatForm");
+                return View("Index");
             }
             
         }
